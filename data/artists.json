@@ -1,0 +1,32 @@
+{
+  "tekno": [
+    {
+      "slug": "voorbeeld-tekno",
+      "name": "Voorbeeld Tekno",
+      "role": "DJ / Live",
+      "city": "Roeselare",
+      "bio": "Placeholder. Underground tekno, soundsystem minded.",
+      "links": {
+        "instagram": "",
+        "soundcloud": "",
+        "youtube": "",
+        "website": ""
+      }
+    }
+  ],
+  "hiphop": [
+    {
+      "slug": "de-kweker",
+      "name": "De Kweker",
+      "role": "MC",
+      "city": "Brugge",
+      "bio": "Rauw en lokaal. Verhaal-gedreven hip hop met West-Vlaamse roots.",
+      "links": {
+        "instagram": "",
+        "spotify": "",
+        "youtube": "",
+        "website": "https://www.kwkr.be"
+      }
+    }
+  ]
+}

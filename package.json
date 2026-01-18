@@ -1,0 +1,10 @@
+{
+  "name": "kwartier-west-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes http-server -c-1 -p 5173 .",
+    "validate": "node data/validate.mjs",
+    "check": "npm run validate"
+  }
+}

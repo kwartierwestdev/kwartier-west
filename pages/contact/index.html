@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <title>Kwartier West — Contact</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Contacteer Kwartier West voor bookings, events en samenwerkingen." />
+  <link rel="stylesheet" href="../../css/base.css" />
+</head>
+<body>
+  <div data-nav></div>
+
+  <div class="page">
+    <div class="topline">
+      <a class="back" href="../../index.html">← terug</a>
+      <div class="kicker"><span class="dot"></span> Contact</div>
+    </div>
+
+    <h1 style="margin:0 0 10px;">Contact</h1>
+    <p class="muted" style="margin:0; max-width:78ch;">
+      Kwartier West is een collectief én organisatie (basis: Roeselare) met twee sides:
+      <strong>Tekno</strong> en <strong>Hip hop</strong>. Artiesten blijven independent (geen contracten),
+      en Kwartier West ondersteunt door events te organiseren en de scene te verbinden.
+    </p>
+
+    <div style="height:18px;"></div>
+
+    <div class="grid">
+      <section class="card" style="grid-column: span 6;">
+        <div class="cardTop">
+          <h3>Bookings</h3>
+          <div class="meta">Artiesten • line-ups • context</div>
+        </div>
+        <p class="bio">
+          Boek een act via de side-pagina’s (Tekno/Hip hop). Later komt hier een app-flow
+          met aanvragen, beschikbaarheden en bevestigingen.
+        </p>
+        <div class="chips">
+          <a class="chip" href="../tekno/booking.html">Tekno booking</a>
+          <a class="chip" href="../hiphop/booking.html">Hip hop booking</a>
+        </div>
+      </section>
+
+      <section class="card" style="grid-column: span 6;">
+        <div class="cardTop">
+          <h3>Events & tickets</h3>
+          <div class="meta">Organisatie</div>
+        </div>
+        <p class="bio">
+          Tickets lopen voorlopig via externe links of “TBA”.
+          De website is gebouwd om later naadloos te koppelen aan een ticketing-app.
+        </p>
+        <div class="chips">
+          <a class="chip" href="../tickets/index.html">Tickets</a>
+        </div>
+      </section>
+
+      <section class="card" style="grid-column: span 12;">
+        <div class="cardTop">
+          <h3>Contactkanalen</h3>
+          <div class="meta">Tijdelijk (tot domein + mailbox)</div>
+        </div>
+
+        <p class="bio" style="max-width:90ch;">
+          Op dit moment is er nog geen officiële domeinmail actief. Zodra het domein er is,
+          schakelen we over naar <span class="muted">info@…</span> en <span class="muted">booking@…</span>.
+          Tot dan: kies één kanaal hieronder (in te vullen door eigenaar).
+        </p>
+
+        <div class="chips">
+          <span class="muted">Instagram: …</span>
+          <span class="muted">E-mail: kwartierwest.dev@gmail.com (intern/technisch)</span>
+        </div>
+
+        <div style="height:10px;"></div>
+        <div class="muted" style="font-size:12px;">
+          App-ready: dit blok wordt later vervangen door een echte contactflow (form/API + CRM/log).
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script type="module">
+    import { renderNav } from "../../partials/nav.js";
+    renderNav({ sideKey: "global", baseDepth: 2 });
+  </script>
+</body>
+</html>

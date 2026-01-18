@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <title>Kwartier West — Hip hop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../css/base.css" />
+</head>
+<body>
+  <div data-nav></div>
+
+  <div class="page">
+    <div class="topline">
+      <a class="back" href="../../index.html">← terug</a>
+      <div class="kicker"><span class="dot"></span> Hip hop</div>
+    </div>
+
+    <div data-sideswitch></div>
+
+    <h1 style="margin:0 0 10px;">Hip hop side</h1>
+    <p style="margin:0; color:var(--muted); max-width:66ch;">
+      Kwartier West is een thuisbasis voor onafhankelijke artiesten.
+      Geen contracten — wel avonden, context en een plek om te bouwen.
+    </p>
+
+    <section aria-label="Hip hop events">
+      <h2 style="margin:26px 0 6px; font-size:18px;">Events</h2>
+      <div data-events></div>
+    </section>
+
+    <section id="artists" aria-label="Hip hop artists">
+      <h2 style="margin:26px 0 6px; font-size:18px;">Artists</h2>
+      <div data-artists></div>
+    </section>
+  </div>
+
+  <script type="module">
+    import { renderNav } from "../../partials/nav.js";
+    import { renderSideSwitch } from "../../partials/side-switch.js";
+    import { renderEvents } from "../../js/events.js";
+    import { renderArtists } from "../../js/artists.js";
+
+    renderNav({ sideKey: "hiphop", baseDepth: 2 });
+    renderSideSwitch("hiphop");
+    renderEvents("hiphop");
+    renderArtists("hiphop");
+  </script>
+</body>
+</html>

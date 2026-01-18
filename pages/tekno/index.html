@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <title>Kwartier West — Tekno</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../css/base.css" />
+</head>
+<body>
+  <div data-nav></div>
+
+  <div class="page">
+    <div class="topline">
+      <a class="back" href="../../index.html">← terug</a>
+      <div class="kicker"><span class="dot"></span> Tekno</div>
+    </div>
+
+    <div data-sideswitch></div>
+
+    <h1 style="margin:0 0 10px;">Tekno side</h1>
+    <p style="margin:0; color:var(--muted); max-width:66ch;">
+      Kwartier West organiseert plekken en nachten binnen de tekno-scene.
+      Geen hype, geen pose — gewoon sound en beweging.
+    </p>
+
+    <section aria-label="Tekno events">
+      <h2 style="margin:26px 0 6px; font-size:18px;">Events</h2>
+      <div data-events></div>
+    </section>
+
+    <section id="artists" aria-label="Tekno artists">
+      <h2 style="margin:26px 0 6px; font-size:18px;">Artists</h2>
+      <div data-artists></div>
+    </section>
+  </div>
+
+  <script type="module">
+    import { renderNav } from "../../partials/nav.js";
+    import { renderSideSwitch } from "../../partials/side-switch.js";
+    import { renderEvents } from "../../js/events.js";
+    import { renderArtists } from "../../js/artists.js";
+
+    renderNav({ sideKey: "tekno", baseDepth: 2 });
+    renderSideSwitch("tekno");
+    renderEvents("tekno");
+    renderArtists("tekno");
+  </script>
+</body>
+</html>

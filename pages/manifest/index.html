@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <title>Kwartier West — Manifest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Kwartier West — manifest: twee sides, één basis. Collectief én organisatie." />
+  <link rel="stylesheet" href="../../css/base.css" />
+</head>
+<body>
+  <div data-nav></div>
+
+  <div class="page">
+    <div class="topline">
+      <a class="back" href="../../index.html">← terug</a>
+      <div class="kicker"><span class="dot"></span> Manifest</div>
+    </div>
+
+    <h1 style="margin:0 0 10px;">Visie</h1>
+    <p class="muted" style="margin:0; max-width:78ch;">
+      Kwartier West is een <strong>collectief</strong> én een <strong>organisatie</strong>.
+      Basis: Roeselare. Reikwijdte: West-Vlaanderen — niet als grens, maar als vertrekpunt.
+    </p>
+
+    <div style="height:18px;"></div>
+
+    <div class="grid">
+      <section class="card" style="grid-column: span 6;">
+        <div class="cardTop">
+          <h3>Twee sides</h3>
+          <div class="meta">Tekno • Hip hop</div>
+        </div>
+        <p class="bio">
+          Geen mengelmoes. Twee scenes, elk met eigen taal en energie.
+          <strong>Tekno</strong> is geen techno. <strong>Hip hop</strong> blijft verhaal en stem.
+        </p>
+        <div class="chips">
+          <a class="chip" href="../tekno/index.html">Tekno</a>
+          <a class="chip" href="../hiphop/index.html">Hip hop</a>
+        </div>
+      </section>
+
+      <section class="card" style="grid-column: span 6;">
+        <div class="cardTop">
+          <h3>Independent by default</h3>
+          <div class="meta">Geen contracten</div>
+        </div>
+        <p class="bio">
+          Artiesten zijn niet contractueel verbonden.
+          Kwartier West ondersteunt door plekken te creëren, avonden te organiseren
+          en de juiste mensen samen te brengen.
+        </p>
+        <div class="chips"><span class="muted">community-first</span></div>
+      </section>
+
+      <section class="card" style="grid-column: span 12;">
+        <div class="cardTop">
+          <h3>Organisatie</h3>
+          <div class="meta">Events • tickets • bookings</div>
+        </div>
+        <p class="bio" style="max-width:92ch;">
+          Kwartier West organiseert events binnen beide scenes. Tickets kunnen extern of intern,
+          afhankelijk van het event. Bookings lopen via de side pages en evolueren naar een centrale flow.
+        </p>
+        <div class="chips">
+          <a class="chip" href="../tickets/index.html">Tickets</a>
+          <a class="chip" href="../tekno/booking.html">Booking tekno</a>
+          <a class="chip" href="../hiphop/booking.html">Booking hip hop</a>
+        </div>
+      </section>
+
+      <section class="card" style="grid-column: span 12;">
+        <div class="cardTop">
+          <h3>App-ready</h3>
+          <div class="meta">Website als fundament</div>
+        </div>
+        <p class="bio" style="max-width:92ch;">
+          De website is gebouwd als fundament voor een latere app:
+          <strong>tickets boeken</strong>, <strong>artiesten boeken</strong> en <strong>merch kopen</strong>
+          in één systeem. De data-structuur (artists/events) is al voorbereid op die koppeling.
+        </p>
+        <div class="chips">
+          <span class="muted">v1: data → pagina</span>
+          <span class="muted">v2: data → API → app</span>
+        </div>
+      </section>
+    </div>
+
+    <div style="height:26px;"></div>
+    <p class="muted" style="margin:0; max-width:78ch; font-size:12px;">
+      Dit manifest is bewust helder en kort. Details (artist roster, exacte partners, venues)
+      vullen we aan wanneer de eigenaar ze bevestigt.
+    </p>
+  </div>
+
+  <script type="module">
+    import { renderNav } from "../../partials/nav.js";
+    renderNav({ sideKey: "global", baseDepth: 2 });
+  </script>
+</body>
+</html>

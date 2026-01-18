@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <title>Kwartier West — Artist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../css/base.css" />
+</head>
+<body>
+  <div data-nav></div>
+
+  <div class="page">
+    <div class="topline">
+      <a class="back" href="./index.html">← terug</a>
+      <div class="kicker"><span class="dot"></span> Hip hop • Artist</div>
+    </div>
+
+    <div data-sideswitch></div>
+
+    <div data-artist-root></div>
+  </div>
+
+  <script type="module">
+    import { renderNav } from "../../partials/nav.js";
+    import { renderSideSwitch } from "../../partials/side-switch.js";
+    import { renderArtistDetail } from "../../js/artist-detail.js";
+
+    renderNav({ sideKey: "hiphop", baseDepth: 2 });
+    renderSideSwitch("hiphop");
+    renderArtistDetail("hiphop");
+  </script>
+</body>
+</html>

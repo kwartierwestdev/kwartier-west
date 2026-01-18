@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <title>Kwartier West — Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../css/base.css" />
+</head>
+<body>
+  <div data-nav></div>
+
+  <div class="page">
+    <div class="topline">
+      <a class="back" href="../../index.html">← terug</a>
+      <div class="kicker"><span class="dot"></span> Shop</div>
+    </div>
+
+    <h1 style="margin:0 0 10px;">Merch</h1>
+    <p class="muted" style="margin:0; max-width:70ch;">
+      Placeholder shop. Later wordt dit gekoppeld aan de app (cart, betaling, stock, verzending).
+    </p>
+
+    <div style="height:18px;"></div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="cardTop">
+          <h3>Hoodies</h3>
+          <div class="meta">TBA</div>
+        </div>
+        <p class="bio">Drops volgen. Hier komt later een echte productgrid.</p>
+        <div class="chips"><span class="muted">soon</span></div>
+      </article>
+
+      <article class="card">
+        <div class="cardTop">
+          <h3>T-shirts</h3>
+          <div class="meta">TBA</div>
+        </div>
+        <p class="bio">App-ready: product data → checkout → order.</p>
+        <div class="chips"><span class="muted">soon</span></div>
+      </article>
+    </div>
+  </div>
+
+  <script type="module">
+    import { renderNav } from "../../partials/nav.js";
+    renderNav({ sideKey: "global", baseDepth: 2 });
+  </script>
+</body>
+</html>

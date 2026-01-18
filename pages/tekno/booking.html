@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <title>Kwartier West — Tekno Booking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../css/base.css" />
+</head>
+<body>
+  <div data-nav></div>
+
+  <div class="page">
+    <div class="topline">
+      <a class="back" href="./index.html">← terug</a>
+      <div class="kicker"><span class="dot"></span> Tekno • Booking</div>
+    </div>
+
+    <div data-sideswitch></div>
+
+    <h1 style="margin:0 0 10px;">Boek een tekno act</h1>
+    <p class="muted" style="margin:0; max-width:70ch;">
+      Dit is een tijdelijke booking flow. Later wordt dit vervangen door de app (tickets/booking/merch).
+    </p>
+
+    <div style="height:18px;"></div>
+
+    <form class="card" style="max-width:720px;">
+      <div class="muted" style="font-size:12px; margin-bottom:10px;">Contact</div>
+
+      <label class="muted" style="display:block; font-size:12px; margin:10px 0 6px;">Naam / organisatie</label>
+      <input class="copyInput" type="text" placeholder="..." />
+
+      <label class="muted" style="display:block; font-size:12px; margin:10px 0 6px;">E-mail</label>
+      <input class="copyInput" type="email" placeholder="..." />
+
+      <label class="muted" style="display:block; font-size:12px; margin:10px 0 6px;">Datum / locatie / context</label>
+      <textarea class="copyInput" style="min-height:120px; resize:vertical;" placeholder="..." ></textarea>
+
+      <div style="height:12px;"></div>
+
+      <div class="muted" style="font-size:12px;">
+        Verzenden komt later via app/API. Voorlopig: contact via de organisatie.
+      </div>
+    </form>
+  </div>
+
+  <script type="module">
+    import { renderNav } from "../../partials/nav.js";
+    import { renderSideSwitch } from "../../partials/side-switch.js";
+    renderNav({ sideKey: "tekno", baseDepth: 2 });
+    renderSideSwitch("tekno");
+  </script>
+</body>
+</html>
