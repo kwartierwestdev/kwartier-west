@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="nl">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <title>Kwartier West — Artist</title>
@@ -11,12 +11,13 @@
 
   <div class="page">
     <div class="topline">
-      <a class="back" href="./index.html">← terug</a>
+      <a class="back" href="./index.html">← back</a>
       <div class="kicker"><span class="dot"></span> Hip hop • Artist</div>
     </div>
 
     <div data-sideswitch></div>
 
+    <!-- IMPORTANT: this must match what artist-detail.js queries -->
     <div data-artist-root></div>
   </div>
 
@@ -27,6 +28,8 @@
 
     renderNav({ sideKey: "hiphop", baseDepth: 2 });
     renderSideSwitch("hiphop");
+
+    // IMPORTANT: pass sideKey so it reads the right array
     renderArtistDetail("hiphop");
   </script>
 </body>

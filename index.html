@@ -4,44 +4,53 @@
   <meta charset="utf-8" />
   <title>Kwartier West</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Kwartier West — collectief & organisatie. Twee sides. Eén basis." />
+  <meta name="description" content="Kwartier West — split mind: tek side & hip hop side. Same underground ethic." />
   <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/landing.css" />
 </head>
-<body class="split">
+<body>
+  <main class="split" aria-label="Kwartier West split landing">
 
-  <!-- TEKNO -->
-  <a class="half tekno" href="./pages/tekno/index.html" aria-label="Ga naar Tekno">
-    <div class="inner">
-      <div class="kicker">
-        <span class="dot"></span> Side A
+    <section class="half tekno" style="--bgimg:url('/assets/landing-tekno.jpg');">
+      <a class="halfHit" href="./pages/tekno/index.html" aria-label="Enter Tekno"></a>
+
+      <div class="inner">
+        <div class="kicker"><span class="dot"></span> Tek side</div>
+        <h1>Tekno</h1>
+        <p>Underground nights. Sound system culture. Not tekno — tekno.</p>
+
+        <div class="enter">
+          Enter:
+          <a href="./pages/tekno/index.html#events">events</a> •
+          <a href="./pages/tekno/index.html#artists">artists</a> •
+          <a href="./pages/tekno/booking.html">booking</a>
+        </div>
       </div>
+    </section>
 
-      <h1>Tekno</h1>
+    <section class="half hiphop" style="--bgimg:url('/assets/landing-hiphop.jpg');">
+      <a class="halfHit" href="./pages/hiphop/index.html" aria-label="Enter Hip hop"></a>
 
-      <p>
-        Roeselare als basis.<br>
-        Ondergonds als standaard.<br>
-        Geen techno — <strong>tekno</strong>.
-      </p>
-    </div>
-  </a>
+      <div class="inner">
+        <div class="kicker"><span class="dot"></span> Hip hop side</div>
+        <h1>Hip hop</h1>
+        <p>Independent voices. Bars with context. No contracts — room to build.</p>
 
-  <!-- HIP HOP -->
-  <a class="half hiphop" href="./pages/hiphop/index.html" aria-label="Ga naar Hip hop">
-    <div class="inner">
-      <div class="kicker">
-        <span class="dot"></span> Side B
+        <div class="enter">
+          Enter:
+          <a href="./pages/hiphop/index.html#events">events</a> •
+          <a href="./pages/hiphop/index.html#artists">artists</a> •
+          <a href="./pages/hiphop/booking.html">booking</a>
+        </div>
       </div>
+    </section>
 
-      <h1>Hip hop</h1>
+    <a class="manifestCard" href="./pages/manifest/index.html" aria-label="Open manifest">
+      <h3>This is the West</h3>
+      <p>Kwartier West is a split mind: tek side + hip hop side. Same underground ethic. Different sound.</p>
+      <span class="go">Open manifest →</span>
+    </a>
 
-      <p>
-        Onafhankelijke stemmen.<br>
-        Bars met context.<br>
-        Geen contracten. Wel ruimte.
-      </p>
-    </div>
-  </a>
-
+  </main>
 </body>
 </html>

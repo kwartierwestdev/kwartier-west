@@ -1,40 +1,38 @@
 {
-  "tekno": [
-    {
-      "id": "tekno-001",
-      "title": "Voorbeeld Nacht",
-      "date": "2026-02-14",
-      "time": "23:00",
-      "city": "Roeselare",
-      "venue": "TBA",
-      "status": "TBA",
-      "tickets": {
-        "mode": "external",
-        "url": ""
-      },
-      "lineup": [
-        { "name": "Voorbeeld Tekno", "slug": "voorbeeld-tekno" }
-      ],
-      "notes": "Details volgen."
-    }
-  ],
   "hiphop": [
     {
-      "id": "hiphop-001",
-      "title": "Voorbeeld Showcase",
+      "id": "hiphop-showcase-01",
+      "title": "Example Showcase",
       "date": "2026-02-28",
       "time": "20:00",
-      "city": "West-Vlaanderen",
+      "region": "West Flanders",
       "venue": "TBA",
-      "status": "TBA",
+      "lineup": [
+        { "slug": "de-kweker" }
+      ],
       "tickets": {
-        "mode": "external",
+        "mode": "tba",
         "url": ""
       },
+      "notes": "Details soon."
+    }
+  ],
+  "tekno": [
+    {
+      "id": "tekno-night-01",
+      "title": "Example Night",
+      "date": "2026-02-14",
+      "time": "23:00",
+      "region": "Roeselare",
+      "venue": "TBA",
       "lineup": [
-        { "name": "De Kweker", "slug": "de-kweker" }
+        { "slug": "voorbeeld-tekno" }
       ],
-      "notes": "Details volgen."
+      "tickets": {
+        "mode": "tba",
+        "url": ""
+      },
+      "notes": "Details soon."
     }
   ]
 }

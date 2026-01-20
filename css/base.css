@@ -1,19 +1,24 @@
-/* Kwartier West — base.css (v1)
-   Palette: black / white / red
+/* Kwartier West — base.css (premium)
+   Scope: all "normal" pages (tekno/hiphop/tickets/shop/contact/manifest)
+   NOT the split landing (that lives in landing.css)
 */
 
 :root{
   --bg:#000;
-  --fg:rgba(255,255,255,.92);
-  --muted:rgba(255,255,255,.68);
-  --line:rgba(255,255,255,.08);
+  --fg: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.66);
+  --line: rgba(255,255,255,.08);
   --red:#b00000;
   --red2:#ff2a2a;
+
   --pad: clamp(18px, 3vw, 42px);
+  --radius: 18px;
+  --shadow: 0 18px 60px rgba(0,0,0,.55);
 }
 
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
+
 body{
   margin:0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -21,7 +26,45 @@ body{
   color: var(--fg);
 }
 
-/* Utilities */
+a{ color: inherit; }
+
+/* =========================================
+   Global background + grain (NORMAL pages only)
+   Landing overrides this in landing.css via :has(.split)
+========================================= */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(900px 520px at 12% 20%, rgba(176,0,0,.12), transparent 60%),
+    radial-gradient(820px 520px at 88% 18%, rgba(255,42,42,.08), transparent 55%),
+    radial-gradient(900px 640px at 50% 105%, rgba(0,0,0,.80), transparent 70%),
+    url("/assets/og/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: saturate(.95) contrast(1.02);
+  opacity: .72;
+}
+
+/* grain */
+body::after{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events:none;
+  opacity: .10;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  background-size: 260px 260px;
+  mix-blend-mode: overlay;
+}
+
+/* =========================================
+   Typography helpers
+========================================= */
 .kicker{
   display:inline-flex;
   gap:10px;
@@ -36,75 +79,34 @@ body{
   box-shadow: 0 0 18px rgba(176,0,0,.55);
 }
 
-a{ color: inherit; }
-
-/* Split landing */
-.split{
-  min-height:100vh;
-  display:flex;
-}
-
-.half{
-  position:relative;
-  flex:1;
-  display:flex;
-  align-items:flex-end;
-  justify-content:flex-start;
-  padding: var(--pad);
-  text-decoration:none;
-  overflow:hidden;
-  border-right: 1px solid var(--line);
-}
-
-.half:last-child{ border-right:none; }
-
-.half::before{
-  content:"";
-  position:absolute; inset:0;
-  background:
-    radial-gradient(800px 420px at 30% 20%, rgba(176,0,0,.12), transparent 60%),
-    radial-gradient(700px 360px at 70% 80%, rgba(255,42,42,.08), transparent 55%),
-    linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.30));
-  opacity:.85;
-  transition: opacity .25s ease, transform .25s ease;
-  transform: scale(1.02);
-}
-
-.half::after{
-  content:"";
-  position:absolute; inset:-1px;
-  background: linear-gradient(90deg, transparent, rgba(176,0,0,.16), transparent);
-  opacity:0;
-  transition: opacity .25s ease;
-}
-
-.half:hover::before{ opacity:1; transform: scale(1.06); }
-.half:hover::after{ opacity:1; }
-
-.inner{
-  position:relative;
-  max-width: 520px;
-  padding: 18px 18px 10px 0;
-}
-
-.inner h1{
-  margin: 10px 0 6px;
-  font-size: clamp(40px, 6vw, 76px);
-  letter-spacing: .02em;
-  line-height: .95;
-}
-
-.inner p{
+.lead{
   margin:0;
   color: var(--muted);
+  max-width: 70ch;
   font-size: 15px;
-  line-height: 1.45;
+  line-height: 1.55;
 }
 
-/* Side pages */
+.muted{ color: var(--muted); }
+.sep{ display:inline-block; margin:0 8px; color: rgba(255,255,255,.22); }
+
+h1{
+  margin: 10px 0 10px;
+  font-size: clamp(28px, 3.6vw, 46px);
+  letter-spacing: .01em;
+}
+h2{
+  margin: 18px 0 10px;
+  font-size: 18px;
+  letter-spacing: .01em;
+}
+
+/* =========================================
+   Page wrapper
+========================================= */
 .page{
   padding: var(--pad);
-  max-width: 980px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
@@ -113,9 +115,9 @@ a{ color: inherit; }
   align-items:center;
   justify-content:space-between;
   gap: 14px;
-  padding: 16px 0 10px;
+  padding: 10px 0 10px;
   border-bottom: 1px solid var(--line);
-  margin-bottom: 28px;
+  margin-bottom: 18px;
 }
 
 .back{
@@ -128,228 +130,24 @@ a{ color: inherit; }
 }
 .back:hover{ color: var(--fg); }
 
-/* Mobile */
-@media (max-width: 900px){
-  .split{ flex-direction: column; }
-  .half{
-    border-right:none;
-    border-bottom: 1px solid var(--line);
-    align-items:flex-end;
-    min-height: 50vh;
-  }
-  .half:last-child{ border-bottom:none; }
-}
-
-/* Artists */
-.muted{ color: var(--muted); }
-
-.grid{
-  display:grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 14px;
-  margin-top: 22px;
-}
-
-.card{
-  grid-column: span 6;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 16px 16px 14px;
-  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.08));
-}
-
-.card h3{
-  margin:0;
-  font-size: 18px;
-  letter-spacing: .01em;
-}
-
-.meta{
-  margin-top: 4px;
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.bio{
-  margin: 12px 0 12px;
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--fg);
-  opacity: .92;
-  max-width: 70ch;
-}
-
-.chips{
-  display:flex;
-  flex-wrap:wrap;
-  gap: 8px;
-}
-
-.chip{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  text-decoration:none;
-  font-size: 12px;
-  color: var(--fg);
-  opacity: .86;
-}
-
-.chip:hover{
-  opacity: 1;
-  border-color: rgba(176,0,0,.45);
-  box-shadow: 0 0 20px rgba(176,0,0,.18);
-}
-
-@media (max-width: 900px){
-  .card{ grid-column: span 12; }
-}
-
-/* Clickable cards */
-.cardLink{ position: relative; }
-.cardA{
-  position:absolute;
-  inset:0;
-  border-radius: 18px;
-  text-indent:-9999px;
-}
-.cardLink:hover{
-  border-color: rgba(176,0,0,.45);
-  box-shadow: 0 0 26px rgba(176,0,0,.16);
-}
-.cardLink:hover h3{ text-shadow: 0 0 20px rgba(176,0,0,.18); }
-
-/* Artist detail */
-.detailTop{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap: 14px;
-}
-
-.detailActions{
-  display:flex;
-  gap: 10px;
-  align-items:center;
-}
-
-.chipBtn{
-  background: transparent;
-  cursor: pointer;
-}
-
-.chipBtn:disabled{
-  cursor: default;
-  opacity: .75;
-}
-
-.copyFallback{ margin-top: 8px; }
-.copyInput{
-  width: min(720px, 100%);
-  margin-top: 8px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: rgba(255,255,255,.03);
-  color: var(--fg);
-  outline: none;
-}
-
-/* Events */
-.events{
-  margin-top: 14px;
-  display:flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.event{
-  display:flex;
-  justify-content:space-between;
-  gap: 14px;
-  padding: 14px 14px;
-  border-radius: 18px;
-  border: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.08));
-}
-
-.eventTitle{
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.eventMeta{
-  margin-top: 6px;
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.eventSide{
-  display:flex;
-  flex-direction: column;
-  align-items:flex-end;
-  gap: 8px;
-  min-width: 140px;
-}
-
-.eventStatus{
-  font-size: 12px;
-  color: var(--muted);
-}
-
-/* Events (extended) */
-.eventLineup{
-  margin-top: 8px;
-  font-size: 13px;
-}
-
-.inlineLink{
-  color: var(--fg);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(176,0,0,.35);
-  opacity: .9;
-}
-.inlineLink:hover{
-  opacity: 1;
-  border-bottom-color: rgba(255,42,42,.7);
-}
-
-.sep{
-  display:inline-block;
-  margin: 0 8px;
-  color: rgba(255,255,255,.22);
-}
-
-.eventNotes{
-  margin-top: 8px;
-  font-size: 12px;
-}
-
-.eventCtas{
-  display:flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* KW Nav */
+/* =========================================
+   NAV (desktop links, mobile drawer only <=900px)
+========================================= */
 .kwNav{
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 40;
   border-bottom: 1px solid var(--line);
-  background: rgba(0,0,0,.72);
-  backdrop-filter: blur(10px);
+  background: rgba(0,0,0,.62);
+  backdrop-filter: blur(12px);
 }
 
 .kwNavInner{
   max-width: 1200px;
   margin: 0 auto;
-  padding: 12px var(--pad);
+  padding: 10px var(--pad);
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr auto auto;
   align-items: center;
   gap: 14px;
 }
@@ -362,8 +160,8 @@ a{ color: inherit; }
   color: var(--fg);
   font-weight: 700;
   letter-spacing: .02em;
+  min-width: 160px;
 }
-
 .kwMark{
   width: 10px;
   height: 10px;
@@ -378,7 +176,6 @@ a{ color: inherit; }
   justify-content: center;
   flex-wrap: wrap;
 }
-
 .kwLinksSide{
   justify-content: flex-end;
 }
@@ -390,24 +187,69 @@ a{ color: inherit; }
   padding: 7px 10px;
   border-radius: 999px;
   border: 1px solid transparent;
+  white-space: nowrap;
 }
-
 .kwLink:hover{
   color: var(--fg);
   border-color: rgba(176,0,0,.35);
   box-shadow: 0 0 18px rgba(176,0,0,.14);
 }
 
-@media (max-width: 900px){
-  .kwNavInner{
-    grid-template-columns: 1fr;
-  }
-  .kwLinksSide{
-    justify-content: center;
-  }
+/* burger: ALWAYS hidden on desktop */
+.kwBurger{ display:none; justify-content:flex-end; }
+.kwBurgerBtn{
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--line);
+  color: var(--fg);
+  border-radius: 999px;
+  padding: 7px 12px;
+  cursor: pointer;
+}
+.kwBurgerBtn:hover{
+  border-color: rgba(176,0,0,.35);
+  box-shadow: 0 0 18px rgba(176,0,0,.14);
 }
 
-/* Side switch */
+.kwDrawer{
+  display:none;
+  border-top: 1px solid var(--line);
+  background: rgba(0,0,0,.74);
+  backdrop-filter: blur(12px);
+}
+.kwDrawer.isOpen{ display:block; }
+
+.kwDrawerGrid{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px var(--pad) 16px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 10px;
+}
+.kwDrawerGrid a{
+  text-decoration:none;
+  color: var(--muted);
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.02);
+}
+.kwDrawerGrid a:hover{
+  color: var(--fg);
+  border-color: rgba(176,0,0,.35);
+  box-shadow: 0 0 18px rgba(176,0,0,.12);
+}
+
+@media (max-width: 900px){
+  .kwLinks, .kwLinksSide{ display:none; }
+  .kwNavInner{ grid-template-columns: 1fr auto; }
+  .kwBurger{ display:flex; }
+  .kwDrawerGrid{ grid-template-columns: 1fr; }
+}
+
+/* =========================================
+   Side switch pill
+========================================= */
 .sideSwitch{
   margin-top: 10px;
   display:flex;
@@ -421,7 +263,8 @@ a{ color: inherit; }
   padding: 8px 10px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  background: rgba(255,255,255,.03);
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(8px);
 }
 
 .sideHere{
@@ -429,10 +272,6 @@ a{ color: inherit; }
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--muted);
-}
-
-.sideSep{
-  color: rgba(255,255,255,.22);
 }
 
 .sideGo{
@@ -443,287 +282,297 @@ a{ color: inherit; }
   padding-bottom: 1px;
   opacity: .9;
 }
-
 .sideGo:hover{
   opacity: 1;
   border-bottom-color: rgba(255,42,42,.7);
 }
-/* =========================
-   Premium type polish (v1.1)
-   (plak onderaan base.css)
-========================= */
 
-/* Better text rendering */
-html{
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Type scale tokens */
-:root{
-  --h1: clamp(34px, 4vw, 52px);
-  --h2: clamp(20px, 2.2vw, 26px);
-  --body: 14.5px;
-  --lead: 15.5px;
-  --lh: 1.68;
+/* =========================================
+   Events
+========================================= */
+.events{
+  margin-top: 14px;
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-/* Make body feel less "flat" */
-body{
-  font-size: var(--body);
-  line-height: var(--lh);
-  letter-spacing: 0.005em;
+.event{
+  display:flex;
+  justify-content:space-between;
+  gap: 14px;
+  padding: 14px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: rgba(0,0,0,.38);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 34px rgba(0,0,0,.35);
 }
 
-/* Headings: tighter, more premium */
-.page h1{
-  font-size: var(--h1);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin: 0 0 10px;
+.eventTitle{
+  font-size: 15px;
+  font-weight: 650;
 }
 
-.page h2{
-  font-size: var(--h2);
-  line-height: 1.15;
-  letter-spacing: -0.015em;
-  margin: 18px 0 10px;
+.eventMeta{
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--muted);
 }
 
-.page h3{
-  letter-spacing: -0.01em;
+.eventLineup{ margin-top: 8px; font-size: 13px; }
+.eventNotes{ margin-top: 8px; font-size: 12px; color: var(--muted); }
+
+.eventSide{
+  display:flex;
+  flex-direction: column;
+  align-items:flex-end;
+  gap: 8px;
+  min-width: 160px;
 }
 
-/* Lead text: calmer + clearer hierarchy */
-.lead{
-  font-size: var(--lead);
-  line-height: 1.65;
-  color: rgba(255,255,255,.80);
-  max-width: 68ch;
-}
+.eventStatus{ font-size: 12px; color: var(--muted); }
 
-/* Paragraph rhythm */
-.page p{
-  max-width: 72ch;
-  margin: 0 0 12px;
-}
-
-.page p:last-child{ margin-bottom: 0; }
-
-/* Muted is too close to fg: pull it down slightly */
-.muted{
-  color: rgba(255,255,255,.62);
-}
-
-/* Cards: more breathing room + better text contrast */
-.card{
-  padding: 20px 20px 18px;
-}
-
-.bio{
-  line-height: 1.7;
-  color: rgba(255,255,255,.86);
-}
-
-/* Make small meta feel intentional */
-.meta{
-  letter-spacing: 0.02em;
-}
-
-/* Kicker: a bit more premium tracking */
-.kicker{
-  letter-spacing: .18em;
-  color: rgba(255,255,255,.58);
-}
-
-/* Links: subtle but readable */
-a.inlineLink{
-  color: rgba(255,255,255,.92);
-}
-/* Split landing: allow lead styling */
-.split .lead{
-  margin: 0;
-  max-width: 44ch;
-}
-.lead{
-  font-size: 16px;
-  line-height: 1.6;
-  color: rgba(255,255,255,.75);
-  max-width: 68ch;
-}
-h1{
-  font-weight: 800;
-  letter-spacing: -0.01em;
-}
-
-h2{
-  font-weight: 700;
-  letter-spacing: -0.005em;
-}
-.accent{
+.chip, .chipBtn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 7px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.02);
+  text-decoration:none;
+  font-size: 12px;
   color: var(--fg);
   opacity: .9;
 }
 
-.subtle{
-  color: var(--muted);
-  font-size: 13px;
-}
-.card h3{
-  font-size: 17px;
-  font-weight: 700;
+.chip:hover, .chipBtn:hover{
+  opacity: 1;
+  border-color: rgba(176,0,0,.45);
+  box-shadow: 0 0 20px rgba(176,0,0,.16);
 }
 
-.card .bio{
-  color: rgba(255,255,255,.82);
+.chipBtn{ cursor: pointer; }
+.chipBtn:disabled{ cursor: default; opacity: .75; }
+
+/* =========================================
+   Artists grid + cards
+========================================= */
+.artistGrid{
+  margin-top: 14px;
+  display:grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 14px;
 }
-.card::before{
-  content:"";
+
+.artistCard{
+  grid-column: span 4; /* 3-up on wide desktop */
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: rgba(0,0,0,.40);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 34px rgba(0,0,0,.32);
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+@media (max-width: 1100px){
+  .artistCard{ grid-column: span 6; } /* 2-up */
+}
+@media (max-width: 900px){
+  .artistCard{ grid-column: span 12; } /* 1-up */
+}
+
+.artistHit{
+  position:absolute;
+  inset:0;
+  z-index: 3;
+  text-indent:-9999px;
+}
+
+.artistMedia{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 280px;
+  overflow:hidden;
+  background: rgba(255,255,255,.02);
+}
+@media (max-width: 900px){
+  .artistMedia{ max-height: 360px; }
+}
+
+.artistImg{
+  width:100%;
+  height:100%;
+  object-fit: cover;
   display:block;
-  width: 18px;
-  height: 2px;
-  background: rgba(176,0,0,.6);
-  margin-bottom: 10px;
+  transform: scale(1.02);
+  filter: contrast(1.02) saturate(.95);
 }
-.splitTagline{
-  font-size: 13px;
-  color: rgba(255,255,255,.65);
-  max-width: 42ch;
-}
-/* =========================
-   Global background (except home split)
-========================= */
 
-body:not(.split){
-  background-color: #000;
-  background-image:
-    linear-gradient(
-      180deg,
-      rgba(0,0,0,.65),
-      rgba(0,0,0,.92)
-    ),
-    url("/assets/bg.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-/* =========================
-   Premium grain overlay (except home split)
-   Uses pure CSS (no image needed)
-========================= */
-
-body:not(.split)::before{
+.artistMedia::after{
   content:"";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-
-  /* Fine noise pattern */
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,.028),
-      rgba(255,255,255,.028) 1px,
-      rgba(0,0,0,0) 2px,
-      rgba(0,0,0,0) 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(0,0,0,.018),
-      rgba(0,0,0,.018) 1px,
-      rgba(0,0,0,0) 2px,
-      rgba(0,0,0,0) 5px
-    );
-
-  opacity: .22;
-  mix-blend-mode: overlay;
+  position:absolute;
+  inset:0;
+  background: radial-gradient(120% 120% at 50% 10%, transparent 40%, rgba(0,0,0,.55) 100%);
+  pointer-events:none;
 }
 
-/* Ensure content stays above background overlays */
-body:not(.split) .kwNav,
-body:not(.split) .page{
+.artistBody{
   position: relative;
   z-index: 2;
-}
-/* =========================
-   Micro typography upgrade
-========================= */
-
-/* Global text color tuning */
-body{
-  color: rgba(255,255,255,.90);
+  padding: 14px 14px 14px;
 }
 
-/* Headings */
-h1, h2, h3{
-  letter-spacing: .015em;
-  text-rendering: optimizeLegibility;
+.artistRow{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap: 12px;
 }
 
-h1{
-  font-weight: 700;
-  color: rgba(255,255,255,.96);
+.artistName{
+  margin:0;
+  font-size: 18px;
+  letter-spacing: .01em;
 }
 
-h2{
-  font-weight: 600;
-  color: rgba(255,255,255,.92);
+.artistMeta{
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
 }
 
-h3{
-  font-weight: 600;
-  color: rgba(255,255,255,.88);
-}
-
-/* Lead text (important) */
-.lead{
-  font-size: 16px;
-  line-height: 1.55;
-  max-width: 70ch;
+.artistSub{
+  margin-top: 6px;
+  font-size: 12px;
   color: rgba(255,255,255,.72);
 }
 
-/* Paragraphs */
-p{
-  line-height: 1.6;
+.artistBio{
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(255,255,255,.86);
+  max-width: 70ch;
 }
 
-/* Muted text (finer than before) */
-.muted{
-  color: rgba(255,255,255,.60);
+.artistCard:hover{
+  transform: translateY(-2px);
+  border-color: rgba(176,0,0,.45);
+  box-shadow: 0 18px 50px rgba(0,0,0,.45), 0 0 26px rgba(176,0,0,.14);
 }
 
-/* Meta text (dates, labels, kicker text) */
-.meta,
-.eventMeta,
-.eventStatus{
-  color: rgba(255,255,255,.55);
-  font-size: 12.5px;
-  letter-spacing: .02em;
+/* =========================================
+   Artist detail page (prevents "gigantic" image)
+========================================= */
+.artistHero{
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow:hidden;
+  background: rgba(0,0,0,.42);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 14px 46px rgba(0,0,0,.40);
 }
 
-/* Kicker refinement */
-.kicker{
-  letter-spacing: .18em;
-  font-size: 11px;
-  color: rgba(255,255,255,.58);
+.artistHeroMedia{
+  width: 100%;
+  aspect-ratio: 16/9;
+  max-height: 560px;
+  overflow:hidden;
+  background: rgba(255,255,255,.02);
 }
 
-/* Links inside text */
+.artistHeroMedia img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  display:block;
+}
+
+.artistHeroBody{
+  padding: 16px 16px 18px;
+}
+
+.artistHeroTop{
+  display:flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.artistHeroTitle{
+  margin: 4px 0 0;
+  font-size: clamp(26px, 3vw, 40px);
+}
+
+.artistHeroLinks{
+  margin-top: 10px;
+  display:flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .inlineLink{
-  color: rgba(255,255,255,.88);
+  color: var(--fg);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(176,0,0,.35);
+  opacity: .9;
+}
+.inlineLink:hover{
+  opacity: 1;
+  border-bottom-color: rgba(255,42,42,.7);
 }
 
-/* Cards: softer text contrast */
-.card p,
-.event p{
-  color: rgba(255,255,255,.82);
+/* =========================================
+   Forms (booking/contact)
+========================================= */
+form{
+  margin-top: 12px;
+  max-width: 520px;
 }
 
-/* Subtle text glow on dark bg (very soft) */
-h1, h2{
-  text-shadow: 0 0 12px rgba(255,255,255,.02);
+label{
+  display:block;
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 14px 0 8px;
+}
+
+input, textarea, select{
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(0,0,0,.45);
+  color: var(--fg);
+  outline: none;
+}
+
+textarea{ min-height: 140px; resize: vertical; }
+
+input:focus, textarea:focus, select:focus{
+  border-color: rgba(176,0,0,.45);
+  box-shadow: 0 0 22px rgba(176,0,0,.14);
+}
+
+button{
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.04);
+  color: var(--fg);
+  cursor: pointer;
+}
+button:hover{
+  border-color: rgba(176,0,0,.45);
+  box-shadow: 0 0 22px rgba(176,0,0,.14);
 }

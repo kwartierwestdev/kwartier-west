@@ -1,32 +1,78 @@
 {
-  "tekno": [
-    {
-      "slug": "voorbeeld-tekno",
-      "name": "Voorbeeld Tekno",
-      "role": "DJ / Live",
-      "city": "Roeselare",
-      "bio": "Placeholder. Underground tekno, soundsystem minded.",
-      "links": {
-        "instagram": "",
-        "soundcloud": "",
-        "youtube": "",
-        "website": ""
-      }
-    }
-  ],
   "hiphop": [
     {
       "slug": "de-kweker",
       "name": "De Kweker",
       "role": "MC",
-      "city": "Brugge",
-      "bio": "Rauw en lokaal. Verhaal-gedreven hip hop met West-Vlaamse roots.",
-      "links": {
-        "instagram": "",
-        "spotify": "",
-        "youtube": "",
-        "website": "https://www.kwkr.be"
-      }
+      "city": "Bruges, BE",
+      "lang": "NL (West-Flemish)",
+      "photo": "/assets/img/artists/hiphop/de-kweker.jpg",
+      "bio": "Raw and local. Story-driven hip hop rooted in West Flanders.",
+      "links": [
+        { "label": "Official site", "url": "https://kwkr.be" }
+      ]
+    },
+    {
+      "slug": "duvve",
+      "name": "Duvve",
+      "role": "Rapper / Live Performer",
+      "city": "West Flanders, BE",
+      "lang": "NL",
+      "photo": "/assets/img/artists/hiphop/duvve.jpg",
+      "bio": "West-Flemish rapper known for high-energy shows — often backed by his own live band.",
+      "links": []
+    },
+    {
+      "slug": "mc-tubbie",
+      "name": "MC Tubbie",
+      "role": "Rapper",
+      "city": "West Flanders, BE",
+      "lang": "NL",
+      "photo": "/assets/img/artists/hiphop/mc-tubbie.jpg",
+      "bio": "Known in the West-Flemish scene for weekly freestyles and collaborations (incl. Samoerai).",
+      "links": []
+    },
+    {
+      "slug": "thepanda",
+      "name": "ThePANDA",
+      "role": "Rapper",
+      "city": "Brussels, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/hiphop/thepanda.jpg",
+      "bio": "English-spitting voice of the crew — representing Kwartier West in Brussels (BXL).",
+      "links": []
+    },
+    {
+      "slug": "bruce",
+      "name": "bruce",
+      "role": "Producer",
+      "city": "West Flanders, BE",
+      "lang": "NL",
+      "photo": "/assets/img/artists/hiphop/bruce.jpg",
+      "bio": "Producer with a clean ear for drums and mood — focused on underground energy.",
+      "links": []
+    },
+    {
+      "slug": "creamz",
+      "name": "creamz",
+      "role": "Producer / Beatmaker",
+      "city": "West Flanders, BE",
+      "lang": "NL",
+      "photo": "/assets/img/artists/hiphop/creamz.jpg",
+      "bio": "Beatmaker and sound architect — from sketch to finished record.",
+      "links": []
+    }
+  ],
+  "tekno": [
+    {
+      "slug": "voorbeeld-tekno",
+      "name": "Example Tekno",
+      "role": "DJ / Live",
+      "city": "Roeselare, BE",
+      "lang": "—",
+      "photo": "",
+      "bio": "Placeholder entry so events can reference a tekno lineup without warnings.",
+      "links": []
     }
   ]
 }

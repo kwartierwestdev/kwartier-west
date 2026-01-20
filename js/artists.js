@@ -1,68 +1,73 @@
-async function loadArtists(){
-  const res = await fetch("../../data/artists.json", { cache: "no-store" });
-  if(!res.ok) throw new Error("Kan data/artists.json niet laden.");
-  return res.json();
-}
+/* Kwartier West — artists.js (v4)
+   Premium artist cards with images + deep links to artist detail page.
+*/
 
-function esc(s){
-  return String(s ?? "")
+function esc(s=""){
+  return String(s)
     .replaceAll("&","&amp;")
     .replaceAll("<","&lt;")
     .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#39;");
+    .replaceAll('"',"&quot;");
 }
 
-function linkItem(label, url){
-  if(!url) return "";
-  const safe = esc(url);
-  return `<a class="chip" href="${safe}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+async function loadArtists(){
+  const res = await fetch("/data/artists.json", { cache: "no-store" });
+  if(!res.ok) throw new Error("Cannot load /data/artists.json");
+  return res.json();
 }
 
-function detailHref(slug){
-  return `./artist.html?slug=${encodeURIComponent(slug)}`;
+function pickSide(data, sideKey){
+  if(Array.isArray(data)) return data;
+  if(data && Array.isArray(data[sideKey])) return data[sideKey];
+  return [];
 }
 
 function card(a){
-  const links = a.links || {};
-  const chips =
-    linkItem("IG", links.instagram) +
-    linkItem("SC", links.soundcloud) +
-    linkItem("YT", links.youtube) +
-    linkItem("SP", links.spotify) +
-    linkItem("Site", links.website);
+  const href = `./artist.html?slug=${encodeURIComponent(a.slug || "")}`;
+  const photo = a.photo ? esc(a.photo) : "";
+  const name = esc(a.name || "");
+  const role = esc(a.role || "");
+  const city = esc(a.city || "");
+  const lang = esc(a.lang || "");
+
+  const media = photo
+    ? `<div class="artistMedia"><img class="artistImg" src="${photo}" alt="${name}" loading="lazy"></div>`
+    : `<div class="artistMedia artistMediaEmpty" aria-hidden="true"></div>`;
 
   return `
-    <article class="card cardLink">
-      <a class="cardA" href="${detailHref(a.slug)}" aria-label="Open ${esc(a.name)}"></a>
-
-      <div class="cardTop">
-        <h3>${esc(a.name)}</h3>
-        <div class="meta">${esc(a.role)}${a.city ? ` • ${esc(a.city)}` : ""}</div>
-      </div>
-
-      <p class="bio">${esc(a.bio)}</p>
-
-      <div class="chips">
-        ${chips || `<span class="muted">links volgen</span>`}
+    <article class="artistCard">
+      <a class="artistHit" href="${href}" aria-label="Open ${name}"></a>
+      ${media}
+      <div class="artistBody">
+        <div class="artistRow">
+          <h3 class="artistName">${name}</h3>
+          <div class="artistMeta">${role}</div>
+        </div>
+        <div class="artistSub">${city}${lang ? ` <span class="sep">•</span> ${lang}` : ""}</div>
+        ${a.bio ? `<p class="artistBio">${esc(a.bio)}</p>` : ``}
       </div>
     </article>
   `;
 }
 
 export async function renderArtists(sideKey){
-  const data = await loadArtists();
-  const list = data?.[sideKey] || [];
-  const el = document.querySelector("[data-artists]");
-  if(!el) return;
+  const mount = document.querySelector("[data-artists]");
+  if(!mount) return;
 
-  el.innerHTML = list.length
-    ? `<div class="grid">${list.map(card).join("")}</div>`
-    : `<p class="muted">Nog geen artiesten toegevoegd.</p>`;
-}
+  mount.innerHTML = `<div class="muted">Loading artists…</div>`;
 
-export async function getArtist(sideKey, slug){
-  const data = await loadArtists();
-  const list = data?.[sideKey] || [];
-  return list.find(a => a.slug === slug) || null;
+  try{
+    const data = await loadArtists();
+    const list = pickSide(data, sideKey);
+
+    if(!list.length){
+      mount.innerHTML = `<div class="muted">No artists yet.</div>`;
+      return;
+    }
+
+    mount.innerHTML = `<div class="artistGrid">${list.map(card).join("")}</div>`;
+  }catch(err){
+    console.error(err);
+    mount.innerHTML = `<div class="muted">Could not load artists.</div>`;
+  }
 }

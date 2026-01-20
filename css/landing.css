@@ -1,0 +1,184 @@
+/* Kwartier West — landing.css (FIXED)
+   - No nested <a> problems (handled by .halfHit overlay)
+   - True 2-panel split, full height
+   - Seam is subtle (no dikke zwarte band)
+*/
+
+body:has(.split)::before,
+body:has(.split)::after{
+  content:none !important;
+}
+
+.split{
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background:#000;
+  display:flex;
+}
+
+/* panels */
+.half{
+  position: relative;
+  flex: 1;
+  min-height: 100vh;
+  overflow: hidden;
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-start;
+  color: rgba(255,255,255,.92);
+
+  background:
+    radial-gradient(900px 700px at 30% 40%, rgba(176,0,0,.08), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.62)),
+    var(--bgimg);
+  background-size: cover;
+  background-position: center;
+  transition: transform .22s ease, filter .22s ease;
+}
+
+/* click overlay (makes whole half clickable, but lets inner links work) */
+.halfHit{
+  position:absolute;
+  inset:0;
+  z-index: 2;
+  text-indent:-9999px;
+}
+
+/* keep text above overlay */
+.inner{
+  position: relative;
+  z-index: 3;
+  padding: clamp(22px, 3vw, 46px);
+  max-width: 560px;
+}
+
+/* text styling */
+.inner h1{
+  margin: 10px 0 6px;
+  font-size: clamp(44px, 6vw, 84px);
+  letter-spacing: .01em;
+  line-height: .95;
+}
+.inner p{
+  margin:0;
+  color: rgba(255,255,255,.72);
+  font-size: 14px;
+  line-height: 1.45;
+  max-width: 62ch;
+}
+
+/* overlay for readability */
+.half::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index: 1;
+  background:
+    radial-gradient(120% 120% at 50% 80%, rgba(0,0,0,.55), transparent 55%),
+    linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.65));
+  pointer-events:none;
+}
+
+.half:hover{ transform: scale(1.01); }
+
+/* Enter row */
+.enter{
+  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(255,255,255,.70);
+  letter-spacing: .06em;
+  position: relative;
+  z-index: 4; /* above .halfHit */
+}
+.enter a{
+  position: relative;
+  z-index: 4;
+  color: rgba(255,255,255,.88);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(176,0,0,.30);
+}
+.enter a:hover{
+  border-bottom-color: rgba(255,42,42,.70);
+}
+
+/* subtle seam (no black slab) */
+.split::before{
+  content:"";
+  position:absolute;
+  inset:-20vh -20vw;
+  z-index:4;
+  pointer-events:none;
+  background:
+    linear-gradient(115deg,
+      transparent 49.40%,
+      rgba(0,0,0,.22) 49.86%,
+      rgba(0,0,0,.22) 50.14%,
+      transparent 50.60%
+    );
+  opacity:.95;
+}
+.split::after{
+  content:"";
+  position:absolute;
+  inset:-20vh -20vw;
+  z-index:5;
+  pointer-events:none;
+  background:
+    linear-gradient(115deg,
+      transparent 49.92%,
+      rgba(176,0,0,.08) 49.97%,
+      rgba(255,42,42,.28) 50.00%,
+      rgba(176,0,0,.08) 50.03%,
+      transparent 50.08%
+    );
+  opacity:.9;
+}
+
+/* Manifest card in the tear */
+.manifestCard{
+  position:absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%) rotate(-12deg);
+  z-index: 7;
+  width: min(520px, calc(100vw - 48px));
+  padding: 16px 16px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(176,0,0,.28);
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 60px rgba(0,0,0,.55);
+  text-decoration:none;
+  color: rgba(255,255,255,.92);
+}
+.manifestCard h3{
+  margin: 0 0 8px;
+  font-size: 13px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.manifestCard p{
+  margin: 0 0 10px;
+  color: rgba(255,255,255,.72);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.manifestCard .go{
+  display:inline-block;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(176,0,0,.35);
+}
+.manifestCard:hover .go{
+  border-bottom-color: rgba(255,42,42,.70);
+}
+
+/* mobile */
+@media (max-width: 900px){
+  .split{ flex-direction: column; }
+  .half{ min-height: 50vh; }
+  .manifestCard{
+    top: 46%;
+    transform: translate(-50%,-50%) rotate(-10deg);
+  }
+}

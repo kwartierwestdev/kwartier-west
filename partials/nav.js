@@ -1,53 +1,85 @@
-function esc(s){
-  return String(s ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#39;");
-}
+export function renderNav({ sideKey = "global", baseDepth = 0 } = {}) {
+  const prefix = "../".repeat(baseDepth);
 
-export function renderNav({ sideKey="global", baseDepth=0 } = {}){
-  const rootPrefix = "../".repeat(baseDepth);
-  const toRoot = baseDepth === 0 ? "./" : rootPrefix;
-
-  const links = [
-    { label: "Home", href: `${toRoot}index.html` },
-    { label: "Tekno", href: `${toRoot}pages/tekno/index.html` },
-    { label: "Hip hop", href: `${toRoot}pages/hiphop/index.html` },
-    { label: "Tickets", href: `${toRoot}pages/tickets/index.html` },
-    { label: "Shop", href: `${toRoot}pages/shop/index.html` },
-    { label: "Contact", href: `${toRoot}pages/contact/index.html` }
+  const linksMain = [
+    { href: `${prefix}index.html`, label: "Home" },
+    { href: `${prefix}pages/tekno/index.html`, label: "Tekno" },
+    { href: `${prefix}pages/hiphop/index.html`, label: "Hip hop" },
+    { href: `${prefix}pages/tickets/index.html`, label: "Tickets" },
+    { href: `${prefix}pages/shop/index.html`, label: "Shop" },
+    { href: `${prefix}pages/contact/index.html`, label: "Contact" },
   ];
 
-  const sideLinks = sideKey === "tekno" || sideKey === "hiphop"
-    ? [
-        { label: "Booking", href: `./booking.html` },
-        { label: "Artists", href: `./index.html#artists` }
-      ]
-    : [];
+  const linksSide =
+    sideKey === "tekno"
+      ? [
+          { href: `${prefix}pages/tekno/booking.html`, label: "Booking" },
+          { href: `${prefix}pages/tekno/index.html#artists`, label: "Artists" },
+        ]
+      : sideKey === "hiphop"
+      ? [
+          { href: `${prefix}pages/hiphop/booking.html`, label: "Booking" },
+          { href: `${prefix}pages/hiphop/index.html#artists`, label: "Artists" },
+        ]
+      : [{ href: `${prefix}pages/manifest/index.html`, label: "Manifest" }];
 
-  const html = `
-    <header class="kwNav">
+  const allLinks = [...linksMain, ...linksSide];
+
+  const host = document.querySelector("[data-nav]");
+  if (!host) return;
+
+  host.innerHTML = `
+    <nav class="kwNav" aria-label="Kwartier West navigation">
       <div class="kwNavInner">
-        <a class="kwBrand" href="${esc(links[0].href)}">
-          <span class="kwMark"></span>
+        <a class="kwBrand" href="${prefix}index.html" aria-label="Kwartier West home">
+          <span class="kwMark" aria-hidden="true"></span>
           <span>Kwartier West</span>
         </a>
 
-        <nav class="kwLinks" aria-label="Navigatie">
-          ${links.map(l => `<a class="kwLink" href="${esc(l.href)}">${esc(l.label)}</a>`).join("")}
-        </nav>
+        <div class="kwLinks">
+          ${linksMain.map(a => `<a class="kwLink" href="${a.href}">${a.label}</a>`).join("")}
+        </div>
 
-        ${sideLinks.length ? `
-          <nav class="kwLinks kwLinksSide" aria-label="Side">
-            ${sideLinks.map(l => `<a class="kwLink" href="${esc(l.href)}">${esc(l.label)}</a>`).join("")}
-          </nav>
-        ` : `<div class="kwLinksSide"></div>`}
+        <div class="kwLinks kwLinksSide">
+          ${linksSide.map(a => `<a class="kwLink" href="${a.href}">${a.label}</a>`).join("")}
+        </div>
+
+        <div class="kwBurger" aria-hidden="true">
+          <button class="kwBurgerBtn" type="button" aria-expanded="false" aria-controls="kwDrawer">
+            Menu
+          </button>
+        </div>
       </div>
-    </header>
+
+      <div class="kwDrawer" id="kwDrawer">
+        <div class="kwDrawerGrid">
+          ${allLinks.map(a => `<a href="${a.href}">${a.label}</a>`).join("")}
+        </div>
+      </div>
+    </nav>
   `;
 
-  const mount = document.querySelector("[data-nav]");
-  if(mount) mount.innerHTML = html;
+  // Only activate burger on mobile
+  const mq = window.matchMedia("(max-width: 900px)");
+  const btn = host.querySelector(".kwBurgerBtn");
+  const drawer = host.querySelector(".kwDrawer");
+  const burgerWrap = host.querySelector(".kwBurger");
+
+  function syncBurger() {
+    const isMobile = mq.matches;
+
+    if (burgerWrap) burgerWrap.style.display = isMobile ? "flex" : "none";
+    if (drawer) drawer.classList.remove("isOpen");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+
+  syncBurger();
+  mq.addEventListener?.("change", syncBurger);
+
+  if (btn && drawer) {
+    btn.addEventListener("click", () => {
+      const open = drawer.classList.toggle("isOpen");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
 }
