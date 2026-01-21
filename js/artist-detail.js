@@ -1,5 +1,6 @@
-/* Kwartier West — artist-detail.js (v3)
-   Reads ?slug= and renders a premium artist detail view.
+/* Kwartier West — artist-detail.js (v4)
+   Reads ?slug= and renders an artist detail view.
+   Uses baseDepth so data loads correctly from any folder.
 */
 
 function esc(s=""){
@@ -15,9 +16,14 @@ function getSlug(){
   return (params.get("slug") || "").trim();
 }
 
-async function loadArtists(){
-  const res = await fetch("/data/artists.json", { cache: "no-store" });
-  if(!res.ok) throw new Error("Cannot load /data/artists.json");
+function basePrefix(depth=0){
+  return "../".repeat(Math.max(0, depth));
+}
+
+async function loadArtists(baseDepth){
+  const url = `${basePrefix(baseDepth)}data/artists.json`;
+  const res = await fetch(url, { cache: "no-store" });
+  if(!res.ok) throw new Error(`Cannot load ${url}`);
   return res.json();
 }
 
@@ -40,11 +46,13 @@ function renderLinks(links){
   return `<div class="chips" style="margin-top:12px;">${items}</div>`;
 }
 
-export async function renderArtistDetail(sideKey){
+export async function renderArtistDetail(sideKey, opts={}){
   const root = document.querySelector("[data-artist-root]");
   if(!root) return;
 
+  const baseDepth = Number(opts.baseDepth ?? 0);
   const slug = getSlug();
+
   if(!slug){
     root.innerHTML = `<div class="muted">No artist selected.</div>`;
     return;
@@ -53,7 +61,7 @@ export async function renderArtistDetail(sideKey){
   root.innerHTML = `<div class="muted">Loading…</div>`;
 
   try{
-    const data = await loadArtists();
+    const data = await loadArtists(baseDepth);
     const list = pickSide(data, sideKey);
     const a = list.find(x => x.slug === slug);
 

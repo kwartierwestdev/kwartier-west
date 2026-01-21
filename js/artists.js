@@ -1,6 +1,8 @@
-/* Kwartier West — artists.js (v4)
+/* Kwartier West — artists.js (v5)
    Premium artist cards with images + deep links to artist detail page.
+   Uses baseDepth so data loads correctly from any folder.
 */
+console.log("🔥 NEW artists.js LOADED", import.meta.url);
 
 function esc(s=""){
   return String(s)
@@ -10,9 +12,14 @@ function esc(s=""){
     .replaceAll('"',"&quot;");
 }
 
-async function loadArtists(){
-  const res = await fetch("/data/artists.json", { cache: "no-store" });
-  if(!res.ok) throw new Error("Cannot load /data/artists.json");
+function basePrefix(depth=0){
+  return "../".repeat(Math.max(0, depth));
+}
+
+async function loadArtists(baseDepth){
+  const url = `${basePrefix(baseDepth)}data/artists.json`;
+  const res = await fetch(url, { cache: "no-store" });
+  if(!res.ok) throw new Error(`Cannot load ${url}`);
   return res.json();
 }
 
@@ -50,14 +57,16 @@ function card(a){
   `;
 }
 
-export async function renderArtists(sideKey){
+export async function renderArtists(sideKey, opts={}){
   const mount = document.querySelector("[data-artists]");
   if(!mount) return;
+
+  const baseDepth = Number(opts.baseDepth ?? 0);
 
   mount.innerHTML = `<div class="muted">Loading artists…</div>`;
 
   try{
-    const data = await loadArtists();
+    const data = await loadArtists(baseDepth);
     const list = pickSide(data, sideKey);
 
     if(!list.length){
