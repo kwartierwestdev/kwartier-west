@@ -234,3 +234,28 @@ body.landing .manifestCard:hover{
     transform: translate(-50%, 0) rotate(-4deg);
   }
 }
+/* interactive open state */
+body.landing .split{
+  --gap: 0px;
+  transition: --gap .2s ease;
+}
+
+body.landing .half{
+  transition: transform .25s ease;
+}
+
+body.landing .manifestCard{
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(-7deg) scale(.98);
+  transition: opacity .18s ease, transform .22s ease;
+  pointer-events: none; /* becomes clickable only when open */
+}
+
+body.landing.isOpen .tekno{ transform: translateX(calc(-1 * var(--gap))); }
+body.landing.isOpen .hiphop{ transform: translateX(var(--gap)); }
+
+body.landing.isOpen .manifestCard{
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(-7deg) scale(1);
+  pointer-events: auto;
+}

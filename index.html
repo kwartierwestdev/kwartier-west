@@ -58,6 +58,41 @@
       <p>Two sides, one backbone. We build nights, stages, and a real lane for independent artists.</p>
       <span class="go">Open manifest →</span>
     </a>
+<script>
+  (function(){
+    const body = document.body;
+    if(!body.classList.contains("landing")) return;
+
+    // zone around center (in px). Larger = easier to trigger.
+    const BAND = 140;
+
+    let raf = 0;
+    function onMove(e){
+      if(raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const x = e.clientX;
+        const center = window.innerWidth / 2;
+        const near = Math.abs(x - center) < BAND;
+        body.classList.toggle("isOpen", near);
+      });
+    }
+
+    function onLeave(){
+      body.classList.remove("isOpen");
+    }
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("mouseleave", onLeave);
+
+    // Also open if you hover the manifest card itself (safe for slower movement)
+    const card = document.querySelector(".manifestCard");
+    if(card){
+      card.addEventListener("mouseenter", () => body.classList.add("isOpen"));
+      card.addEventListener("mouseleave", () => body.classList.remove("isOpen"));
+    }
+  })();
+</script>
 
   </main>
 </body>
