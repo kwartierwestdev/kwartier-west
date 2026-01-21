@@ -22,7 +22,7 @@ body.landing .half{
   overflow: hidden;
 }
 
-/* Torn edge shapes */
+/* Torn edge shapes (desktop) */
 body.landing .tekno{
   clip-path: polygon(
     0% 0%, 100% 0%,
@@ -66,7 +66,7 @@ body.landing .half::before{
   z-index: 0;
 }
 
-/* Premium dark vignette (lighter than your current one) */
+/* Premium dark vignette */
 body.landing .half::after{
   content:"";
   position:absolute;
@@ -153,7 +153,7 @@ body.landing .enter a:hover{
   border-bottom-color: rgba(255,40,40,.90);
 }
 
-/* Seam light (NOT a block) */
+/* Seam light (desktop) */
 body.landing .split::after{
   content:"";
   position:absolute;
@@ -212,50 +212,137 @@ body.landing .manifestCard:hover{
   border-color: rgba(255,40,40,.55);
 }
 
+/* =========================
+   MOBILE: both halves on ONE screen (diagonal split)
+========================= */
 @media (max-width: 900px){
-  body.landing{ overflow: auto; }
-  body.landing .split{ grid-template-columns: 1fr; }
-  body.landing .tekno,
-  body.landing .hiphop{ clip-path: none; }
-  body.landing .split::after{ display:none; }
 
-  body.landing .tekno .inner,
+  /* Zorg dat split als container werkt voor absolute children */
+  body.landing .split{
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ====== HIP HOP CARD (boven) ====== */
   body.landing .hiphop .inner{
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
+    top: 14px;
+    left: 14px;
+    right: 14px;
+    bottom: auto;
+    z-index: 6;
+    text-align: left;
+    max-width: none;
+  }
+
+  /* ====== TEKNO CARD (onder) ====== */
+  body.landing .tekno .inner{
+    bottom: 14px;
+    left: 14px;
+    right: 14px;
+    top: auto;
+    z-index: 6;
+    text-align: left;
+    max-width: none;
+  }
+
+  /* Cards compacter zodat ze nooit botsen */
+  body.landing .inner{
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  body.landing .inner h1{
+    margin: 8px 0 6px;
+    font-size: clamp(26px, 7vw, 38px);
+    line-height: .98;
+  }
+
+  body.landing .inner p{
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.45;
+    max-width: 46ch;
+  }
+
+  /* ====== MANIFEST CARD (midden, nooit overlap) ====== */
+  body.landing .manifestCard{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-4deg);
+    width: min(92vw, 420px);
+    z-index: 12;
+    pointer-events: auto;
+  }
+
+  /* Manifest iets compacter op mobile */
+  body.landing .manifestCard p{
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+
+  /* ====== SEAM (rode lijn) blijft ertussen ====== */
+  body.landing .split::after{
+    z-index: 10;
+  }
+
+
+
+  /* ========== GENRE CARDS (INNER BLOCKS) ========== */
+  body.landing .inner{
+    position: absolute;
+    z-index: 6;
+    max-width: none;
+    padding: 18px;
+    border-radius: 16px;
+    background: rgba(0,0,0,.40);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.12);
+    box-shadow: 0 18px 50px rgba(0,0,0,.55);
+  }
+
+  /* HIP HOP = BOVEN */
+  body.landing .hiphop .inner{
+    top: 14px;
+    left: 14px;
+    right: 14px;
+    bottom: auto;
+    text-align: left;
+  }
+
+  /* TEKNO = ONDER */
+  body.landing .tekno .inner{
+    bottom: 14px;
+    left: 14px;
+    right: 14px;
     top: auto;
     text-align: left;
   }
-  body.landing .hiphop .kicker{ justify-content: flex-start; }
 
-  body.landing .manifestCard{
-    top: 14%;
-    transform: translate(-50%, 0) rotate(-4deg);
+  /* ========== TYPO MOBILE TUNING ========== */
+  body.landing h1{
+    font-size: clamp(28px, 7vw, 40px);
+    line-height: 1;
   }
-}
-/* interactive open state */
-body.landing .split{
-  --gap: 0px;
-  transition: --gap .2s ease;
-}
 
-body.landing .half{
-  transition: transform .25s ease;
-}
+  body.landing .half p{
+    font-size: 14px;
+    max-width: 100%;
+  }
 
-body.landing .manifestCard{
-  opacity: 0;
-  transform: translate(-50%, -50%) rotate(-7deg) scale(.98);
-  transition: opacity .18s ease, transform .22s ease;
-  pointer-events: none; /* becomes clickable only when open */
-}
+  body.landing .kicker{
+    font-size: 10px;
+    letter-spacing: .18em;
+  }
 
-body.landing.isOpen .tekno{ transform: translateX(calc(-1 * var(--gap))); }
-body.landing.isOpen .hiphop{ transform: translateX(var(--gap)); }
+  /* ========== MANIFEST CARD (MIDDEN) ========== */
+  body.landing .manifestCard{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-4deg);
+    width: min(92vw, 420px);
+    padding: 16px;
+    z-index: 12;
+  }
 
-body.landing.isOpen .manifestCard{
-  opacity: 1;
-  transform: translate(-50%, -50%) rotate(-7deg) scale(1);
-  pointer-events: auto;
 }
