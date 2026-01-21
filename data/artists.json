@@ -1,25 +1,7 @@
 {
   "hiphop": [
-    {
-      "slug": "de-kweker",
-      "name": "De Kweker",
-      "role": "MC",
-      "city": "Bruges, BE",
-      "lang": "NL",
-      "photo": "/assets/img/artists/hiphop/de-kweker.jpg",
-      "bio": "Raw and local. Story-driven hip hop rooted in West Flanders.",
-      "links": [{ "label": "Official site", "url": "https://kwkr.be" }]
-    },
-    {
-      "slug": "duvve",
-      "name": "Duvve",
-      "role": "Rapper / Live performer",
-      "city": "West Flanders, BE",
-      "lang": "NL",
-      "photo": "/assets/img/artists/hiphop/duvve.jpg",
-      "bio": "High-energy rapper known for intense live shows — often backed by a live band.",
-      "links": []
-    },
+   
+    
     {
       "slug": "mc-tubbie",
       "name": "MC Tubbie",
@@ -38,6 +20,26 @@
       "lang": "EN",
       "photo": "/assets/img/artists/hiphop/thepanda.jpg",
       "bio": "English-spitting voice of the crew — representing Kwartier West in Brussels.",
+      "links": []
+    },
+     {
+      "slug": "de-kweker",
+      "name": "De Kweker",
+      "role": "MC",
+      "city": "Bruges, BE",
+      "lang": "NL",
+      "photo": "/assets/img/artists/hiphop/de-kweker.jpg",
+      "bio": "Raw and local. Story-driven hip hop rooted in West Flanders.",
+      "links": [{ "label": "Official site", "url": "https://kwkr.be" }]
+    },
+    {
+      "slug": "duvve",
+      "name": "Duvve",
+      "role": "Rapper / Live performer",
+      "city": "West Flanders, BE",
+      "lang": "NL",
+      "photo": "/assets/img/artists/hiphop/duvve.jpg",
+      "bio": "High-energy rapper known for intense live shows — often backed by a live band.",
       "links": []
     },
     {
@@ -62,6 +64,16 @@
     }
   ],
   "tekno": [
+    {
+      "slug": "onschuldig",
+      "name": "Onschuldig",
+      "role": "Kwartier West Head",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/onschuldig.png",
+      "bio": "Producer. Tek side operator. Real nights, real pressure.",
+      "links": []
+    },
     {
       "slug": "hyperion",
       "name": "Hyperion",
@@ -122,16 +134,7 @@
       "bio": "Tek side operator. Real nights, real pressure.",
       "links": []
     },
-    {
-      "slug": "onschuldig",
-      "name": "Onschuldig",
-      "role": "DJ / Live",
-      "city": "West Flanders, BE",
-      "lang": "EN",
-      "photo": "/assets/img/artists/tekno/onschuldig.png",
-      "bio": "Tek side operator. Real nights, real pressure.",
-      "links": []
-    },
+    
     {
       "slug": "psamtek",
       "name": "Psamtek",
