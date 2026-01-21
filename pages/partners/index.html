@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>Kwartier West — Partners</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Partner sound systems and crews we build with." />
+  <meta name="description" content="Partners of Kwartier West — soundsystems, crews, studios and visuals we trust." />
   <link rel="stylesheet" href="../../css/base.css" />
 </head>
 <body>
@@ -18,58 +18,31 @@
 
     <div class="sectionCard">
       <h1>Partners</h1>
-      <p class="lead">
-        Crews and sound systems we build with.
-        Shared nights, shared pressure, mutual respect.
+      <p class="lead" style="max-width:78ch;">
+        Not sponsors. Not random logos.
+        These are the people and systems we actually move with — rigs, crews, studios, visuals.
+        Same ethic: clean work, no noise.
       </p>
+
+      <div class="chips" style="margin-top:12px;">
+        <a class="chip" href="../tekno/index.html">Tek side</a>
+        <a class="chip" href="../hiphop/index.html">Hip hop side</a>
+        <a class="chip" href="../contact/index.html">Contact</a>
+      </div>
     </div>
 
-    <div class="grid">
-      <article class="card" style="grid-column: span 6;">
-        <div class="cardTop">
-          <h3>Example Sound System</h3>
-          <div class="meta">Tekno</div>
-        </div>
-        <p class="bio">
-          Mobile rig. Outdoor focused. Built for long nights and clean pressure.
-        </p>
-      </article>
-
-      <article class="card" style="grid-column: span 6;">
-        <div class="cardTop">
-          <h3>Another Crew</h3>
-          <div class="meta">Tekno / Hybrid</div>
-        </div>
-        <p class="bio">
-          Cross-border crew with a shared ethic: no hype, no shortcuts.
-        </p>
-      </article>
-
-      <article class="card" style="grid-column: span 6;">
-        <div class="cardTop">
-          <h3>Warehouse Unit</h3>
-          <div class="meta">Infrastructure</div>
-        </div>
-        <p class="bio">
-          Spaces, logistics and quiet problem solving behind the scenes.
-        </p>
-      </article>
-
-      <article class="card" style="grid-column: span 6;">
-        <div class="cardTop">
-          <h3>Local Operators</h3>
-          <div class="meta">Support</div>
-        </div>
-        <p class="bio">
-          Locals who know the terrain. Access, timing, trust.
-        </p>
-      </article>
-    </div>
+    <section class="sectionCard" aria-label="Partner list">
+      <h2>Trusted links</h2>
+      <div data-partners></div>
+    </section>
   </div>
 
   <script type="module">
     import { renderNav } from "../../partials/nav.js";
+    import { renderPartners } from "../../js/partners.js";
+
     renderNav({ sideKey: "global", baseDepth: 2 });
+    renderPartners();
   </script>
 </body>
 </html>

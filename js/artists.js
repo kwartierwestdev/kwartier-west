@@ -1,25 +1,20 @@
-/* Kwartier West — artists.js (v5)
+/* Kwartier West — artists.js (v6)
    Premium artist cards with images + deep links to artist detail page.
-   Uses baseDepth so data loads correctly from any folder.
+   Always loads from /data/artists.json (absolute path).
 */
-console.log("🔥 NEW artists.js LOADED", import.meta.url);
+console.log("🔥 artists.js LOADED", import.meta.url);
 
 function esc(s=""){
-  return String(s)
+  return String(s ?? "")
     .replaceAll("&","&amp;")
     .replaceAll("<","&lt;")
     .replaceAll(">","&gt;")
     .replaceAll('"',"&quot;");
 }
 
-function basePrefix(depth=0){
-  return "../".repeat(Math.max(0, depth));
-}
-
-async function loadArtists(baseDepth){
-  const url = `${basePrefix(baseDepth)}data/artists.json`;
-  const res = await fetch(url, { cache: "no-store" });
-  if(!res.ok) throw new Error(`Cannot load ${url}`);
+async function loadArtists(){
+  const res = await fetch("/data/artists.json", { cache: "no-store" });
+  if(!res.ok) throw new Error("Cannot load /data/artists.json");
   return res.json();
 }
 
@@ -57,17 +52,17 @@ function card(a){
   `;
 }
 
-export async function renderArtists(sideKey, opts={}){
+export async function renderArtists(sideKey){
   const mount = document.querySelector("[data-artists]");
   if(!mount) return;
-
-  const baseDepth = Number(opts.baseDepth ?? 0);
 
   mount.innerHTML = `<div class="muted">Loading artists…</div>`;
 
   try{
-    const data = await loadArtists(baseDepth);
+    const data = await loadArtists();
     const list = pickSide(data, sideKey);
+
+    console.log("artists:", sideKey, "count:", list.length);
 
     if(!list.length){
       mount.innerHTML = `<div class="muted">No artists yet.</div>`;

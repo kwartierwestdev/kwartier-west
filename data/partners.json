@@ -1,0 +1,49 @@
+{
+  "partners": [
+    {
+      "slug": "iron-rig-soundsystem",
+      "name": "Iron Rig Soundsystem",
+      "type": "Sound system",
+      "region": "West Flanders, BE",
+      "bio": "Heavy rig, clean pressure. Built for long nights, proper control, no circus.",
+      "tags": ["Rig", "Tekno", "Outdoor/warehouse"],
+      "links": [
+        { "label": "Instagram", "url": "https://instagram.com/" }
+      ]
+    },
+    {
+      "slug": "westline-visuals",
+      "name": "Westline Visuals",
+      "type": "Video / Photo",
+      "region": "BE",
+      "bio": "Live coverage + aftermovies. Raw light, no over-editing, real atmosphere.",
+      "tags": ["Aftermovie", "Live", "Press kit"],
+      "links": [
+        { "label": "Portfolio", "url": "https://example.com" },
+        { "label": "Instagram", "url": "https://instagram.com/" }
+      ]
+    },
+    {
+      "slug": "roomtone-studio",
+      "name": "Roomtone Studio",
+      "type": "Studio / Mixing",
+      "region": "West Flanders, BE",
+      "bio": "Tracking, mix, and cleanup. Built for artists who want clarity without losing edge.",
+      "tags": ["Recording", "Mix", "Master"],
+      "links": [
+        { "label": "Website", "url": "https://example.com" }
+      ]
+    },
+    {
+      "slug": "warehouse-crew",
+      "name": "Warehouse Crew",
+      "type": "Crew / Locations",
+      "region": "BE",
+      "bio": "Hosts + logistics. Entries, safety, flow — so the night stays solid.",
+      "tags": ["Host", "Logistics", "Safety"],
+      "links": [
+        { "label": "Contact", "url": "../contact/index.html" }
+      ]
+    }
+  ]
+}

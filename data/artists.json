@@ -5,21 +5,19 @@
       "name": "De Kweker",
       "role": "MC",
       "city": "Bruges, BE",
-      "lang": "NL (West-Flemish)",
+      "lang": "NL",
       "photo": "/assets/img/artists/hiphop/de-kweker.jpg",
       "bio": "Raw and local. Story-driven hip hop rooted in West Flanders.",
-      "links": [
-        { "label": "Official site", "url": "https://kwkr.be" }
-      ]
+      "links": [{ "label": "Official site", "url": "https://kwkr.be" }]
     },
     {
       "slug": "duvve",
       "name": "Duvve",
-      "role": "Rapper / Live Performer",
+      "role": "Rapper / Live performer",
       "city": "West Flanders, BE",
       "lang": "NL",
       "photo": "/assets/img/artists/hiphop/duvve.jpg",
-      "bio": "West-Flemish rapper known for high-energy shows — often backed by his own live band.",
+      "bio": "High-energy rapper known for intense live shows — often backed by a live band.",
       "links": []
     },
     {
@@ -29,7 +27,7 @@
       "city": "West Flanders, BE",
       "lang": "NL",
       "photo": "/assets/img/artists/hiphop/mc-tubbie.jpg",
-      "bio": "Known in the West-Flemish scene for weekly freestyles and collaborations (incl. Samoerai).",
+      "bio": "Known for weekly freestyles and strong collaborations across the West Flemish scene.",
       "links": []
     },
     {
@@ -39,39 +37,129 @@
       "city": "Brussels, BE",
       "lang": "EN",
       "photo": "/assets/img/artists/hiphop/thepanda.jpg",
-      "bio": "English-spitting voice of the crew — representing Kwartier West in Brussels (BXL).",
+      "bio": "English-spitting voice of the crew — representing Kwartier West in Brussels.",
       "links": []
     },
     {
       "slug": "bruce",
-      "name": "bruce",
+      "name": "Bruce",
       "role": "Producer",
       "city": "West Flanders, BE",
       "lang": "NL",
       "photo": "/assets/img/artists/hiphop/bruce.jpg",
-      "bio": "Producer with a clean ear for drums and mood — focused on underground energy.",
+      "bio": "Producer with a clean ear for drums and mood — built for rappers and live energy.",
       "links": []
     },
     {
       "slug": "creamz",
-      "name": "creamz",
+      "name": "Creamz",
       "role": "Producer / Beatmaker",
       "city": "West Flanders, BE",
       "lang": "NL",
       "photo": "/assets/img/artists/hiphop/creamz.jpg",
-      "bio": "Beatmaker and sound architect — from sketch to finished record.",
+      "bio": "Beatmaker focused on texture, bounce and detail — from sketch to finished record.",
       "links": []
     }
   ],
   "tekno": [
     {
-      "slug": "voorbeeld-tekno",
-      "name": "Example Tekno",
+      "slug": "hyperion",
+      "name": "Hyperion",
       "role": "DJ / Live",
-      "city": "Roeselare, BE",
-      "lang": "—",
-      "photo": "",
-      "bio": "Placeholder entry so events can reference a tekno lineup without warnings.",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/hyperion.png",
+      "bio": "Tek side operator. Real nights, real pressure.",
+      "links": []
+    },
+    {
+      "slug": "jenesaispas",
+      "name": "Jenesaispas",
+      "role": "DJ / Live",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/jenesaispas.png",
+      "bio": "Tek side operator. Real nights, real pressure.",
+      "links": []
+    },
+    {
+      "slug": "kulture",
+      "name": "Kulture",
+      "role": "DJ / Live",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/Kulture.png",
+      "bio": "Tek side operator. Real nights, real pressure.",
+      "links": []
+    },
+    {
+      "slug": "kumatekz",
+      "name": "Kumatekz",
+      "role": "DJ / Live",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/kumatekz.png",
+      "bio": "Tek side operator. Real nights, real pressure.",
+      "links": []
+    },
+    {
+      "slug": "masschie",
+      "name": "Masschie",
+      "role": "DJ / Live",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/masschie.png",
+      "bio": "Tek side operator. Real nights, real pressure.",
+      "links": []
+    },
+    {
+      "slug": "mombietekk",
+      "name": "Mombietekk",
+      "role": "DJ / Live",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/mombietekk.png",
+      "bio": "Tek side operator. Real nights, real pressure.",
+      "links": []
+    },
+    {
+      "slug": "onschuldig",
+      "name": "Onschuldig",
+      "role": "DJ / Live",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/onschuldig.png",
+      "bio": "Tek side operator. Real nights, real pressure.",
+      "links": []
+    },
+    {
+      "slug": "psamtek",
+      "name": "Psamtek",
+      "role": "DJ / Live",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/psamtek.png",
+      "bio": "Tek side operator. Real nights, real pressure.",
+      "links": []
+    },
+    {
+      "slug": "spoorloos",
+      "name": "Spoorloos",
+      "role": "DJ / Live",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/spoorloos.png",
+      "bio": "Tek side operator. Real nights, real pressure.",
+      "links": []
+    },
+    {
+      "slug": "woebn",
+      "name": "Woebn",
+      "role": "DJ / Live",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/woebn.png",
+      "bio": "Tek side operator. Real nights, real pressure.",
       "links": []
     }
   ]
