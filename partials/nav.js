@@ -5,6 +5,7 @@ export function renderNav({ sideKey = "global", baseDepth = 0 } = {}) {
     { href: `${prefix}index.html`, label: "Home" },
     { href: `${prefix}pages/tekno/index.html`, label: "Tekno" },
     { href: `${prefix}pages/hiphop/index.html`, label: "Hip hop" },
+    { href: `${prefix}pages/partners/index.html`, label: "Partners" },
     { href: `${prefix}pages/tickets/index.html`, label: "Tickets" },
     { href: `${prefix}pages/shop/index.html`, label: "Shop" },
     { href: `${prefix}pages/contact/index.html`, label: "Contact" },
@@ -59,6 +60,7 @@ export function renderNav({ sideKey = "global", baseDepth = 0 } = {}) {
     </nav>
   `;
 
+  // Only activate burger on mobile
   const mq = window.matchMedia("(max-width: 900px)");
   const btn = host.querySelector(".kwBurgerBtn");
   const drawer = host.querySelector(".kwDrawer");
@@ -66,6 +68,7 @@ export function renderNav({ sideKey = "global", baseDepth = 0 } = {}) {
 
   function syncBurger() {
     const isMobile = mq.matches;
+
     if (burgerWrap) burgerWrap.style.display = isMobile ? "flex" : "none";
     if (drawer) drawer.classList.remove("isOpen");
     if (btn) btn.setAttribute("aria-expanded", "false");
