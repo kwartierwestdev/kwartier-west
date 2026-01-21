@@ -217,78 +217,28 @@ body.landing .manifestCard:hover{
 ========================= */
 @media (max-width: 900px){
 
-  /* Zorg dat split als container werkt voor absolute children */
-  body.landing .split{
-    position: relative;
+  /* ===== Landing blijft split (GEEN scroll-stack) ===== */
+  body.landing{
     overflow: hidden;
   }
 
-  /* ====== HIP HOP CARD (boven) ====== */
-  body.landing .hiphop .inner{
-    top: 14px;
-    left: 14px;
-    right: 14px;
-    bottom: auto;
-    z-index: 6;
-    text-align: left;
-    max-width: none;
+  body.landing .split{
+    grid-template-columns: 1fr 1fr; /* blijf 2 helften */
   }
 
-  /* ====== TEKNO CARD (onder) ====== */
-  body.landing .tekno .inner{
-    bottom: 14px;
-    left: 14px;
-    right: 14px;
-    top: auto;
-    z-index: 6;
-    text-align: left;
-    max-width: none;
-  }
+  /* Clip paths blijven aan (dus NIET resetten naar none) */
+  /* Als je ergens nog oude regels had zoals:
+     .tekno,.hiphop{ clip-path:none; }  -> weg ermee
+  */
 
-  /* Cards compacter zodat ze nooit botsen */
-  body.landing .inner{
-    padding: 16px;
-    border-radius: 16px;
-  }
-
-  body.landing .inner h1{
-    margin: 8px 0 6px;
-    font-size: clamp(26px, 7vw, 38px);
-    line-height: .98;
-  }
-
-  body.landing .inner p{
-    margin: 0 0 10px;
-    font-size: 13px;
-    line-height: 1.45;
-    max-width: 46ch;
-  }
-
-  /* ====== MANIFEST CARD (midden, nooit overlap) ====== */
-  body.landing .manifestCard{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) rotate(-4deg);
-    width: min(92vw, 420px);
-    z-index: 12;
-    pointer-events: auto;
-  }
-
-  /* Manifest iets compacter op mobile */
-  body.landing .manifestCard p{
-    font-size: 12.5px;
-    line-height: 1.4;
-  }
-
-  /* ====== SEAM (rode lijn) blijft ertussen ====== */
+  /* ===== Seam (rode lijn) zichtbaar op mobile ===== */
   body.landing .split::after{
-    z-index: 10;
+    display: block;   /* belangrijk: sommige oudere versies zetten dit op display:none */
+    opacity: .90;
+    width: 3px;
   }
 
-
-
-  /* ========== GENRE CARDS (INNER BLOCKS) ========== */
+  /* ===== Genre cards (inner blocks) ===== */
   body.landing .inner{
     position: absolute;
     z-index: 6;
@@ -299,27 +249,27 @@ body.landing .manifestCard:hover{
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,.12);
     box-shadow: 0 18px 50px rgba(0,0,0,.55);
+    transform: none; /* safety */
+    text-align: left;
   }
 
-  /* HIP HOP = BOVEN */
+  /* HIP HOP = boven */
   body.landing .hiphop .inner{
     top: 14px;
     left: 14px;
     right: 14px;
     bottom: auto;
-    text-align: left;
   }
 
-  /* TEKNO = ONDER */
+  /* TEKNO = onder */
   body.landing .tekno .inner{
     bottom: 14px;
     left: 14px;
     right: 14px;
     top: auto;
-    text-align: left;
   }
 
-  /* ========== TYPO MOBILE TUNING ========== */
+  /* ===== Typo mobile tuning ===== */
   body.landing h1{
     font-size: clamp(28px, 7vw, 40px);
     line-height: 1;
@@ -335,14 +285,48 @@ body.landing .manifestCard:hover{
     letter-spacing: .18em;
   }
 
-  /* ========== MANIFEST CARD (MIDDEN) ========== */
+  /* ===== Manifest card (midden, niet statisch) ===== */
   body.landing .manifestCard{
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-4deg);
     width: min(92vw, 420px);
     padding: 16px;
     z-index: 12;
+
+    /* standaard hidden op mobile */
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(.96) rotate(-3deg);
+    transition:
+      opacity .35s ease,
+      transform .45s cubic-bezier(.2,.9,.2,1);
   }
 
+  /* mobile reveal (tap/press intent) */
+  body.landing .split:active .manifestCard,
+  body.landing .split:focus-within .manifestCard{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1) rotate(-3deg);
+  }
+}
+
+/* ===== Manifest reveal default (desktop / algemeen) ===== */
+.manifestCard{
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(.96) rotate(-4deg);
+  transition:
+    opacity .35s ease,
+    transform .45s cubic-bezier(.2,.9,.2,1);
+}
+
+/* Desktop reveal (hover intent) */
+body.landing .split:hover .manifestCard{
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1) rotate(-4deg);
+}
+
+/* Extra finesse: glow bij hover (desktop) */
+body.landing .split:hover::after{
+  box-shadow: 0 0 40px rgba(255,0,0,.25);
 }
