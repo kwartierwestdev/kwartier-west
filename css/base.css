@@ -458,6 +458,27 @@ h2{
 /* -------------------------
    Artists grid (js/artists.js) — SINGLE SOURCE OF TRUTH
 ------------------------- */
+.artistCard.isLeader{
+  border-color: rgba(255,40,40,.28);
+  box-shadow: var(--shadow), 0 0 32px rgba(255,40,40,.12);
+}
+
+.artistBadge{
+  position:absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 11;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.92);
+  background: rgba(0,0,0,.55);
+  border: 1px solid rgba(255,40,40,.35);
+  backdrop-filter: blur(10px);
+}
+
 .artistGrid{
   display:grid;
   grid-template-columns: repeat(3, minmax(0,1fr));
@@ -668,3 +689,34 @@ h2{
 
   .sideHere{ font-size: 10px; letter-spacing: .18em; }
 }
+@media (max-width: 900px){
+  /* jouw grid wordt 1 kolom */
+  .grid{
+    grid-template-columns: 1fr;
+  }
+
+  /* 🔥 forceer ALLES in die grid naar volle breedte (override inline span 6/12) */
+  .grid > *{
+    grid-column: 1 / -1 !important;
+    min-width: 0;
+  }
+
+  /* card headers die nu botsen (titel links + meta rechts) */
+  .cardTop{
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 6px 10px;
+  }
+
+  /* meta mag op mobile gerust onder de titel vallen */
+  .meta{
+    margin-left: 0;
+    white-space: nowrap;
+  }
+
+  /* kleine extra: teksten mogen breken, geen rare overflow */
+  .bio, .lead{
+    overflow-wrap: anywhere;
+  }
+}
+

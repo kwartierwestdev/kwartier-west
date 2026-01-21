@@ -2,6 +2,7 @@
    Premium artist cards with images + deep links to artist detail page.
    Uses baseDepth so data loads correctly from any folder.
 */
+console.log("🔥 NEW artists.js LOADED", import.meta.url);
 
 function esc(s=""){
   return String(s)
@@ -28,7 +29,8 @@ function pickSide(data, sideKey){
   return [];
 }
 
-function isFeatured(a){
+function isLeader(a){
+  // founder highlight (pas slug aan als nodig)
   return (a?.slug || "").toLowerCase() === "onschuldig";
 }
 
@@ -40,26 +42,25 @@ function card(a){
   const city = esc(a.city || "");
   const lang = esc(a.lang || "");
 
-  const featured = isFeatured(a);
-  const featuredClass = featured ? " artistCardFeatured" : "";
-  const roleBadge = featured ? `<span class="roleBadge">Collective Lead</span>` : "";
+  const leader = isLeader(a);
+  const roleLine = leader ? `Collective Lead` : role;
 
   const media = photo
     ? `<div class="artistMedia"><img class="artistImg" src="${photo}" alt="${name}" loading="lazy"></div>`
     : `<div class="artistMedia artistMediaEmpty" aria-hidden="true"></div>`;
 
   return `
-    <article class="artistCard${featuredClass}">
+    <article class="artistCard ${leader ? "isLeader" : ""}">
       <a class="artistHit" href="${href}" aria-label="Open ${name}"></a>
+
+      ${leader ? `<div class="artistBadge">Collective Lead</div>` : ""}
+
       ${media}
       <div class="artistBody">
         <div class="artistRow">
           <h3 class="artistName">${name}</h3>
-          <div class="artistMeta">${role || ""}</div>
+          <div class="artistMeta">${esc(roleLine || "")}</div>
         </div>
-
-        ${featured ? `<div class="artistBadges">${roleBadge}</div>` : ""}
-
         <div class="artistSub">${city}${lang ? ` <span class="sep">•</span> ${lang}` : ""}</div>
         ${a.bio ? `<p class="artistBio">${esc(a.bio)}</p>` : ``}
       </div>
