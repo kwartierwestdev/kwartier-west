@@ -11,6 +11,8 @@
 
 <body class="landing">
   <main class="split" aria-label="Kwartier West split landing">
+    <div class="manifestHotzone" aria-hidden="true"></div>
+
 
     <!-- TEKNO -->
     <section class="half tekno" style="--bgimg:url('/assets/landing-tekno.jpg');" aria-label="Tek side">
@@ -92,8 +94,32 @@
       card.addEventListener("mouseleave", () => body.classList.remove("isOpen"));
     }
   })();
+  
+</script>
+<script>
+(function(){
+  const body = document.body;
+  if(!body.classList.contains("landing")) return;
+
+  const hot = document.querySelector(".manifestHotzone");
+  if(!hot) return;
+
+  const open = () => body.classList.add("manifestOpen");
+  const close = () => body.classList.remove("manifestOpen");
+
+  // Touch: show while finger is in the middle zone
+  hot.addEventListener("touchstart", (e) => { open(); }, { passive: true });
+  hot.addEventListener("touchmove",  (e) => { open(); }, { passive: true });
+  hot.addEventListener("touchend",   close, { passive: true });
+  hot.addEventListener("touchcancel",close, { passive: true });
+
+  // Mouse: show on hover (useful when testing in devtools)
+  hot.addEventListener("mouseenter", open);
+  hot.addEventListener("mouseleave", close);
+})();
 </script>
 
   </main>
+  
 </body>
 </html>

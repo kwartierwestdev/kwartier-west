@@ -330,3 +330,35 @@ body.landing .split:hover .manifestCard{
 body.landing .split:hover::after{
   box-shadow: 0 0 40px rgba(255,0,0,.25);
 }
+/* ===== Mobile: manifest reveal via class (JS) ===== */
+body.landing .manifestCard{
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(.96) rotate(-4deg);
+  transition:
+    opacity .25s ease,
+    transform .35s cubic-bezier(.2,.9,.2,1);
+}
+
+body.landing.manifestOpen .manifestCard{
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1) rotate(-4deg);
+}
+
+/* optional: extra glow on seam when open */
+body.landing.manifestOpen .split::after{
+  box-shadow: 0 0 40px rgba(255,0,0,.25);
+}
+/* ===== Middle hotzone (touch + mouse) ===== */
+body.landing .manifestHotzone{
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 74px;              /* breedte “midden” zone */
+  height: 100%;
+  transform: translateX(-50%);
+  z-index: 20;              /* boven halves, onder manifestCard (die zit 12 maar mag hoger) */
+  background: transparent;
+  touch-action: none;
+}
