@@ -59,7 +59,6 @@ export function renderNav({ sideKey = "global", baseDepth = 0 } = {}) {
     </nav>
   `;
 
-  // Only activate burger on mobile
   const mq = window.matchMedia("(max-width: 900px)");
   const btn = host.querySelector(".kwBurgerBtn");
   const drawer = host.querySelector(".kwDrawer");
@@ -67,7 +66,6 @@ export function renderNav({ sideKey = "global", baseDepth = 0 } = {}) {
 
   function syncBurger() {
     const isMobile = mq.matches;
-
     if (burgerWrap) burgerWrap.style.display = isMobile ? "flex" : "none";
     if (drawer) drawer.classList.remove("isOpen");
     if (btn) btn.setAttribute("aria-expanded", "false");

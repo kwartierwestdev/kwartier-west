@@ -8,8 +8,9 @@ function esc(s){
 }
 
 async function loadEvents(){
-  const res = await fetch("../../data/events.json", { cache: "no-store" });
-  if(!res.ok) throw new Error("Kan data/events.json niet laden.");
+  // Absolute path = stable from any page depth
+  const res = await fetch("/data/events.json", { cache: "no-store" });
+  if(!res.ok) throw new Error("Cannot load /data/events.json");
   return res.json();
 }
 
@@ -19,11 +20,10 @@ function niceDate(iso){
 
 function lineupList(sideKey, lineup){
   const arr = Array.isArray(lineup) ? lineup : [];
-  if(!arr.length) return `<span class="muted">Line-up: later</span>`;
+  if(!arr.length) return `<span class="muted">Line-up: TBA</span>`;
 
   const items = arr.map(a => {
     if(a?.slug){
-      // link to artist detail template in same side
       return `<a class="inlineLink" href="./artist.html?slug=${encodeURIComponent(a.slug)}">${esc(a.name || a.slug)}</a>`;
     }
     return `<span>${esc(a?.name || "")}</span>`;
@@ -42,12 +42,11 @@ function ticketCta(tickets){
   if(mode === "internal"){
     return `<a class="chip" href="../tickets/index.html">Tickets</a>`;
   }
-  return `<span class="muted">Tickets: later</span>`;
+  return `<span class="muted">Tickets: TBA</span>`;
 }
 
 function bookingCta(){
-  // per side page: booking.html in same folder
-  return `<a class="chip" href="./booking.html">Boek artiest</a>`;
+  return `<a class="chip" href="./booking.html">Book an act</a>`;
 }
 
 function item(sideKey, e){
@@ -79,12 +78,18 @@ function item(sideKey, e){
 }
 
 export async function renderEvents(sideKey){
-  const data = await loadEvents();
-  const list = data?.[sideKey] || [];
   const el = document.querySelector("[data-events]");
   if(!el) return;
 
-  el.innerHTML = list.length
-    ? `<div class="events">${list.map(e => item(sideKey, e)).join("")}</div>`
-    : `<p class="muted">Nog geen events toegevoegd.</p>`;
+  try{
+    const data = await loadEvents();
+    const list = data?.[sideKey] || [];
+
+    el.innerHTML = list.length
+      ? `<div class="events">${list.map(e => item(sideKey, e)).join("")}</div>`
+      : `<p class="muted">No events yet.</p>`;
+  }catch(err){
+    console.error(err);
+    el.innerHTML = `<p class="muted">Could not load events.</p>`;
+  }
 }

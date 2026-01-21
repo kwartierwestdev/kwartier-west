@@ -1,449 +1,236 @@
-/* css/landing.css
-   Split landing only.
-   - Seamless diagonal tear (no dikke zwarte band)
-   - Tekno content linksonder
-   - Hip hop content rechtsboven
-   - Beide helften worden strak "geclipt" langs de scheur
-*/
-
-:root{
-  --pad: clamp(18px, 3vw, 42px);
-  --radius: 18px;
-  --line: rgba(255,255,255,.08);
-  --fg: rgba(255,255,255,.92);
-  --muted: rgba(255,255,255,.66);
-  --red: #b00000;
-  --red2:#ff2a2a;
-
-  /* Diagonal seam position */
-  --seam-x: 52%;
-  --seam-tilt: 12vw; /* hoe schuin */
+/* css/landing.css */
+/* Scoped: should only affect landing page */
+body.landing{
+  overflow: hidden;
+  background: #000;
 }
 
-/* Landing: laat base bg/grain niet domineren */
-body{
-  background:#000;
-}
-
-/* container */
-.split{
+body.landing .split{
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  background: #000;
+}
+
+/* Each half is clipped into a torn edge (no middle black block needed) */
+body.landing .half{
+  position: relative;
+  min-height: 100svh;
+  isolation: isolate;
   overflow: hidden;
 }
 
-/* halve panel */
-.half{
-  position: relative;
-  display: block;
-  text-decoration: none;
-  color: var(--fg);
-  overflow: hidden;
+/* Torn edge shapes */
+body.landing .tekno{
+  clip-path: polygon(
+    0% 0%, 100% 0%,
+    96% 6%, 100% 12%,
+    95% 18%, 100% 24%,
+    95% 30%, 100% 36%,
+    95% 42%, 100% 48%,
+    95% 54%, 100% 60%,
+    95% 66%, 100% 72%,
+    95% 78%, 100% 84%,
+    95% 90%, 100% 96%,
+    96% 100%, 0% 100%
+  );
+}
 
-  /* image as background (wordt mee geclipt door clip-path) */
+body.landing .hiphop{
+  clip-path: polygon(
+    0% 0%, 100% 0%,
+    100% 100%, 0% 100%,
+    4% 96%, 0% 90%,
+    5% 84%, 0% 78%,
+    5% 72%, 0% 66%,
+    5% 60%, 0% 54%,
+    5% 48%, 0% 42%,
+    5% 36%, 0% 30%,
+    5% 24%, 0% 18%,
+    4% 12%, 0% 6%
+  );
+}
+
+/* Background image */
+body.landing .half::before{
+  content:"";
+  position:absolute;
+  inset:0;
   background-image: var(--bgimg);
   background-size: cover;
   background-position: center;
-  transform: translateZ(0);
+  transform: scale(1.02);
+  filter: saturate(.95) contrast(1.07);
+  z-index: 0;
 }
 
-/* cinematic overlay */
-.half::before{
+/* Premium dark vignette (lighter than your current one) */
+body.landing .half::after{
   content:"";
   position:absolute;
   inset:0;
   background:
-    radial-gradient(900px 600px at 15% 20%, rgba(255,42,42,.10), transparent 60%),
-    radial-gradient(900px 700px at 85% 25%, rgba(176,0,0,.12), transparent 62%),
-    linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,.30));
-  opacity: .95;
-  pointer-events:none;
+    radial-gradient(70% 70% at 20% 80%, rgba(0,0,0,.05), rgba(0,0,0,.78) 70%),
+    linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.20));
+  z-index: 1;
 }
 
-/* subtiele grain per helft (premium, niet te zwaar) */
-.half::after{
-  content:"";
+/* Clickable area */
+body.landing .halfHit{
   position:absolute;
   inset:0;
-  pointer-events:none;
-  opacity:.10;
-  mix-blend-mode: overlay;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
-  background-size: 260px 260px;
+  z-index: 4;
 }
 
-/* ---------
-   DE SCHEUR: clip beide helften zodat ze NIET door elkaar lopen
-   We maken een "ragged" polygon (rafelige rand) rond de diagonaal.
---------- */
-
-/* linkse helft: behoud links, snij rechts langs diagonaal */
-.half.tekno{
-  clip-path: polygon(
-    0 0,
-    calc(var(--seam-x) - 10%) 0,
-    calc(var(--seam-x) - 6%) 8%,
-    calc(var(--seam-x) - 8%) 16%,
-    calc(var(--seam-x) - 4%) 24%,
-    calc(var(--seam-x) - 7%) 32%,
-    calc(var(--seam-x) - 3%) 40%,
-    calc(var(--seam-x) - 6%) 48%,
-    calc(var(--seam-x) - 2%) 56%,
-    calc(var(--seam-x) - 5%) 64%,
-    calc(var(--seam-x) - 1%) 72%,
-    calc(var(--seam-x) - 4%) 80%,
-    calc(var(--seam-x) + 1%) 88%,
-    calc(var(--seam-x) - 2%) 96%,
-    calc(var(--seam-x) + 3%) 100%,
-    0 100%
-  );
-}
-
-/* rechtse helft: behoud rechts, snij links langs diagonaal */
-.half.hiphop{
-  clip-path: polygon(
-    calc(var(--seam-x) + 10%) 0,
-    100% 0,
-    100% 100%,
-    calc(var(--seam-x) + 3%) 100%,
-    calc(var(--seam-x) - 1%) 92%,
-    calc(var(--seam-x) + 2%) 84%,
-    calc(var(--seam-x) - 2%) 76%,
-    calc(var(--seam-x) + 1%) 68%,
-    calc(var(--seam-x) - 3%) 60%,
-    calc(var(--seam-x) + 1%) 52%,
-    calc(var(--seam-x) - 4%) 44%,
-    calc(var(--seam-x) + 1%) 36%,
-    calc(var(--seam-x) - 5%) 28%,
-    calc(var(--seam-x) - 1%) 20%,
-    calc(var(--seam-x) - 6%) 12%,
-    calc(var(--seam-x) - 2%) 6%
-  );
-}
-
-/* ---------
-   De scheur-lijn zelf (subtiel, premium) + “open” glow
---------- */
-.split::before{
-  content:"";
+/* Content box */
+body.landing .inner{
   position:absolute;
-  inset:-10vh -10vw;
-  pointer-events:none;
-  z-index: 5;
-
-  /* Een smalle, schuine, “scherpe” seam met glow */
-  background:
-    linear-gradient(115deg,
-      transparent 0%,
-      transparent calc(var(--seam-x) - 0.35%),
-      rgba(255,42,42,.18) calc(var(--seam-x) - 0.20%),
-      rgba(0,0,0,.88)  calc(var(--seam-x) - 0.06%),
-      rgba(0,0,0,.92)  calc(var(--seam-x) + 0.06%),
-      rgba(255,42,42,.14) calc(var(--seam-x) + 0.20%),
-      transparent calc(var(--seam-x) + 0.35%),
-      transparent 100%
-    );
-  filter: blur(.2px);
-  opacity: .95;
-}
-
-/* Rafelige rand-highlight (heel subtiel) */
-.split::after{
-  content:"";
-  position:absolute;
-  inset:-10vh -10vw;
-  pointer-events:none;
   z-index: 6;
-  background:
-    linear-gradient(115deg,
-      transparent calc(var(--seam-x) - 0.9%),
-      rgba(255,255,255,.06) calc(var(--seam-x) - 0.2%),
-      transparent calc(var(--seam-x) + 0.9%)
-    );
-  opacity:.55;
+  max-width: 560px;
+  padding: 24px 24px 18px;
+  border-radius: 18px;
+  background: rgba(0,0,0,.30);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 18px 60px rgba(0,0,0,.45);
 }
 
-/* ---------
-   Inner content layout
---------- */
-.inner{
-  position:absolute;
-  z-index: 10;
-  max-width: 520px;
-  padding: 14px 16px;
+body.landing .tekno .inner{
+  left: 28px;
+  bottom: 28px;
 }
-
-/* Tekno: linksonder */
-.half.tekno .inner{
-  left: var(--pad);
-  bottom: var(--pad);
-  text-align: left;
-}
-
-/* Hip hop: rechtsboven */
-.half.hiphop .inner{
-  right: var(--pad);
-  top: var(--pad);
+body.landing .hiphop .inner{
+  right: 28px;
+  top: 28px;
   text-align: right;
 }
 
-/* Title style */
-.inner h1{
-  margin: 10px 0 6px;
-  font-size: clamp(44px, 6vw, 86px);
-  letter-spacing: .01em;
-  line-height: .92;
-  text-shadow: 0 14px 44px rgba(0,0,0,.75);
-}
-.inner p{
-  margin: 0;
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.45;
-  text-shadow: 0 10px 28px rgba(0,0,0,.65);
-}
-
-/* kicker zoals je base.css */
-.kicker{
-  display:inline-flex;
-  gap:10px;
+body.landing .kicker{
+  display:flex;
   align-items:center;
-  font-size:12px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color: var(--muted);
+  gap:10px;
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.70);
 }
-.kicker .dot{
-  width:7px;height:7px;border-radius:999px;background:var(--red);
-  box-shadow: 0 0 18px rgba(176,0,0,.55);
+body.landing .hiphop .kicker{ justify-content: flex-end; }
+
+body.landing .dot{
+  width:7px;
+  height:7px;
+  border-radius:999px;
+  background: rgba(255,40,40,.95);
+  box-shadow: 0 0 18px rgba(255,40,40,.55);
 }
 
-/* Enter links */
-.enter{
-  margin-top: 10px;
+body.landing h1{
+  margin: 10px 0 8px;
+  font-size: clamp(44px, 5.2vw, 84px);
+  line-height: .95;
+  letter-spacing: -0.02em;
+}
+
+body.landing .half p{
+  margin: 0 0 12px;
+  color: rgba(255,255,255,.78);
+  max-width: 52ch;
+}
+body.landing .hiphop .half p{ margin-left: auto; }
+
+body.landing .enter{
   font-size: 12px;
   color: rgba(255,255,255,.72);
 }
-.enter a{
-  color: rgba(255,255,255,.86);
+body.landing .enter a{
+  color: rgba(255,255,255,.92);
   text-decoration: none;
-  border-bottom: 1px solid rgba(255,42,42,.25);
+  border-bottom: 1px solid rgba(255,40,40,.35);
 }
-.enter a:hover{
-  border-bottom-color: rgba(255,42,42,.65);
+body.landing .enter a:hover{
+  border-bottom-color: rgba(255,40,40,.90);
 }
 
-/* Hover: “openscheurend” effect (subtiel) */
-.half{
-  transition: transform .22s ease, filter .22s ease;
-}
-.half:hover{
-  filter: saturate(1.05) contrast(1.02);
-}
-.half.tekno:hover{ transform: translateX(-6px); }
-.half.hiphop:hover{ transform: translateX(6px); }
-
-/* Manifest card: in de scheur-zone, zwevend */
-.manifestCard{
+/* Seam light (NOT a block) */
+body.landing .split::after{
+  content:"";
   position:absolute;
-  z-index: 20;
-  left: var(--seam-x);
+  left: 50%;
+  top: -10%;
+  width: 3px;
+  height: 120%;
+  transform: translateX(-50%) rotate(2deg);
+  background: linear-gradient(
+    to bottom,
+    rgba(255,40,40,0),
+    rgba(255,40,40,.65),
+    rgba(255,40,40,0)
+  );
+  filter: blur(.2px);
+  opacity: .8;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Manifest card */
+body.landing .manifestCard{
+  position: absolute;
+  left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) rotate(-10deg);
-  width: min(520px, 72vw);
-  text-decoration:none;
-  color: var(--fg);
+  transform: translate(-50%, -50%) rotate(-7deg);
+  z-index: 12;
+  display: block;
+  width: min(560px, 84vw);
+  padding: 18px;
   border-radius: 16px;
-  border: 1px solid rgba(255,42,42,.18);
-  background: rgba(0,0,0,.55);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 18px 60px rgba(0,0,0,.55);
-  padding: 14px 16px 12px;
+  text-decoration: none;
+  color: rgba(255,255,255,.92);
+  background: rgba(0,0,0,.58);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,40,40,.25);
+  box-shadow: 0 30px 90px rgba(0,0,0,.55);
 }
-.manifestCard:hover{
-  border-color: rgba(255,42,42,.45);
-  box-shadow: 0 22px 70px rgba(0,0,0,.62), 0 0 26px rgba(255,42,42,.12);
-}
-.manifestCard h3{
-  margin:0 0 6px;
-  font-size: 13px;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-}
-.manifestCard p{
-  margin:0 0 10px;
-  color: rgba(255,255,255,.72);
+body.landing .manifestCard h3{
+  margin: 0 0 8px;
   font-size: 12px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+body.landing .manifestCard p{
+  margin: 0 0 10px;
+  color: rgba(255,255,255,.72);
+  font-size: 13px;
   line-height: 1.45;
 }
-.manifestCard .go{
-  font-size: 12px;
-  border-bottom: 1px solid rgba(255,42,42,.35);
+body.landing .manifestCard .go{
+  font-size: 13px;
+  border-bottom: 1px solid rgba(255,40,40,.55);
+}
+body.landing .manifestCard:hover{
+  border-color: rgba(255,40,40,.55);
 }
 
-/* Mobile: stack, seam blijft “scheur” maar simpeler */
 @media (max-width: 900px){
-  .split{
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
+  body.landing{ overflow: auto; }
+  body.landing .split{ grid-template-columns: 1fr; }
+  body.landing .tekno,
+  body.landing .hiphop{ clip-path: none; }
+  body.landing .split::after{ display:none; }
+
+  body.landing .tekno .inner,
+  body.landing .hiphop .inner{
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    top: auto;
+    text-align: left;
   }
+  body.landing .hiphop .kicker{ justify-content: flex-start; }
 
-  /* clip uitzetten op mobiel (anders rare snedes) */
-  .half.tekno, .half.hiphop{ clip-path: none; }
-
-  .half.tekno .inner{
-    left: var(--pad);
-    bottom: var(--pad);
+  body.landing .manifestCard{
+    top: 14%;
+    transform: translate(-50%, 0) rotate(-4deg);
   }
-  .half.hiphop .inner{
-    right: var(--pad);
-    top: var(--pad);
-  }
-
-  .split::before, .split::after{
-    opacity: .25;
-  }
-
-  .manifestCard{
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) rotate(-8deg);
-  }
-}
-/* landing.css - required overlay/link stacking */
-.halfHit{
-  position:absolute;
-  inset:0;
-  z-index: 2;
-  display:block;
-}
-
-/* content boven de overlay */
-.inner{
-  position:absolute;
-  z-index: 4;
-}
-
-/* quick links expliciet klikbaar */
-.enterLink{
-  position: relative;
-  z-index: 6;
-}
-
-/* kleine dot separator */
-.sepDot{
-  opacity:.55;
-  padding: 0 6px;
-}
-/* === FIX: geen zwarte void in het midden === */
-
-/* basis */
-.split{
-  position: relative;
-  min-height: 100vh;
-  overflow: hidden;
-  background: #000; /* ok als fallback, maar mag nooit zichtbaar als gap */
-}
-
-/* helften moeten altijd het volledige scherm bedekken: overlap */
-.half{
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 56vw;            /* > 50vw zodat ze overlappen */
-  overflow: hidden;
-}
-
-/* links/rechts plaatsen */
-.half.tekno{ left: 0; }
-.half.hiphop{ right: 0; }
-
-/* background image op de helft zelf */
-.half{
-  background: var(--bgimg) center / cover no-repeat;
-}
-
-/* dim/vignette per helft (premium look) */
-.half::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:
-    radial-gradient(80% 80% at 50% 30%, rgba(0,0,0,.10), rgba(0,0,0,.75)),
-    linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.70));
-}
-
-/* scheur: clip de randen (geen zwart vlak in het midden!) */
-.half.tekno{
-  clip-path: polygon(
-    0% 0%, 92% 0%,
-    88% 10%, 93% 18%,
-    87% 28%, 94% 38%,
-    86% 52%, 93% 62%,
-    87% 74%, 94% 84%,
-    88% 92%, 92% 100%,
-    0% 100%
-  );
-}
-.half.hiphop{
-  clip-path: polygon(
-    8% 0%, 100% 0%,
-    100% 100%, 8% 100%,
-    12% 92%, 7% 84%,
-    13% 74%, 6% 62%,
-    14% 52%, 7% 38%,
-    13% 28%, 6% 18%,
-    12% 10%
-  );
-}
-
-/* content bovenop */
-.inner{
-  position: absolute;
-  z-index: 4;
-}
-
-/* dunne rode “naad” i.p.v. zwart vlak */
-.split::before{
-  content:"";
-  position:absolute;
-  inset:-20vh -20vw; /* groot genoeg voor diagonaal */
-  z-index: 3;
-  pointer-events:none;
-  background:
-    linear-gradient(115deg,
-      transparent 49.6%,
-      rgba(176,0,0,.25) 50%,
-      transparent 50.4%
-    ),
-    linear-gradient(115deg,
-      transparent 49.2%,
-      rgba(255,42,42,.08) 49.7%,
-      transparent 50.2%
-    );
-  mix-blend-mode: screen;
-  opacity: .9;
-}
-
-/* manifest card boven alles */
-.manifestCard{
-  position: absolute;
-  z-index: 6;
-}
-
-/* mobile: terug netjes stacken */
-@media (max-width: 900px){
-  .half{
-    position: relative;
-    width: 100%;
-    height: 50vh;
-  }
-  .half.tekno, .half.hiphop{
-    clip-path: none;
-  }
-  .split::before{ content:none; }
 }

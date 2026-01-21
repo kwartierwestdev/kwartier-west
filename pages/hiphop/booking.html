@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="nl">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Kwartier West — Hip hop Booking</title>
+  <title>Kwartier West — Hip Hop Booking</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Book a hip hop act — clean intake, proper follow-up." />
   <link rel="stylesheet" href="../../css/base.css" />
 </head>
 <body>
@@ -11,35 +12,50 @@
 
   <div class="page">
     <div class="topline">
-      <a class="back" href="./index.html">← terug</a>
-      <div class="kicker"><span class="dot"></span> Hip hop • Booking</div>
+      <a class="back" href="./index.html">← back</a>
+      <div class="kicker"><span class="dot"></span> Hip hop side • Booking</div>
     </div>
 
     <div data-sideswitch></div>
 
-    <h1 style="margin:0 0 10px;">Boek een hip hop act</h1>
-    <p class="muted" style="margin:0; max-width:70ch;">
-      Dit is een tijdelijke booking flow. Later wordt dit vervangen door de app (tickets/booking/merch).
-    </p>
+    <div class="sectionCard">
+      <h1>Book a hip hop act</h1>
+      <p class="lead">
+        Give us the brief and the constraints. We’ll match the right pen, the right presence,
+        and the right pocket of energy for your room. Clean comms. No weird back-and-forth.
+      </p>
 
-    <div style="height:18px;"></div>
+      <div class="chips" style="margin-top:12px;">
+        <a class="chip" href="../hiphop/index.html#artists">Browse artists</a>
+        <a class="chip" href="../contact/index.html">General contact</a>
+      </div>
+    </div>
 
-    <form class="card" style="max-width:720px;">
-      <div class="muted" style="font-size:12px; margin-bottom:10px;">Contact</div>
+    <form class="card" style="max-width:760px;">
+      <div class="kicker" style="margin-bottom:12px;">
+        <span class="dot"></span> Booking intake
+      </div>
 
-      <label class="muted" style="display:block; font-size:12px; margin:10px 0 6px;">Naam / organisatie</label>
-      <input class="copyInput" type="text" placeholder="..." />
+      <label class="muted" style="display:block; font-size:12px; margin:10px 0 6px;">
+        Name / organisation
+      </label>
+      <input class="field" type="text" placeholder="promoter / venue / org" autocomplete="name" />
 
-      <label class="muted" style="display:block; font-size:12px; margin:10px 0 6px;">E-mail</label>
-      <input class="copyInput" type="email" placeholder="..." />
+      <label class="muted" style="display:block; font-size:12px; margin:10px 0 6px;">
+        Email
+      </label>
+      <input class="field" type="email" placeholder="you@domain.com" autocomplete="email" />
 
-      <label class="muted" style="display:block; font-size:12px; margin:10px 0 6px;">Datum / locatie / context</label>
-      <textarea class="copyInput" style="min-height:120px; resize:vertical;" placeholder="..." ></textarea>
+      <label class="muted" style="display:block; font-size:12px; margin:10px 0 6px;">
+        Date / venue / brief
+      </label>
+      <textarea class="field" style="min-height:140px; resize:vertical;"
+        placeholder="Date + city + venue • set length • mic / monitors • budget range • crowd / vibe • lineup notes"></textarea>
 
       <div style="height:12px;"></div>
 
       <div class="muted" style="font-size:12px;">
-        Verzenden komt later via app/API. Voorlopig: contact via de organisatie.
+        Submitting + tracking becomes an app path later. For now: this page is the intake.
       </div>
     </form>
   </div>
