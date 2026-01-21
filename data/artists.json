@@ -75,6 +75,26 @@
       "links": []
     },
     {
+      "slug": "woebn",
+      "name": "Woebn",
+      "role": "DJ / Live",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/woebn.png",
+      "bio": "Tek side operator. Real nights, real pressure.",
+      "links": []
+    },
+    {
+      "slug": "spoorloos",
+      "name": "Spoorloos",
+      "role": "DJ / Live",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/spoorloos.png",
+      "bio": "Tek side operator. Real nights, real pressure.",
+      "links": []
+    },
+    {
       "slug": "hyperion",
       "name": "Hyperion",
       "role": "DJ / Live",
@@ -144,26 +164,8 @@
       "photo": "/assets/img/artists/tekno/psamtek.png",
       "bio": "Tek side operator. Real nights, real pressure.",
       "links": []
-    },
-    {
-      "slug": "spoorloos",
-      "name": "Spoorloos",
-      "role": "DJ / Live",
-      "city": "West Flanders, BE",
-      "lang": "EN",
-      "photo": "/assets/img/artists/tekno/spoorloos.png",
-      "bio": "Tek side operator. Real nights, real pressure.",
-      "links": []
-    },
-    {
-      "slug": "woebn",
-      "name": "Woebn",
-      "role": "DJ / Live",
-      "city": "West Flanders, BE",
-      "lang": "EN",
-      "photo": "/assets/img/artists/tekno/woebn.png",
-      "bio": "Tek side operator. Real nights, real pressure.",
-      "links": []
     }
+    
+    
   ]
 }

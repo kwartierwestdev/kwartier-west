@@ -216,6 +216,15 @@ body.landing .manifestCard:hover{
    MOBILE: both halves on ONE screen (diagonal split)
 ========================= */
 @media (max-width: 900px){
+    /* smaller open distance on mobile */
+  body.landing.manifestOpen .tekno{  transform: translateX(-14px); }
+  body.landing.manifestOpen .hiphop{ transform: translateX( 14px); }
+/* desktop convenience: hovering the split also “opens” */
+@media (min-width: 901px){
+  body.landing .split:hover .tekno{  transform: translateX(-28px); }
+  body.landing .split:hover .hiphop{ transform: translateX( 28px); }
+}
+
 
   /* ===== Landing blijft split (GEEN scroll-stack) ===== */
   body.landing{
@@ -350,6 +359,32 @@ body.landing.manifestOpen .manifestCard{
 body.landing.manifestOpen .split::after{
   box-shadow: 0 0 40px rgba(255,0,0,.25);
 }
+/* ===== Split “opens” when manifest is revealed ===== */
+
+/* smooth movement */
+body.landing .tekno,
+body.landing .hiphop{
+  transition: transform .55s cubic-bezier(.2,.9,.2,1), filter .35s ease;
+  will-change: transform;
+}
+
+/* open distance (desktop) */
+body.landing.manifestOpen .tekno{  transform: translateX(-28px); }
+body.landing.manifestOpen .hiphop{ transform: translateX( 28px); }
+
+/* little extra depth */
+body.landing.manifestOpen .half::after{
+  background:
+    radial-gradient(70% 70% at 20% 80%, rgba(0,0,0,.02), rgba(0,0,0,.82) 70%),
+    linear-gradient(0deg, rgba(0,0,0,.40), rgba(0,0,0,.24));
+}
+
+/* make seam pop a bit when open */
+body.landing.manifestOpen .split::after{
+  opacity: 1;
+  width: 4px;
+}
+
 /* ===== Middle hotzone (touch + mouse) ===== */
 body.landing .manifestHotzone{
   position: absolute;
