@@ -30,7 +30,7 @@
       "lang": "NL",
       "photo": "/assets/img/artists/hiphop/de-kweker.jpg",
       "bio": "Raw and local. Story-driven hip hop rooted in West Flanders.",
-      "links": [{ "label": "Official site", "url": "https://kwkr.be" }]
+      "links": [{ "label": "Website", "url": "https://kwkr.be" }]
     },
     {
       "slug": "duvve",
@@ -67,11 +67,11 @@
     {
       "slug": "onschuldig",
       "name": "Onschuldig",
-      "role": "Collective Lead",
-      "city": "West Flanders, BE",
+      "role": "Tekno / Acid",
+      "city": "Roeselare, BE",
       "lang": "EN",
       "photo": "/assets/img/artists/tekno/onschuldig.png",
-      "bio": "FOUNDER. Producer. Provides unique Tekno & Acid.",
+      "bio": "Founder. Producer. Provides unique Tekno & Acid.",
       "links": []
     },
     {

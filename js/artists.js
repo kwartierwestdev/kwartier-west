@@ -1,20 +1,24 @@
 /* Kwartier West — artists.js (v6)
    Premium artist cards with images + deep links to artist detail page.
-   Always loads from /data/artists.json (absolute path).
+   Uses baseDepth so data loads correctly from any folder.
 */
-console.log("🔥 artists.js LOADED", import.meta.url);
 
 function esc(s=""){
-  return String(s ?? "")
+  return String(s)
     .replaceAll("&","&amp;")
     .replaceAll("<","&lt;")
     .replaceAll(">","&gt;")
     .replaceAll('"',"&quot;");
 }
 
-async function loadArtists(){
-  const res = await fetch("/data/artists.json", { cache: "no-store" });
-  if(!res.ok) throw new Error("Cannot load /data/artists.json");
+function basePrefix(depth=0){
+  return "../".repeat(Math.max(0, depth));
+}
+
+async function loadArtists(baseDepth){
+  const url = `${basePrefix(baseDepth)}data/artists.json`;
+  const res = await fetch(url, { cache: "no-store" });
+  if(!res.ok) throw new Error(`Cannot load ${url}`);
   return res.json();
 }
 
@@ -22,6 +26,10 @@ function pickSide(data, sideKey){
   if(Array.isArray(data)) return data;
   if(data && Array.isArray(data[sideKey])) return data[sideKey];
   return [];
+}
+
+function isFeatured(a){
+  return (a?.slug || "").toLowerCase() === "onschuldig";
 }
 
 function card(a){
@@ -32,19 +40,26 @@ function card(a){
   const city = esc(a.city || "");
   const lang = esc(a.lang || "");
 
+  const featured = isFeatured(a);
+  const featuredClass = featured ? " artistCardFeatured" : "";
+  const roleBadge = featured ? `<span class="roleBadge">Collective Lead</span>` : "";
+
   const media = photo
     ? `<div class="artistMedia"><img class="artistImg" src="${photo}" alt="${name}" loading="lazy"></div>`
     : `<div class="artistMedia artistMediaEmpty" aria-hidden="true"></div>`;
 
   return `
-    <article class="artistCard">
+    <article class="artistCard${featuredClass}">
       <a class="artistHit" href="${href}" aria-label="Open ${name}"></a>
       ${media}
       <div class="artistBody">
         <div class="artistRow">
           <h3 class="artistName">${name}</h3>
-          <div class="artistMeta">${role}</div>
+          <div class="artistMeta">${role || ""}</div>
         </div>
+
+        ${featured ? `<div class="artistBadges">${roleBadge}</div>` : ""}
+
         <div class="artistSub">${city}${lang ? ` <span class="sep">•</span> ${lang}` : ""}</div>
         ${a.bio ? `<p class="artistBio">${esc(a.bio)}</p>` : ``}
       </div>
@@ -52,17 +67,17 @@ function card(a){
   `;
 }
 
-export async function renderArtists(sideKey){
+export async function renderArtists(sideKey, opts={}){
   const mount = document.querySelector("[data-artists]");
   if(!mount) return;
+
+  const baseDepth = Number(opts.baseDepth ?? 0);
 
   mount.innerHTML = `<div class="muted">Loading artists…</div>`;
 
   try{
-    const data = await loadArtists();
+    const data = await loadArtists(baseDepth);
     const list = pickSide(data, sideKey);
-
-    console.log("artists:", sideKey, "count:", list.length);
 
     if(!list.length){
       mount.innerHTML = `<div class="muted">No artists yet.</div>`;

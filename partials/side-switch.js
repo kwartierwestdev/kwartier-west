@@ -8,6 +8,9 @@ function esc(s){
 }
 
 export function renderSideSwitch(sideKey){
+  // bovenaan in renderSideSwitch
+if (window.matchMedia("(min-width: 901px)").matches) return;
+
   const mount = document.querySelector("[data-sideswitch]");
   if(!mount) return;
 

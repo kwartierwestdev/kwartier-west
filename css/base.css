@@ -581,3 +581,90 @@ h2{
   color: rgba(255,255,255,.76);
   line-height: 1.65;
 }
+/* ===== Featured artist (Onschuldig) ===== */
+.artistCardFeatured{
+  border-color: rgba(255,40,40,.35);
+  box-shadow: var(--shadow), 0 0 38px rgba(255,40,40,.12);
+}
+
+.artistCardFeatured:hover{
+  border-color: rgba(255,40,40,.55);
+  box-shadow: var(--shadow), 0 0 52px rgba(255,40,40,.18);
+}
+
+/* a small top ribbon vibe without clutter */
+.artistBadges{
+  margin-top: 10px;
+  display:flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* role badge */
+.roleBadge{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.92);
+  background: rgba(255,40,40,.14);
+  border: 1px solid rgba(255,40,40,.30);
+  box-shadow: 0 0 18px rgba(255,40,40,.10);
+}
+/* --- Side switch: stop "button in button" + stop layout push --- */
+.sideSwitch{
+  margin-top: 0;              /* geen extra witruimte */
+  position: absolute;         /* uit de flow => duwt niets */
+  right: 0;
+  top: 0;
+  justify-content: flex-end;
+  pointer-events: none;       /* alleen de pill zelf is klikbaar */
+}
+
+.sideSwitchPill{
+  pointer-events: auto;
+  gap: 10px;
+}
+
+/* Maak de pill minder "knop in knop": label + link voelen één geheel */
+.sideGo{
+  border-bottom: none;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.10);
+}
+.sideGo:hover{
+  border-color: var(--redSoft);
+  box-shadow: 0 0 22px var(--redGlow);
+}
+
+/* Zet de switch alleen op mobile zichtbaar (desktop heeft al topnav) */
+@media (min-width: 901px){
+  .sideSwitch{ display:none; }
+}
+
+/* Mobile: zwevende switch rechtsboven in de page, niet tegen sections */
+@media (max-width: 900px){
+  .page{ position: relative; } /* anchor voor absolute sideSwitch */
+
+  .sideSwitch{
+    display:flex;
+    position: absolute;
+    top: 10px;
+    right: 0;
+  }
+
+  .sideSwitchPill{
+    padding: 8px 10px;
+    background: rgba(0,0,0,.35);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.10);
+  }
+
+  .sideHere{ font-size: 10px; letter-spacing: .18em; }
+}
