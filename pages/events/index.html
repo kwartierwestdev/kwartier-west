@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Kwartier West — Events</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Kwartier West events — tek & hip hop. Tickets, line-ups, info and booking." />
+  <link rel="stylesheet" href="../../css/base.css" />
+  <link rel="stylesheet" href="../../css/events.css" />
+</head>
+<body class="events">
+  <div data-nav></div>
+
+  <div class="page">
+    <div class="topline">
+      <a class="back" href="../../index.html">← back</a>
+      <div class="kicker"><span class="dot"></span> Events</div>
+    </div>
+
+    <!-- HERO -->
+    <section class="sectionCard eventHero" aria-label="Events overview">
+      <div class="eventHeroTop">
+        <div>
+          <h1 style="margin:0 0 8px;">Events</h1>
+          <p class="lead" style="margin:0; max-width:80ch;">
+            Two lanes, one backbone. Tek pressure and Hip hop nights — curated, not random.
+            Tickets link out for now. Later this page plugs into the app flow.
+          </p>
+        </div>
+
+        <div class="eventHeroTools">
+          <div class="filterPills" role="tablist" aria-label="Filter events">
+            <button class="pillBtn isActive" data-filter="all" role="tab" aria-selected="true">All</button>
+            <button class="pillBtn" data-filter="tekno" role="tab" aria-selected="false">Tek</button>
+            <button class="pillBtn" data-filter="hiphop" role="tab" aria-selected="false">Hip hop</button>
+          </div>
+
+          <div class="miniMeta muted">
+            <span data-count>—</span>
+            <span class="sep">•</span>
+            Updated live
+          </div>
+        </div>
+      </div>
+
+      <div class="eventHeroFeatured" data-featured>
+        <!-- JS fills -->
+      </div>
+    </section>
+
+    <!-- LIST -->
+    <section class="sectionCard" aria-label="All events">
+      <h2>Upcoming</h2>
+      <div data-events-page></div>
+
+      <div class="eventFooter muted" style="font-size:12px; margin-top:12px;">
+        Roadmap: booking → payment → QR → check-in (site + app). This page stays the source of truth.
+      </div>
+    </section>
+  </div>
+
+  <script type="module">
+    import { renderNav } from "../../partials/nav.js";
+    import { mountEventsPage } from "../../js/events-page.js";
+
+    renderNav({ sideKey: "global", baseDepth: 2 });
+    mountEventsPage({ baseDepth: 2 });
+  </script>
+</body>
+</html>
