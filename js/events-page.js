@@ -10,12 +10,17 @@ function esc(s){
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#39;");
 }
+function basePrefix(depth=0){
+  return "../".repeat(Math.max(0, depth));
+}
 
-async function loadEvents(){
-  const res = await fetch("/data/events.json", { cache: "no-store" });
-  if(!res.ok) throw new Error("Cannot load /data/events.json");
+async function loadEvents(baseDepth=0){
+  const url = `${basePrefix(baseDepth)}data/events.json`;
+  const res = await fetch(url, { cache: "no-store" });
+  if(!res.ok) throw new Error(`Cannot load ${url}`);
   return res.json();
 }
+
 
 function parseDateISO(d){
   // YYYY-MM-DD
@@ -164,7 +169,10 @@ function applyFilter(listRoot, key){
   });
 }
 
-export async function mountEventsPage(){
+export async function mountEventsPage(opts = {}){
+  const baseDepth = Number(opts.baseDepth ?? 0);
+
+
   const mount = document.querySelector("[data-events-page]");
   const featured = document.querySelector("[data-featured]");
   const countEl = document.querySelector("[data-count]");
@@ -176,7 +184,8 @@ export async function mountEventsPage(){
   featured.innerHTML = ``;
 
   try{
-    const data = await loadEvents();
+    const data = await loadEvents(baseDepth);
+
     const all = flatten(data);
 
     countEl.textContent = `${all.length} event${all.length === 1 ? "" : "s"}`;
