@@ -720,3 +720,43 @@ h2{
   }
 }
 
+.contactLinks{
+  display:flex;
+  flex-direction:column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.contactItem{
+  display:inline-flex;
+  align-items:center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.92);
+  text-decoration:none;
+  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.contactItem:hover{
+  background: rgba(0,0,0,.45);
+  border-color: rgba(255,40,40,.35);
+  box-shadow: 0 0 22px rgba(255,40,40,.12);
+}
+
+.icon{
+  width: 18px;
+  height: 18px;
+  display:inline-block;
+  background-size: contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  opacity: .92;
+}
+
+.icon.instagram{ background-image: url("/assets/icons/instagram.svg"); }
+.icon.mail{ background-image: url("/assets/icons/mail.svg"); }
+
+.contactNote{ font-size: 12px; }
