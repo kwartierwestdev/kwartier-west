@@ -760,3 +760,36 @@ h2{
 .icon.mail{ background-image: url("/assets/icons/mail.svg"); }
 
 .contactNote{ font-size: 12px; }
+/* ============ EVENTS PAGE BACKGROUND ============ */
+
+/* Events page: custom background image layer */
+body.events::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.68), rgba(0,0,0,.78)),
+    url("/assets/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  filter: contrast(1.06) saturate(.95);
+}
+
+/* Keep the premium glow but behind content */
+body.events::after{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background:
+    radial-gradient(1000px 600px at 15% 50%, rgba(255,40,40,.10), transparent 60%),
+    radial-gradient(900px 540px at 85% 40%, rgba(255,40,40,.08), transparent 60%),
+    radial-gradient(700px 420px at 50% 10%, rgba(255,255,255,.03), transparent 60%);
+}
