@@ -1,6 +1,7 @@
 // js/events-page.js
 // Global Events hub: loads /data/events.json (stable on Vercel) and renders a premium list + featured.
 // Later swap loadEvents() to your API endpoint without touching the page HTML.
+console.log("events-page.js LOADED", import.meta.url);
 
 function esc(s){
   return String(s ?? "")
@@ -10,17 +11,13 @@ function esc(s){
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#39;");
 }
-function basePrefix(depth=0){
-  return "../".repeat(Math.max(0, depth));
-}
 
-async function loadEvents(baseDepth=0){
-  const url = `${basePrefix(baseDepth)}data/events.json`;
-  const res = await fetch(url, { cache: "no-store" });
-  if(!res.ok) throw new Error(`Cannot load ${url}`);
+async function loadEvents(){
+  // Absolute path = stable from any page depth (local + Vercel + custom domain)
+  const res = await fetch("/data/events.json", { cache: "no-store" });
+  if(!res.ok) throw new Error("Cannot load /data/events.json");
   return res.json();
 }
-
 
 function parseDateISO(d){
   // YYYY-MM-DD
@@ -59,7 +56,9 @@ function lineupHTML(e){
   const arr = Array.isArray(e.lineup) ? e.lineup : [];
   if(!arr.length) return `<span class="muted">Line-up: TBA</span>`;
 
-  // From /pages/events/ -> artist pages are siblings: ../tekno/artist.html / ../hiphop/artist.html
+  // From /pages/events/ -> artist pages are siblings:
+  // ../tekno/artist.html?slug=...
+  // ../hiphop/artist.html?slug=...
   const items = arr.map(a => {
     const slug = a?.slug;
     const name = esc(a?.name || a?.slug || "");
@@ -114,7 +113,6 @@ function featureCard(e){
 }
 
 function listItem(e){
-  // reuse your base.css event styles so everything stays unified
   const meta = esc(metaLine(e));
   const side = sideLabel(e.sideKey);
 
@@ -169,10 +167,7 @@ function applyFilter(listRoot, key){
   });
 }
 
-export async function mountEventsPage(opts = {}){
-  const baseDepth = Number(opts.baseDepth ?? 0);
-
-
+export async function mountEventsPage(){
   const mount = document.querySelector("[data-events-page]");
   const featured = document.querySelector("[data-featured]");
   const countEl = document.querySelector("[data-count]");
@@ -184,11 +179,12 @@ export async function mountEventsPage(opts = {}){
   featured.innerHTML = ``;
 
   try{
-    const data = await loadEvents(baseDepth);
-
+    const data = await loadEvents();
     const all = flatten(data);
 
-    countEl.textContent = `${all.length} event${all.length === 1 ? "" : "s"}`;
+    if(countEl){
+      countEl.textContent = `${all.length} event${all.length === 1 ? "" : "s"}`;
+    }
 
     if(!all.length){
       featured.innerHTML = `
@@ -206,8 +202,7 @@ export async function mountEventsPage(opts = {}){
     }
 
     // Featured: soonest upcoming
-    const next = all[0];
-    featured.innerHTML = featureCard(next);
+    featured.innerHTML = featureCard(all[0]);
 
     // List
     mount.innerHTML = `<div class="events">${all.map(listItem).join("")}</div>`;
@@ -222,7 +217,6 @@ export async function mountEventsPage(opts = {}){
       });
     });
 
-    // default
     setActiveFilter(root, current);
     applyFilter(mount, current);
 
