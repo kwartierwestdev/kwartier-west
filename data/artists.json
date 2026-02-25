@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-23T23:55:00Z",
+  "updatedAt": "2026-02-25T11:45:00Z",
   "hiphop": [
     {
       "slug": "de-kweker",
@@ -447,6 +447,44 @@
           "platform": "instagram",
           "label": "@_woebn_",
           "url": "https://www.instagram.com/_woebn_/"
+        }
+      ]
+    },
+    {
+      "slug": "noratn",
+      "name": "NORATN",
+      "role": "DJ / Producer",
+      "city": "Belgium",
+      "lang": "EN",
+      "photo": "https://ugc.production.linktr.ee/d4adca48-af3b-43db-a243-496eb2d0da32_DSC-8953.jpeg?io=true&size=avatar-v3_0",
+      "bio": "Noratn is a rising DJ and music producer specializing in tek, acid and mental, delivering high-energy beats and deep hypnotic rhythms.",
+      "headline": "Rising tek force with acid pressure and hypnotic groove control.",
+      "story": "Known for powerful sets and a distinct underground sound, NORATN brings a fresh perspective to the tek lane while keeping the floor locked from first drop to final cut.",
+      "live": "No matter where she plays, her sets stay focused on momentum: high-energy drive, deep rhythmic control and boundary-pushing selection.",
+      "focus": [
+        "Tek and acid pressure",
+        "Mental groove sequencing",
+        "High-energy underground sets"
+      ],
+      "tags": [
+        "Tek",
+        "Acid",
+        "Mental"
+      ],
+      "priority": 67,
+      "collective": "tekno",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "linktree",
+          "label": "noratn__",
+          "url": "https://linktr.ee/noratn__"
         }
       ]
     },
