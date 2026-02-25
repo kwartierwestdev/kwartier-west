@@ -39,5 +39,9 @@ jobs:
           cls -la /www/
           cls -la /webroots
           cls -la /webroots/
+          cls -la /webroots/007f71aa
+          cls -la /webroots/007f71aa/
+          cls -la /webroots/by-route
+          cls -la /webroots/by-route/
           bye
           EOF
