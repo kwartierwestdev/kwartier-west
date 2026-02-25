@@ -121,9 +121,20 @@ function applyFilter({ side = "all", scope = "upcoming" } = {}) {
   }
 }
 
-function setupFilterButtons() {
-  let side = "all";
-  let scope = "upcoming";
+function readInitialFilters() {
+  const params = new URLSearchParams(window.location.search || "");
+  const sideRaw = String(params.get("side") || "").toLowerCase();
+  const scopeRaw = String(params.get("scope") || "").toLowerCase();
+
+  const side = ["all", "tekno", "hiphop"].includes(sideRaw) ? sideRaw : "all";
+  const scope = ["upcoming", "all", "past"].includes(scopeRaw) ? scopeRaw : "upcoming";
+
+  return { side, scope };
+}
+
+function setupFilterButtons({ initialSide = "all", initialScope = "upcoming" } = {}) {
+  let side = initialSide;
+  let scope = initialScope;
 
   const sideButtons = document.querySelectorAll("[data-filter-side]");
   const scopeButtons = document.querySelectorAll("[data-filter-scope]");
@@ -176,6 +187,8 @@ export async function mountEventsPage({ baseDepth = 0 } = {}) {
       loadArtists({ baseDepth })
     ]);
 
+    const initial = readInitialFilters();
+
     const merged = flattenEvents(eventsData);
     const { upcoming, past } = splitEventsByDate(merged);
     const ordered = [...upcoming, ...past.slice().reverse()].map((eventItem) => ({
@@ -198,7 +211,10 @@ export async function mountEventsPage({ baseDepth = 0 } = {}) {
 
     listRoot.innerHTML = `<div class="event-list">${ordered.map((eventItem) => listItem(eventItem, artistsData)).join("")}</div>`;
 
-    setupFilterButtons();
+    setupFilterButtons({
+      initialSide: initial.side,
+      initialScope: initial.scope
+    });
   } catch (error) {
     console.error(error);
     featuredRoot.innerHTML = `<p class="muted">${t("events.error")}</p>`;

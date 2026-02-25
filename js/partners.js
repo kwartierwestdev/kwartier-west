@@ -20,7 +20,29 @@ function renderTags(tags) {
   return `<div class="partner-card__tags">${list.map((tag) => `<span class="tag-pill">${escapeHTML(tag)}</span>`).join("")}</div>`;
 }
 
-function partnerCard(partner) {
+function resolveAssetPath(path, baseDepth = 0) {
+  const raw = String(path || "").trim();
+  if (!raw) return "";
+  if (/^https?:\/\//i.test(raw)) return raw;
+  if (raw.startsWith("/")) return raw;
+  const relativePrefix = "../".repeat(Math.max(0, Number(baseDepth) || 0));
+  return `${relativePrefix}${raw.replace(/^\.?\//, "")}`;
+}
+
+function renderPartnerMark(partner, baseDepth) {
+  const logoSrc = resolveAssetPath(partner?.logo, baseDepth);
+  if (!logoSrc) return `<div class="partner-card__mark" aria-hidden="true">${escapeHTML(initials(partner?.name || ""))}</div>`;
+  const logoMode = String(partner?.logoMode || "").toLowerCase();
+  const modeClass = logoMode === "wordmark" ? " partner-card__mark--wordmark" : "";
+
+  return `
+    <div class="partner-card__mark partner-card__mark--logo${modeClass}">
+      <img src="${escapeHTML(logoSrc)}" alt="${escapeHTML(partner?.name || "Partner")} logo" loading="lazy" decoding="async">
+    </div>
+  `;
+}
+
+function partnerCard(partner, baseDepth) {
   const name = escapeHTML(partner?.name || "Partner");
   const type = escapeHTML(partner?.type || "");
   const region = escapeHTML(partner?.region || "");
@@ -33,7 +55,7 @@ function partnerCard(partner) {
   return `
     <article class="tile-card tile-card--partner">
       <div class="partner-card__head">
-        <div class="partner-card__mark" aria-hidden="true">${escapeHTML(initials(partner?.name || ""))}</div>
+        ${renderPartnerMark(partner, baseDepth)}
 
         <div class="partner-card__title">
           <h3>${name}</h3>
@@ -66,7 +88,7 @@ export async function renderPartners({ baseDepth = 0 } = {}) {
       return;
     }
 
-    mount.innerHTML = `<div class="tile-grid">${partners.map((partner) => partnerCard(partner)).join("")}</div>`;
+    mount.innerHTML = `<div class="tile-grid tile-grid--partners">${partners.map((partner) => partnerCard(partner, baseDepth)).join("")}</div>`;
   } catch (error) {
     console.error(error);
     mount.innerHTML = `<p class="muted">${t("partners.error")}</p>`;

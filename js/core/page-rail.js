@@ -6,6 +6,31 @@ function laneLabel(sideKey) {
   return t("rail.lane.global");
 }
 
+function quickRoutes(sideKey) {
+  if (sideKey === "tekno") {
+    return [
+      { href: "./index.html#artists", label: t("nav.teknoArtists") },
+      { href: "./booking.html?type=collective_side", label: t("nav.bookTekno") }
+    ];
+  }
+
+  if (sideKey === "hiphop") {
+    return [
+      { href: "./index.html#artists", label: t("nav.hiphopArtists") },
+      { href: "./booking.html?type=collective_side", label: t("nav.bookHiphop") }
+    ];
+  }
+
+  return [];
+}
+
+function eventsHubHref(sideKey) {
+  if (sideKey === "tekno" || sideKey === "hiphop") {
+    return `../events/index.html?side=${encodeURIComponent(sideKey)}&scope=upcoming`;
+  }
+  return "../events/index.html";
+}
+
 export function mountPageRail({ sideKey = "global" } = {}) {
   const shell = document.querySelector(".page-shell");
   if (!shell) return;
@@ -40,6 +65,18 @@ export function mountPageRail({ sideKey = "global" } = {}) {
     shell.append(rail);
   }
 
+  const quick = quickRoutes(sideKey);
+  const quickHTML = quick.length
+    ? `
+      <section class="page-rail__panel" aria-label="${t("rail.quick.aria")}">
+        <p class="eyebrow">${t("rail.quick.title")}</p>
+        <div class="page-rail__quick-links">
+          ${quick.map((item) => `<a class="page-rail__quick-link" href="${item.href}">${item.label}</a>`).join("")}
+        </div>
+      </section>
+    `
+    : "";
+
   rail.innerHTML = `
     <div class="page-rail__stack">
       <section class="page-rail__panel page-rail__panel--lane" aria-label="${t("rail.lane.aria")}">
@@ -48,10 +85,15 @@ export function mountPageRail({ sideKey = "global" } = {}) {
         <p class="page-rail__lane">${laneLabel(sideKey)}</p>
       </section>
 
+      ${quickHTML}
+
       <section class="page-rail__panel page-rail__panel--events" aria-label="${t("nav.events")}">
         <p class="eyebrow">${t("nav.events")}</p>
         <div class="page-rail__events" data-rail-events>
           <p class="muted">${t("events.loading")}</p>
+        </div>
+        <div class="page-rail__actions">
+          <a class="page-rail__quick-link" href="${eventsHubHref(sideKey)}">${t("events.filter.allEvents")}</a>
         </div>
       </section>
     </div>

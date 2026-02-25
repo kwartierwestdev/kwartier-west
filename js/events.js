@@ -18,20 +18,40 @@ function ticketCTA(eventItem) {
   return `<span class="muted">${t("events.ticketsTba")}</span>`;
 }
 
-function ticketRailCTA(eventItem) {
+function railPrimaryTarget(eventItem, sideKey) {
   const mode = eventItem?.tickets?.mode || "tba";
-  const url = eventItem?.tickets?.url || "";
-  const label = eventItem?.tickets?.label || t("events.ticketsLabel");
+  const ticketUrl = String(eventItem?.tickets?.url || "").trim();
+  const sourceUrl = String(eventItem?.source?.url || "").trim();
 
-  if (mode === "external" && url) {
-    return `<a class="page-rail__event-link" href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(label)}</a>`;
+  if (mode === "external" && ticketUrl) {
+    return {
+      url: ticketUrl,
+      label: eventItem?.tickets?.label || t("events.ticketsLabel"),
+      external: true
+    };
   }
 
   if (mode === "internal") {
-    return `<a class="page-rail__event-link" href="../tickets/index.html">${t("events.ticketsLabel")}</a>`;
+    return {
+      url: "../tickets/index.html",
+      label: t("events.ticketsLabel"),
+      external: false
+    };
   }
 
-  return `<span class="page-rail__event-link is-muted">${t("events.ticketsTba")}</span>`;
+  if (sourceUrl) {
+    return {
+      url: sourceUrl,
+      label: `${t("events.source")}: ${eventItem?.source?.platform || t("events.sourceDefault")}`,
+      external: true
+    };
+  }
+
+  return {
+    url: `../events/index.html?side=${encodeURIComponent(sideKey)}&scope=all`,
+    label: t("events.filter.allEvents"),
+    external: false
+  };
 }
 
 function lineupHTML(eventItem, artistsData, sideKey) {
@@ -83,7 +103,7 @@ function renderRailEvents(sideEvents, sideKey) {
 
   const { upcoming, past } = splitEventsByDate(sideEvents);
   const ordered = upcoming.length ? upcoming : past.slice().reverse();
-  const limited = ordered.slice(0, 4);
+  const limited = ordered.slice(0, 3);
 
   if (!limited.length) {
     mount.innerHTML = `<p class="muted">${t("events.none")}</p>`;
@@ -98,21 +118,21 @@ function renderRailEvents(sideEvents, sideKey) {
           const location = [eventItem?.region, eventItem?.venue].filter(Boolean).map(escapeHTML).join(" - ");
           const status = escapeHTML(eventItem?.status || t("events.filter.upcoming"));
           const title = escapeHTML(eventItem?.title || t("events.untitled"));
-          const bookLabel = t("events.bookSide", { side: escapeHTML(sideShortLabel(sideKey)) });
-          const side = escapeHTML(sideShortLabel(sideKey));
+          const target = railPrimaryTarget(eventItem, sideKey);
+          const href = escapeHTML(target.url);
+          const label = escapeHTML(target.label);
+          const attrs = target.external ? ` target="_blank" rel="noopener noreferrer"` : "";
 
           return `
             <article class="page-rail__event">
-              <div class="page-rail__event-top">
-                <p class="page-rail__event-status">${status}</p>
-                <p class="page-rail__event-side">${side}</p>
-              </div>
-              <h4>${title}</h4>
-              <p class="page-rail__event-meta">${escapeHTML(dateLabel)}${location ? ` <span class="dot-sep"></span> ${location}` : ""}</p>
-              <div class="page-rail__event-links">
-                ${ticketRailCTA(eventItem)}
-                <a class="page-rail__event-link" href="./booking.html?type=collective_side">${bookLabel}</a>
-              </div>
+              <a class="page-rail__event-main" href="${href}"${attrs}>
+                <div class="page-rail__event-top">
+                  <p class="page-rail__event-status">${status}</p>
+                </div>
+                <h4>${title}</h4>
+                <p class="page-rail__event-meta">${escapeHTML(dateLabel)}${location ? ` <span class="dot-sep"></span> ${location}` : ""}</p>
+                <p class="page-rail__event-hint">${label}</p>
+              </a>
             </article>
           `;
         })
