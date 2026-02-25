@@ -17,27 +17,35 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Upload to one.com via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.ONECOM_FTP_HOST }}
-          username: ${{ secrets.ONECOM_FTP_USER }}
-          password: ${{ secrets.ONECOM_FTP_PASSWORD }}
-          port: ${{ secrets.ONECOM_FTP_PORT }}
-          protocol: ftps
-          server-dir: ${{ secrets.ONECOM_FTP_PATH }}
-          local-dir: ./
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/node_modules/**
-            **/_screens/**
-            **/_chrome-profile/**
-            **/.vscode/**
-            **/.idea/**
-            **/docs/**
-            **/scripts/**
-            **/README.md
-            **/package.json
-            **/package-lock.json
+      - name: Install lftp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
+      - name: Upload to one.com via SFTP
+        env:
+          ONECOM_FTP_HOST: ${{ secrets.ONECOM_FTP_HOST }}
+          ONECOM_FTP_USER: ${{ secrets.ONECOM_FTP_USER }}
+          ONECOM_FTP_PASSWORD: ${{ secrets.ONECOM_FTP_PASSWORD }}
+          ONECOM_FTP_PORT: ${{ secrets.ONECOM_FTP_PORT }}
+          ONECOM_FTP_PATH: ${{ secrets.ONECOM_FTP_PATH }}
+        run: |
+          REMOTE_PATH="${ONECOM_FTP_PATH:-/}"
+          lftp -u "$ONECOM_FTP_USER","$ONECOM_FTP_PASSWORD" "sftp://$ONECOM_FTP_HOST:$ONECOM_FTP_PORT" <<EOF
+          set sftp:auto-confirm yes
+          mirror -R --delete --verbose \
+            --exclude-glob .git* \
+            --exclude-glob .github \
+            --exclude-glob node_modules \
+            --exclude-glob _screens \
+            --exclude-glob _chrome-profile \
+            --exclude-glob .vscode \
+            --exclude-glob .idea \
+            --exclude-glob docs \
+            --exclude-glob scripts \
+            --exclude-glob README.md \
+            --exclude-glob package.json \
+            --exclude-glob package-lock.json \
+            ./ "$REMOTE_PATH"
+          bye
+          EOF
