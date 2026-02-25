@@ -1,0 +1,706 @@
+const DEFAULT_LANGUAGE = "nl";
+const UNKNOWN_LANGUAGE_FALLBACK = "en";
+const STORAGE_KEY = "kw.lang";
+const QUERY_KEY = "lang";
+
+const LANGUAGES = [
+  { code: "en", label: "English" },
+  { code: "nl", label: "Nederlands" },
+  { code: "fr", label: "Francais" },
+  { code: "de", label: "Deutsch" },
+  { code: "es", label: "Espanol" },
+  { code: "pt", label: "Portugues" },
+  { code: "it", label: "Italiano" },
+  { code: "pl", label: "Polski" },
+  { code: "ru", label: "Russkiy" },
+  { code: "tr", label: "Turkce" },
+  { code: "ar", label: "Arabic" },
+  { code: "zh", label: "Chinese" }
+];
+
+const RTL_LANGUAGES = new Set(["ar"]);
+
+const EN = {
+  "common.language": "Language",
+  "common.noPhoto": "No photo",
+  "common.loading": "Loading...",
+  "common.datePending": "Date pending",
+  "common.na": "n/a",
+  "common.tba": "TBA",
+  "common.profile": "Profile",
+  "common.copyJson": "Copy JSON",
+  "common.copied": "Copied",
+  "common.copyFailed": "Copy failed",
+
+  "nav.skip": "Skip to content",
+  "nav.menu": "Menu",
+  "nav.mainAria": "Kwartier West navigation",
+  "nav.homeAria": "Kwartier West home",
+  "nav.sideSwitchAria": "Switch between collectives",
+  "nav.events": "Events",
+  "nav.tekno": "Tekno",
+  "nav.hiphop": "Hip hop",
+  "nav.bookings": "Bookings",
+  "nav.shop": "Shop",
+  "nav.partners": "Partners",
+  "nav.contact": "Contact",
+  "nav.bookingDesk": "Booking desk",
+  "nav.manifest": "Manifest",
+  "nav.teknoArtists": "Tekno artists",
+  "nav.bookTekno": "Book Tekno",
+  "nav.hiphopArtists": "Hip hop artists",
+  "nav.bookHiphop": "Book Hip hop",
+  "rail.lane.aria": "Active lane",
+  "rail.lane.title": "Active lane",
+  "rail.lane.global": "Label-wide",
+  "rail.quick.aria": "Fast routes",
+  "rail.quick.title": "Fast routes",
+  "rail.toc.aria": "On-page structure",
+  "rail.toc.title": "On this page",
+  "rail.toc.empty": "Sections are loading...",
+  "rail.channels.aria": "Official channels",
+  "rail.channels.title": "Official channels",
+  "rail.channels.note": "Official channels.",
+
+  "meta.home.title": "Kwartier West",
+  "meta.home.description": "Kwartier West: Tekno and Hip hop collectives, events, bookings and merch.",
+  "meta.tekno.title": "Kwartier West - Tekno",
+  "meta.tekno.description": "Tekno collective of Kwartier West: artists, events and bookings.",
+  "meta.hiphop.title": "Kwartier West - Hip hop",
+  "meta.hiphop.description": "Hip hop collective of Kwartier West: artists, events and bookings.",
+  "meta.events.title": "Kwartier West - Events",
+  "meta.events.description": "Event hub with Tekno and Hip hop line-ups, tickets and official social sources.",
+  "meta.shop.title": "Kwartier West - Shop",
+  "meta.shop.description": "Storefront for Kwartier West merch and artist drops.",
+  "meta.booking.title": "Kwartier West - Central booking desk",
+  "meta.booking.description": "Central booking desk for Tekno, Hip hop and full label takeovers.",
+  "meta.teknoBooking.title": "Kwartier West - Tekno booking",
+  "meta.teknoBooking.description": "Book Tekno artists or the full Tekno collective.",
+  "meta.hiphopBooking.title": "Kwartier West - Hip hop booking",
+  "meta.hiphopBooking.description": "Book Hip hop artists or the full Hip hop collective.",
+  "meta.teknoArtist.title": "Kwartier West - Tekno artist",
+  "meta.teknoArtist.description": "Artist detail page for Tekno talents within Kwartier West.",
+  "meta.hiphopArtist.title": "Kwartier West - Hip hop artist",
+  "meta.hiphopArtist.description": "Artist detail page for Hip hop talents within Kwartier West.",
+  "meta.contact.title": "Kwartier West - Contact",
+  "meta.contact.description": "Contact Kwartier West for bookings, partnerships and production requests.",
+  "meta.manifest.title": "Kwartier West - Manifest",
+  "meta.manifest.description": "Manifest of Kwartier West: vision, values and operational rules.",
+  "meta.partners.title": "Kwartier West - Partners",
+  "meta.partners.description": "Trusted partners of Kwartier West across production, visuals, sound and operations.",
+  "meta.tickets.title": "Kwartier West - Tickets",
+  "meta.tickets.description": "Ticketing and access information for Kwartier West events.",
+
+  "landing.quick.events": "Events",
+  "landing.quick.aria": "Quick links",
+  "landing.quick.booking": "Booking desk",
+  "landing.quick.shop": "Shop",
+  "landing.portal.aria": "Kwartier West portal",
+  "landing.portal.instruction": "Choose your lane. Press Enter to cross the rift.",
+  "landing.tekno.eyebrow": "Tekno collective",
+  "landing.tekno.title": "Tekno",
+  "landing.tekno.desc": "Hardtek, acid pressure and soundsystem discipline.",
+  "landing.tekno.open": "Open Tekno",
+  "landing.tekno.book": "Book Tekno",
+  "landing.tekno.aria": "Open Tekno portal",
+  "landing.hiphop.eyebrow": "Hip hop collective",
+  "landing.hiphop.title": "Hip hop",
+  "landing.hiphop.desc": "Bars, producers and live energy with character.",
+  "landing.hiphop.open": "Open Hip hop",
+  "landing.hiphop.book": "Book Hip hop",
+  "landing.hiphop.aria": "Open Hip hop portal",
+  "landing.rift.main.aria": "Enter the main Kwartier West site",
+  "landing.rift.main.title": "Enter The West",
+  "landing.rift.tekno.aria": "Enter Tekno collective",
+  "landing.rift.tekno.title": "Enter The Rhythm",
+  "landing.rift.hiphop.aria": "Enter Hip hop collective",
+  "landing.rift.hiphop.title": "Enter The Barz",
+  "landing.footer.events": "Live event hub",
+  "landing.footer.partners": "Partners",
+  "landing.footer.contact": "Contact",
+  "landing.footer.powered": "Powered by deeqstudio",
+
+  "tekno.hero.eyebrow": "Kwartier West / Tekno",
+  "tekno.hero.title": "Tekno Collective",
+  "tekno.hero.lead": "Raves, warehouse pressure and live sets built for heavy systems.",
+  "tekno.hero.collective": "Book Tekno collective",
+  "tekno.hero.desk": "Open central booking desk",
+  "tekno.events.title": "Events",
+  "tekno.events.cta": "Open global event hub",
+  "tekno.artists.title": "Artists",
+  "tekno.artists.cta": "Book multiple artists",
+
+  "hiphop.hero.eyebrow": "Kwartier West / Hip hop",
+  "hiphop.hero.title": "Hip hop Collective",
+  "hiphop.hero.lead": "Live bars, producers and performers ready for real stages.",
+  "hiphop.hero.collective": "Book Hip hop collective",
+  "hiphop.hero.desk": "Open central booking desk",
+  "hiphop.events.title": "Events",
+  "hiphop.events.cta": "Open global event hub",
+  "hiphop.artists.title": "Artists",
+  "hiphop.artists.cta": "Book multiple artists",
+
+  "events.hero.eyebrow": "Kwartier West / Event hub",
+  "events.hero.title": "Live Event Feed",
+  "events.hero.lead": "One feed. Two lanes.",
+  "events.filtersAria": "Event filters",
+  "events.filter.all": "All",
+  "events.filter.groupSide": "Filter by collective",
+  "events.filter.groupScope": "Filter by timeline",
+  "events.filter.tekno": "Tekno",
+  "events.filter.hiphop": "Hip hop",
+  "events.filter.upcoming": "Upcoming",
+  "events.filter.allEvents": "All events",
+  "events.filter.past": "Past",
+  "events.section.featured": "Featured",
+  "events.section.sources": "Official social feed",
+  "events.cta.takeover": "Book full takeover",
+  "events.section.overview": "Event overview",
+  "events.cta.production": "Contact production",
+  "events.loading": "Loading events...",
+  "events.error": "Events could not be loaded.",
+  "events.none": "No events published yet.",
+  "events.lineup": "Line-up",
+  "events.lineupPending": "Line-up coming soon.",
+  "events.ticketsTba": "Tickets: TBA",
+  "events.bookSide": "Book {side}",
+  "events.source": "Source",
+  "events.sourceDefault": "Social",
+  "events.source.live": "Live sync active.",
+  "events.source.ready": "Live sync ready.",
+  "events.source.noSource": "No source configured.",
+  "events.visible": "{count} visible",
+  "events.total": "{count} events",
+  "events.ticketsLabel": "Tickets",
+  "events.untitled": "Untitled event",
+
+  "artists.loading": "Loading artists...",
+  "artists.empty": "No artists available yet.",
+  "artists.error": "Artists could not be loaded.",
+  "artists.profile": "Profile",
+  "artists.bookSolo": "Book solo",
+  "artists.defaultName": "Unknown artist",
+  "artists.defaultRole": "Artist",
+
+  "artist.loading": "Loading artist...",
+  "artist.notSelected": "No artist selected.",
+  "artist.notFound": "Artist not found.",
+  "artist.wrongSideTitle": "Artist is on the other side",
+  "artist.wrongSideBody": "{name} belongs to {side}.",
+  "artist.openCorrect": "Open correct profile",
+  "artist.bookSolo": "Book solo",
+  "artist.bookMultiple": "Book with multiple artists",
+  "artist.hero.eyebrowTekno": "Tekno / Artist profile",
+  "artist.hero.eyebrowHiphop": "Hip hop / Artist profile",
+  "artist.section.signature": "Signature",
+  "artist.section.live": "Live direction",
+  "artist.section.focus": "Focus lanes",
+  "artist.section.channels": "Channels",
+  "artist.focusEmpty": "No focus lanes published yet.",
+  "artist.linksEmpty": "No public channels published yet.",
+
+  "booking.hero.eyebrow": "Booking / Central desk",
+  "booking.hero.eyebrowTekno": "Booking / Tekno",
+  "booking.hero.eyebrowHiphop": "Booking / Hip hop",
+  "booking.hero.title": "Book Kwartier West",
+  "booking.hero.lead": "Pick a type and submit.",
+  "booking.link.tekno": "Tekno artists",
+  "booking.link.hiphop": "Hip hop artists",
+  "booking.link.events": "Event hub",
+  "booking.initial": "Use the form to generate a complete booking payload.",
+  "booking.type.single.label": "Single artist",
+  "booking.type.single.hint": "Book exactly one artist.",
+  "booking.type.multiple.label": "Multiple artists",
+  "booking.type.multiple.hint": "Book a selected group of artists.",
+  "booking.type.side.label": "Collective (per side)",
+  "booking.type.side.hint": "Book the complete Tekno or Hip hop collective.",
+  "booking.type.full.label": "Full label takeover",
+  "booking.type.full.hint": "Book Tekno and Hip hop together.",
+  "booking.form.type": "Booking type",
+  "booking.form.collective": "Collective",
+  "booking.form.artistSelection": "Artist selection",
+  "booking.form.artistNotNeeded": "Artist selection is not required for this booking type.",
+  "booking.form.chooseSide": "Choose Tekno or Hip hop first for a side collective booking.",
+  "booking.form.eventName": "Event name",
+  "booking.form.eventDate": "Event date",
+  "booking.form.startTime": "Start time",
+  "booking.form.city": "City / region",
+  "booking.form.venue": "Venue",
+  "booking.form.attendance": "Expected attendance",
+  "booking.form.budget": "Budget (EUR)",
+  "booking.form.setLength": "Set length (min)",
+  "booking.form.contactName": "Contact name",
+  "booking.form.contactEmail": "Contact email",
+  "booking.form.phone": "Phone",
+  "booking.form.org": "Organisation",
+  "booking.form.notes": "Technical and production notes",
+  "booking.form.submit": "Generate booking request",
+  "booking.form.helper": "You receive payload and email draft, ready for app or webhook integration.",
+  "booking.form.placeholder.eventName": "Warehouse Pressure Night",
+  "booking.form.placeholder.city": "Roeselare",
+  "booking.form.placeholder.venue": "Venue",
+  "booking.form.placeholder.attendance": "350",
+  "booking.form.placeholder.budget": "2500",
+  "booking.form.placeholder.setLength": "60",
+  "booking.form.placeholder.contactName": "Jane Doe",
+  "booking.form.placeholder.contactEmail": "name@domain.com",
+  "booking.form.placeholder.phone": "+32 ...",
+  "booking.form.placeholder.organisation": "Crew / venue / agency",
+  "booking.form.placeholder.notes": "PA, monitors, stage setup, curfew",
+  "booking.validate.name": "Contact name is required.",
+  "booking.validate.email": "Provide a valid email address.",
+  "booking.validate.event": "Event date and city are required.",
+  "booking.validate.single": "Select exactly 1 artist for a single booking.",
+  "booking.validate.multiple": "Select at least 2 artists for a multiple booking.",
+  "booking.validate.side": "Choose Tekno or Hip hop for a side collective booking.",
+  "booking.result.title": "Booking request ready",
+  "booking.result.reference": "Reference",
+  "booking.result.mail": "Open mail draft",
+  "booking.result.webhookDisabled": "Webhook: disabled (mail and payload flow active).",
+  "booking.result.webhookOk": "Webhook: delivered successfully.",
+  "booking.result.webhookFail": "Webhook error",
+  "booking.result.webhookHttp": "HTTP status {status}",
+  "booking.result.webhookNetwork": "Network or timeout error",
+  "booking.loadArtistsError": "Artists could not be loaded. Booking form is temporarily offline.",
+  "booking.summary.artists": "Artists",
+  "booking.summary.event": "Event",
+  "booking.summary.venue": "Venue",
+  "booking.summary.budget": "Budget",
+  "booking.summary.contact": "Contact",
+  "booking.summary.json": "JSON payload",
+
+  "shop.hero.eyebrow": "Merch / Storefront",
+  "shop.hero.title": "Kwartier West Shop",
+  "shop.hero.lead": "Label merch and artist drops.",
+  "shop.search.label": "Search merch",
+  "shop.search.placeholder": "Search item or artist",
+  "shop.filter.all": "All",
+  "shop.filter.label": "Kwartier West",
+  "shop.filter.artists": "Artist merch",
+  "shop.filter.tekno": "Tekno",
+  "shop.filter.hiphop": "Hip hop",
+  "shop.filter.available": "Available",
+  "shop.filter.comingSoon": "Coming soon",
+  "shop.status.inStock": "In stock",
+  "shop.status.preorder": "Pre-order",
+  "shop.status.soldOut": "Sold out",
+  "shop.status.comingSoon": "Coming soon",
+  "shop.status.tba": "Status TBA",
+  "shop.price.tba": "Price TBA",
+  "shop.product.open": "Open product",
+  "shop.product.pending": "Product link coming soon",
+  "shop.sizes": "Sizes",
+  "shop.loading": "Loading shop...",
+  "shop.empty": "No items found for this filter.",
+  "shop.error": "Shop could not be loaded.",
+  "shop.count": "{count} items",
+
+  "partners.loading": "Loading partners...",
+  "partners.empty": "No partners published yet.",
+  "partners.error": "Partners could not be loaded.",
+  "partners.linksPending": "Links coming soon.",
+  "partners.hero.eyebrow": "Network / Trusted partners",
+  "partners.hero.title": "Partners",
+  "partners.hero.lead": "Studios, crews and operators in the West network.",
+  "partners.hero.events": "Event hub",
+  "partners.hero.become": "Become a partner",
+  "partners.protocol.title": "How we collaborate",
+  "partners.protocol.one": "Operational clarity first: production, timing and ownership are aligned before launch.",
+  "partners.protocol.two": "Channel discipline: every partner has clear comms and response lanes.",
+  "partners.protocol.three": "Scalable system: workflows stay compatible with the app integration roadmap.",
+  "partners.protocol.cta": "Open contact desk",
+
+  "contact.hero.eyebrow": "Contact / Production desk",
+  "contact.hero.title": "Contact Kwartier West",
+  "contact.hero.lead": "Booking, production and partnership contact.",
+  "contact.hero.booking": "Open booking desk",
+  "contact.hero.events": "Open event hub",
+  "contact.tile.bookings.title": "Bookings",
+  "contact.tile.bookings.meta": "Artists and collectives",
+  "contact.tile.bookings.body": "Submit artist or collective requests via one intake.",
+  "contact.tile.bookings.main": "Central booking desk",
+  "contact.tile.bookings.tekno": "Tekno booking",
+  "contact.tile.bookings.hiphop": "Hip hop booking",
+  "contact.tile.channels.title": "General channels",
+  "contact.tile.channels.meta": "Team contact",
+  "contact.tile.channels.body": "General team and partner contact.",
+  "contact.tile.integration.title": "App integration",
+  "contact.tile.integration.meta": "Roadmap",
+  "contact.tile.integration.body": "Booking, events and shop already run on app-ready payload contracts.",
+  "contact.tile.integration.cta": "View integration config",
+
+  "manifest.hero.eyebrow": "This is the West",
+  "manifest.hero.title": "Manifest",
+  "manifest.hero.lead": "Two lanes. One standard.",
+  "manifest.why.title": "Why two sides",
+  "manifest.why.body": "Tekno and Hip hop move differently, but run on one production backbone.",
+  "manifest.rules.title": "Our rules",
+  "manifest.rules.one": "Artists remain owners of their identity and story.",
+  "manifest.rules.two": "Events are programmed on quality and safety, not hype.",
+  "manifest.rules.three": "Communication with promoters and venues stays tight, transparent and fast.",
+  "manifest.rules.four": "Data from web, booking flow and events is prepared for app integration.",
+  "manifest.platform.title": "What this platform does",
+  "manifest.platform.one": "Process bookings per artist, multiple artists or full collective.",
+  "manifest.platform.two": "Show events with official social sources as origin.",
+  "manifest.platform.three": "Combine merch: label drops and artist drops in one storefront.",
+  "manifest.cta.booking": "Start booking",
+  "manifest.cta.events": "View events",
+
+  "tickets.hero.eyebrow": "Tickets / Access flow",
+  "tickets.hero.title": "Tickets",
+  "tickets.hero.lead": "Ticket status is managed per event from the event hub.",
+  "tickets.hero.events": "Open event hub",
+  "tickets.hero.support": "Ticket support",
+  "tickets.status.title": "Ticket status",
+  "tickets.status.external.label": "External:",
+  "tickets.status.external.body": "Purchase on the organiser's platform.",
+  "tickets.status.internal.label": "Internal:",
+  "tickets.status.internal.body": "Kwartier West flow (later linked to app and QR check-in).",
+  "tickets.status.tba.label": "TBA:",
+  "tickets.status.tba.body": "Details follow once venue, capacity and production lock are final.",
+  "tickets.policy.title": "Entry policy",
+  "tickets.policy.one": "Bring your confirmation or ticket.",
+  "tickets.policy.two": "Respect venue rules and crew briefing.",
+  "tickets.policy.three": "Door policy remains an operational decision by the organisation."
+};
+
+const NL = {
+  ...EN,
+  "common.language": "Taal",
+  "common.noPhoto": "Geen foto",
+  "common.loading": "Laden...",
+  "common.datePending": "Datum volgt",
+  "common.na": "n.v.t.",
+  "common.tba": "N.t.b.",
+  "common.profile": "Profiel",
+  "common.copyJson": "Kopieer JSON",
+  "common.copied": "Gekopieerd",
+  "common.copyFailed": "Kopieren mislukt",
+  "nav.skip": "Ga naar inhoud",
+  "nav.mainAria": "Kwartier West navigatie",
+  "nav.sideSwitchAria": "Wissel tussen collectives",
+  "nav.teknoArtists": "Tekno artiesten",
+  "nav.hiphopArtists": "Hip hop artiesten",
+  "nav.bookTekno": "Boek Tekno",
+  "nav.bookHiphop": "Boek Hip hop",
+  "rail.lane.aria": "Actieve lane",
+  "rail.lane.title": "Actieve lane",
+  "rail.lane.global": "Label-breed",
+  "rail.quick.aria": "Snelle routes",
+  "rail.quick.title": "Snelle routes",
+  "rail.toc.aria": "Pagina-structuur",
+  "rail.toc.title": "Op deze pagina",
+  "rail.toc.empty": "Secties laden nog...",
+  "rail.channels.aria": "Officiele kanalen",
+  "rail.channels.title": "Officiele kanalen",
+  "rail.channels.note": "Officiele kanalen.",
+  "landing.quick.aria": "Snelle links",
+  "landing.portal.aria": "Kwartier West portaal",
+  "landing.portal.instruction": "Kies je lane. Druk Enter om de rift te kruisen.",
+  "landing.tekno.desc": "Hardtek, acid pressure en soundsystem discipline.",
+  "landing.hiphop.desc": "Bars, producers en live energie met karakter.",
+  "tekno.hero.lead": "Raves, warehouse pressure en live sets gebouwd voor zware systemen.",
+  "tekno.hero.collective": "Boek Tekno collective",
+  "tekno.hero.desk": "Open centrale booking desk",
+  "tekno.events.cta": "Open globale event hub",
+  "tekno.artists.title": "Artiesten",
+  "tekno.artists.cta": "Boek meerdere artiesten",
+  "hiphop.hero.lead": "Live bars, producers en performers klaar voor echte stages.",
+  "hiphop.hero.collective": "Boek Hip hop collective",
+  "hiphop.hero.desk": "Open centrale booking desk",
+  "hiphop.events.cta": "Open globale event hub",
+  "hiphop.artists.title": "Artiesten",
+  "hiphop.artists.cta": "Boek meerdere artiesten",
+  "events.hero.lead": "Een feed. Twee lanes.",
+  "events.filter.all": "Alles",
+  "events.filter.upcoming": "Komend",
+  "events.filter.allEvents": "Alle events",
+  "events.filter.past": "Voorbij",
+  "events.loading": "Events laden...",
+  "events.error": "Events konden niet geladen worden.",
+  "events.none": "Nog geen events gepubliceerd.",
+  "events.lineupPending": "Line-up volgt.",
+  "events.ticketsTba": "Tickets: N.t.b.",
+  "events.visible": "{count} zichtbaar",
+  "events.untitled": "Naamloos event",
+  "artists.loading": "Artiesten laden...",
+  "artists.empty": "Nog geen artiesten beschikbaar.",
+  "artists.error": "Artiesten konden niet geladen worden.",
+  "artists.bookSolo": "Boek solo",
+  "artists.defaultName": "Onbekende artiest",
+  "artists.defaultRole": "Artiest",
+  "artist.loading": "Artiest laden...",
+  "artist.notSelected": "Geen artiest geselecteerd.",
+  "artist.notFound": "Artiest niet gevonden.",
+  "artist.wrongSideTitle": "Artiest zit op de andere side",
+  "artist.wrongSideBody": "{name} hoort bij {side}.",
+  "artist.openCorrect": "Open juiste profiel",
+  "artist.bookSolo": "Boek solo",
+  "artist.bookMultiple": "Boek met meerdere artiesten",
+  "artist.hero.eyebrowTekno": "Tekno / Artiestprofiel",
+  "artist.hero.eyebrowHiphop": "Hip hop / Artiestprofiel",
+  "artist.section.signature": "Signatuur",
+  "artist.section.live": "Live richting",
+  "artist.section.focus": "Focuslijnen",
+  "artist.section.channels": "Kanalen",
+  "artist.focusEmpty": "Nog geen focuslijnen gepubliceerd.",
+  "artist.linksEmpty": "Nog geen publieke kanalen gepubliceerd.",
+  "booking.hero.eyebrow": "Booking / Centrale desk",
+  "booking.hero.eyebrowTekno": "Booking / Tekno",
+  "booking.hero.eyebrowHiphop": "Booking / Hip hop",
+  "booking.hero.title": "Boek Kwartier West",
+  "booking.hero.lead": "Kies een type en verstuur.",
+  "booking.type.single.label": "Enkele artiest",
+  "booking.type.multiple.label": "Meerdere artiesten",
+  "booking.type.full.label": "Volledige label takeover",
+  "booking.form.submit": "Genereer booking aanvraag",
+  "booking.validate.name": "Contact naam is verplicht.",
+  "booking.validate.email": "Vul een geldig emailadres in.",
+  "booking.validate.event": "Event datum en stad zijn verplicht.",
+  "booking.validate.single": "Selecteer exact 1 artiest voor een single booking.",
+  "booking.validate.multiple": "Selecteer minstens 2 artiesten voor een multiple booking.",
+  "booking.validate.side": "Kies Tekno of Hip hop voor een side collective booking.",
+  "booking.result.title": "Booking aanvraag klaar",
+  "booking.result.mail": "Open maildraft",
+  "booking.result.webhookDisabled": "Webhook: uitgeschakeld (mail en payload flow actief).",
+  "booking.result.webhookOk": "Webhook: succesvol afgeleverd.",
+  "booking.result.webhookFail": "Webhook fout",
+  "booking.result.webhookNetwork": "Netwerk- of timeoutfout",
+  "booking.loadArtistsError": "Artiesten konden niet geladen worden. Booking formulier tijdelijk offline.",
+  "booking.summary.artists": "Artiesten",
+  "shop.search.label": "Zoek merch",
+  "shop.search.placeholder": "Zoek item of artiest",
+  "shop.hero.lead": "Label merch en artist drops.",
+  "shop.filter.all": "Alles",
+  "shop.filter.available": "Beschikbaar",
+  "shop.filter.comingSoon": "Binnenkort",
+  "shop.status.inStock": "Op voorraad",
+  "shop.status.soldOut": "Uitverkocht",
+  "shop.status.comingSoon": "Binnenkort",
+  "shop.price.tba": "Prijs TBA",
+  "shop.product.pending": "Product link volgt",
+  "shop.loading": "Shop laden...",
+  "shop.empty": "Geen items gevonden voor deze filter.",
+  "shop.error": "Shop kon niet geladen worden.",
+  "partners.loading": "Partners laden...",
+  "partners.empty": "Nog geen partners gepubliceerd.",
+  "partners.error": "Partners konden niet geladen worden.",
+  "partners.linksPending": "Links volgen.",
+  "partners.hero.lead": "Studio's, crews en operators in het West-netwerk.",
+  "partners.hero.become": "Word partner",
+  "partners.protocol.title": "Hoe we samenwerken",
+  "partners.protocol.one": "Eerst operationele duidelijkheid: productie, timing en ownership liggen vast voor launch.",
+  "partners.protocol.two": "Kanaaldiscipline: elke partner heeft duidelijke comms- en response lanes.",
+  "partners.protocol.three": "Schaalbaar systeem: workflows blijven compatibel met de app-roadmap.",
+  "partners.protocol.cta": "Open contactdesk",
+  "contact.hero.lead": "Booking, productie en partnership contact.",
+  "contact.tile.bookings.body": "Verstuur artist- of collective-aanvragen via een intake.",
+  "contact.tile.channels.body": "Algemeen team- en partnercontact.",
+  "contact.tile.integration.body": "Booking, events en shop draaien al op app-ready payload contracts.",
+  "manifest.hero.lead": "Twee lanes. Een standaard.",
+  "manifest.why.body": "Tekno en Hip hop bewegen anders, maar draaien op een gedeelde productieruggengraat.",
+  "tickets.hero.lead": "Ticketstatus wordt per event beheerd vanuit de event hub."
+};
+
+const MESSAGES = {
+  en: EN,
+  nl: NL,
+  fr: { ...EN, "common.language": "Langue" },
+  de: { ...EN, "common.language": "Sprache" },
+  es: { ...EN, "common.language": "Idioma" },
+  pt: { ...EN, "common.language": "Idioma" },
+  it: { ...EN, "common.language": "Lingua" },
+  pl: { ...EN, "common.language": "Jezyk" },
+  ru: { ...EN, "common.language": "Yazyk" },
+  tr: { ...EN, "common.language": "Dil" },
+  ar: { ...EN, "common.language": "Language" },
+  zh: { ...EN, "common.language": "Language" }
+};
+
+let activeLanguage = DEFAULT_LANGUAGE;
+
+function languageCodes() {
+  return new Set(LANGUAGES.map((item) => item.code));
+}
+
+function normalizeLanguage(input) {
+  const value = String(input || "").trim().toLowerCase();
+  if (!value) return UNKNOWN_LANGUAGE_FALLBACK;
+
+  const codes = languageCodes();
+  if (codes.has(value)) return value;
+
+  const base = value.split("-")[0];
+  if (codes.has(base)) return base;
+
+  return UNKNOWN_LANGUAGE_FALLBACK;
+}
+
+function readQueryLanguage() {
+  const params = new URLSearchParams(window.location.search || "");
+  return params.get(QUERY_KEY) || "";
+}
+
+function detectLanguage() {
+  const queryLanguage = readQueryLanguage();
+  if (queryLanguage) return normalizeLanguage(queryLanguage);
+
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) return normalizeLanguage(stored);
+  } catch {
+    // ignore
+  }
+
+  const navLangs =
+    Array.isArray(navigator.languages) && navigator.languages.length
+      ? navigator.languages
+      : [navigator.language || ""];
+  for (const candidate of navLangs) {
+    if (!candidate) continue;
+    const normalized = normalizeLanguage(candidate);
+    if (normalized) return normalized;
+  }
+
+  return UNKNOWN_LANGUAGE_FALLBACK;
+}
+
+function interpolate(template, params = {}) {
+  return String(template).replace(/\{(\w+)\}/g, (_, token) => String(params[token] ?? ""));
+}
+
+function hasMessage(lang, key) {
+  return Object.prototype.hasOwnProperty.call(MESSAGES?.[lang] || {}, key);
+}
+
+function messageFor(lang, key) {
+  if (hasMessage(lang, key)) return MESSAGES[lang][key];
+  if (hasMessage(DEFAULT_LANGUAGE, key)) return MESSAGES[DEFAULT_LANGUAGE][key];
+  return null;
+}
+
+export function t(key, params = {}) {
+  const value = messageFor(activeLanguage, key);
+  if (value === null) return key;
+  return interpolate(value, params);
+}
+
+export function getCurrentLanguage() {
+  return activeLanguage;
+}
+
+export function getCurrentLocale() {
+  const lang = getCurrentLanguage();
+  const map = {
+    en: "en-US",
+    nl: "nl-BE",
+    fr: "fr-FR",
+    de: "de-DE",
+    es: "es-ES",
+    pt: "pt-PT",
+    it: "it-IT",
+    pl: "pl-PL",
+    ru: "ru-RU",
+    tr: "tr-TR",
+    ar: "ar-SA",
+    zh: "zh-CN"
+  };
+  return map[lang] || "en-US";
+}
+
+export function isRTL() {
+  return RTL_LANGUAGES.has(activeLanguage);
+}
+
+export function setLanguage(language, { persist = true } = {}) {
+  activeLanguage = normalizeLanguage(language);
+
+  if (persist) {
+    try {
+      localStorage.setItem(STORAGE_KEY, activeLanguage);
+    } catch {
+      // ignore
+    }
+  }
+
+  document.documentElement.setAttribute("lang", activeLanguage);
+  document.documentElement.setAttribute("dir", isRTL() ? "rtl" : "ltr");
+}
+
+function updateUrlWithLanguage(lang) {
+  const url = new URL(window.location.href);
+  url.searchParams.set(QUERY_KEY, lang);
+  return url.toString();
+}
+
+function applyTextTranslations(root) {
+  root.querySelectorAll("[data-i18n]").forEach((element) => {
+    const key = element.getAttribute("data-i18n") || "";
+    const value = messageFor(activeLanguage, key);
+    if (value !== null) element.textContent = interpolate(value);
+  });
+
+  root.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-placeholder") || "";
+    const value = messageFor(activeLanguage, key);
+    if (value !== null) element.setAttribute("placeholder", value);
+  });
+
+  root.querySelectorAll("[data-i18n-content]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-content") || "";
+    const value = messageFor(activeLanguage, key);
+    if (value !== null) element.setAttribute("content", value);
+  });
+
+  root.querySelectorAll("[data-i18n-title]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-title") || "";
+    const value = messageFor(activeLanguage, key);
+    if (value === null) return;
+    if (element.tagName.toLowerCase() === "title") {
+      element.textContent = value;
+      return;
+    }
+    element.setAttribute("title", value);
+  });
+
+  root.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-aria-label") || "";
+    const value = messageFor(activeLanguage, key);
+    if (value !== null) element.setAttribute("aria-label", value);
+  });
+
+  root.querySelectorAll("[data-i18n-value]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-value") || "";
+    const value = messageFor(activeLanguage, key);
+    if (value !== null) element.setAttribute("value", value);
+  });
+}
+
+function buildLanguageOptions(select) {
+  select.innerHTML = LANGUAGES.map((language) => `<option value="${language.code}">${language.label}</option>`).join("");
+  select.value = activeLanguage;
+}
+
+export function attachLanguageSwitchers(root = document) {
+  const switches = root.querySelectorAll("[data-lang-switch]");
+  switches.forEach((select) => {
+    buildLanguageOptions(select);
+    select.setAttribute("aria-label", t("common.language"));
+
+    select.addEventListener("change", () => {
+      const next = normalizeLanguage(select.value);
+      setLanguage(next, { persist: true });
+      window.location.href = updateUrlWithLanguage(next);
+    });
+  });
+}
+
+export function applyI18n(root = document) {
+  applyTextTranslations(root);
+}
+
+export function initI18nPage() {
+  setLanguage(detectLanguage(), { persist: true });
+  applyI18n(document);
+  attachLanguageSwitchers(document);
+}

@@ -1,53 +1,55 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Kwartier West — Tekno</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Kwartier West — Tek side: late nights, rigs, pressure. No hype. No cosplay." />
-  <link rel="stylesheet" href="../../css/base.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n-title="meta.tekno.title">Kwartier West - Tekno</title>
+  <meta name="description" content="Tekno collective of Kwartier West: artists, events and bookings." data-i18n-content="meta.tekno.description">
+  <link rel="stylesheet" href="../../css/base.css?v=20260224j">
 </head>
-<body>
-
+<body class="kw-page kw-side-tekno">
   <div data-nav></div>
 
-  <div class="page">
-    <div class="topline">
-      <a class="back" href="../../index.html">← back</a>
-      <div class="kicker"><span class="dot"></span> Tek side</div>
-    </div>
+  <main id="main-content" class="page-shell">
+    <header class="hero-surface">
+      <p class="eyebrow" data-i18n="tekno.hero.eyebrow">Kwartier West / Tekno</p>
+      <h1 data-i18n="tekno.hero.title">Tekno Collective</h1>
+      <p class="lead" data-i18n="tekno.hero.lead">Raves, warehouse pressure and live sets built for heavy systems.</p>
+      <figure class="collective-hero-media collective-hero-media--tekno" aria-hidden="true">
+        <img src="../../assets/landing-tekno.jpg" alt="" loading="lazy" decoding="async">
+        <span class="collective-hero-media__logo" aria-hidden="true"></span>
+      </figure>
+      <div class="inline-actions">
+        <a class="cta-btn" href="./booking.html" data-i18n="tekno.hero.collective">Book Tekno collective</a>
+      </div>
+    </header>
 
-    <div data-sideswitch></div>
-
-    <div class="sectionCard">
-      <h1>KWARTIER.TEK</h1>
-      <p class="lead">
-       Pushing high-BPM sonic boundaries. Kwartier West delivers raw hardtek and mental tekno, built for massive sound systems and non-stop raves. — <strong>tekno</strong>.
-      </p>
-    </div>
-
-    <section id="events" aria-label="Tekno events" class="sectionCard">
-      <h2>Events</h2>
-      <div data-events></div>
+    <section id="artists" class="surface">
+      <div class="section-header">
+        <h2 data-i18n="tekno.artists.title">Artists</h2>
+      </div>
+      <div data-artists aria-live="polite"></div>
     </section>
+  </main>
 
-    <section id="artists" aria-label="Tekno artists" class="sectionCard">
-      <h2>Artists</h2>
-      <div data-artists></div>
-    </section>
-  </div>
+  <div data-footer></div>
 
   <script type="module">
+    import { initI18nPage } from "../../js/core/i18n.js";
     import { renderNav } from "../../partials/nav.js";
-    import { renderSideSwitch } from "../../partials/side-switch.js";
+    import { renderFooter } from "../../partials/footer.js";
     import { renderEvents } from "../../js/events.js";
     import { renderArtists } from "../../js/artists.js";
 
+    initI18nPage();
     renderNav({ sideKey: "tekno", baseDepth: 2 });
-    renderSideSwitch("tekno");
-    renderEvents("tekno");
+    renderFooter({ baseDepth: 2 });
+    renderEvents("tekno", { baseDepth: 2 });
     renderArtists("tekno", { baseDepth: 2 });
-
   </script>
 </body>
 </html>
+
+
+
+

@@ -1,52 +1,55 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Kwartier West — Hip hop</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Kwartier West — Hip hop side: independent voices, bars with context." />
-  <link rel="stylesheet" href="../../css/base.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n-title="meta.hiphop.title">Kwartier West - Hip hop</title>
+  <meta name="description" content="Hip hop collective of Kwartier West: artists, events and bookings." data-i18n-content="meta.hiphop.description">
+  <link rel="stylesheet" href="../../css/base.css?v=20260224j">
 </head>
-<body>
+<body class="kw-page kw-side-hiphop">
   <div data-nav></div>
 
-  <div class="page">
-    <div class="topline">
-      <a class="back" href="../../index.html">← back</a>
-      <div class="kicker"><span class="dot"></span> Hip hop</div>
-    </div>
+  <main id="main-content" class="page-shell">
+    <header class="hero-surface">
+      <p class="eyebrow" data-i18n="hiphop.hero.eyebrow">Kwartier West / Hip hop</p>
+      <h1 data-i18n="hiphop.hero.title">Hip hop Collective</h1>
+      <p class="lead" data-i18n="hiphop.hero.lead">Live bars, producers and performers ready for real stages.</p>
+      <figure class="collective-hero-media collective-hero-media--hiphop" aria-hidden="true">
+        <img src="../../assets/landing-hiphop.jpg" alt="" loading="lazy" decoding="async">
+        <span class="collective-hero-media__logo" aria-hidden="true"></span>
+      </figure>
+      <div class="inline-actions">
+        <a class="cta-btn" href="./booking.html" data-i18n="hiphop.hero.collective">Book Hip hop collective</a>
+      </div>
+    </header>
 
-    <div data-sideswitch></div>
-
-    <div class="sectionCard">
-      <h1>WEST.SIDE</h1>
-      <p class="lead">
-       Hip hop in its purest form. Kwartier West connects talent, passion, and rhythm to amplify the voice of the new generation.
-      </p>
-    </div>
-
-    <section id="events" aria-label="Hip hop events" class="sectionCard">
-      <h2>Events</h2>
-      <div data-events></div>
+    <section id="artists" class="surface">
+      <div class="section-header">
+        <h2 data-i18n="hiphop.artists.title">Artists</h2>
+      </div>
+      <div data-artists aria-live="polite"></div>
     </section>
+  </main>
 
-    <section id="artists" aria-label="Hip hop artists" class="sectionCard">
-      <h2>Artists</h2>
-      <div data-artists></div>
-    </section>
-  </div>
+  <div data-footer></div>
 
   <script type="module">
+    import { initI18nPage } from "../../js/core/i18n.js";
     import { renderNav } from "../../partials/nav.js";
-    import { renderSideSwitch } from "../../partials/side-switch.js";
+    import { renderFooter } from "../../partials/footer.js";
     import { renderEvents } from "../../js/events.js";
     import { renderArtists } from "../../js/artists.js";
 
+    initI18nPage();
     renderNav({ sideKey: "hiphop", baseDepth: 2 });
-    renderSideSwitch("hiphop");
-    renderEvents("hiphop");
+    renderFooter({ baseDepth: 2 });
+    renderEvents("hiphop", { baseDepth: 2 });
     renderArtists("hiphop", { baseDepth: 2 });
-
   </script>
 </body>
 </html>
+
+
+
+

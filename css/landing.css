@@ -1,399 +1,1185 @@
-/* css/landing.css */
-/* Scoped: should only affect landing page */
-body.landing{
-  overflow: hidden;
-  background: #000;
+body.landing {
+  margin: 0;
+  min-height: 100svh;
+  color: #f5f5f5;
+  background:
+    radial-gradient(800px 420px at 8% 8%, rgba(227, 13, 13, 0.26), transparent 75%),
+    radial-gradient(920px 420px at 92% -6%, rgba(255, 255, 255, 0.09), transparent 74%),
+    linear-gradient(165deg, #030303 0%, #090909 48%, #040404 100%);
 }
 
-body.landing .split{
+body.landing::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.skip-link--landing {
+  top: -3.2rem;
+  left: 1rem;
+}
+
+.skip-link--landing:focus {
+  top: 1rem;
+}
+
+.landing-portal {
+  --portal-split: 50%;
+  --portal-rift-width: clamp(82px, 8vw, 138px);
+  --portal-rift-height: clamp(82px, 8vw, 138px);
+  --portal-rift-opacity: 0.14;
+  --portal-rift-scale: 0.58;
+  --portal-rift-intensity: 0.72;
   position: relative;
   min-height: 100svh;
-  width: 100%;
+  width: min(1460px, 96vw);
+  margin: 0 auto;
+  padding: clamp(1rem, 1.8vw, 1.6rem);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  background: #000;
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(0.75rem, 1.7vw, 1.1rem);
 }
 
-/* Each half is clipped into a torn edge (no middle black block needed) */
-body.landing .half{
+.landing-portal[data-active="tekno"] {
+  --portal-split: 53%;
+  --portal-rift-width: clamp(220px, 24vw, 360px);
+  --portal-rift-height: clamp(220px, 24vw, 360px);
+  --portal-rift-opacity: 0.82;
+  --portal-rift-scale: 1;
+  --portal-rift-intensity: 1.08;
+}
+
+.landing-portal[data-active="hiphop"] {
+  --portal-split: 47%;
+  --portal-rift-width: clamp(220px, 24vw, 360px);
+  --portal-rift-height: clamp(220px, 24vw, 360px);
+  --portal-rift-opacity: 0.82;
+  --portal-rift-scale: 1;
+  --portal-rift-intensity: 1.08;
+}
+
+.landing-portal[data-active="rift"] {
+  --portal-split: 50%;
+  --portal-rift-width: clamp(270px, 28vw, 420px);
+  --portal-rift-height: clamp(270px, 28vw, 420px);
+  --portal-rift-opacity: 0.94;
+  --portal-rift-scale: 1.04;
+  --portal-rift-intensity: 1.18;
+}
+
+.portal-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.15rem 0.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.portal-brand {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.portal-brand__logo {
+  width: clamp(176px, 12.4vw, 246px);
+  aspect-ratio: 903 / 216;
+  display: block;
+  background: url("/assets/kw-wordmark-real.png") center / contain no-repeat;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.52));
+}
+
+.portal-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.portal-quick {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.portal-quick a {
+  text-decoration: none;
+  font-family: "Space Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  padding: 0.48rem 0.52rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+  min-height: 2.1rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.portal-quick a:hover,
+.portal-quick a:focus-visible {
+  border-bottom-color: rgba(227, 13, 13, 0.88);
+}
+
+.portal-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: "Space Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.62rem;
+}
+
+.portal-lang select {
+  min-height: 2.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(8, 8, 8, 0.9);
+  color: #fff;
+  font: inherit;
+  padding: 0.35rem 0.45rem;
+}
+
+.portal-canvas {
   position: relative;
-  min-height: 100svh;
+  min-height: min(76svh, 900px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  overflow: clip;
   isolation: isolate;
+  background:
+    radial-gradient(460px 220px at 50% 54%, rgba(227, 13, 13, 0.19), rgba(4, 4, 4, 0.92) 74%),
+    #050505;
+}
+
+.portal-instruction {
+  position: absolute;
+  left: 50%;
+  top: 0.8rem;
+  transform: translateX(-50%);
+  z-index: 14;
+  margin: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0.2rem 0.1rem;
+  font-family: "Space Mono", monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 245, 0.82);
+  opacity: 0.9;
+  text-shadow: 0 0 12px rgba(0, 0, 0, 0.85);
+}
+
+.portal-side {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  text-decoration: none;
+  color: inherit;
+  display: block;
   overflow: hidden;
+  transition:
+    left 2240ms cubic-bezier(0.16, 0.84, 0.18, 1),
+    width 2240ms cubic-bezier(0.16, 0.84, 0.18, 1);
 }
 
-/* Torn edge shapes (desktop) */
-body.landing .tekno{
-  clip-path: polygon(
-    0% 0%, 100% 0%,
-    96% 6%, 100% 12%,
-    95% 18%, 100% 24%,
-    95% 30%, 100% 36%,
-    95% 42%, 100% 48%,
-    95% 54%, 100% 60%,
-    95% 66%, 100% 72%,
-    95% 78%, 100% 84%,
-    95% 90%, 100% 96%,
-    96% 100%, 0% 100%
-  );
+.portal-side--tekno {
+  left: 0;
+  width: var(--portal-split);
 }
 
-body.landing .hiphop{
-  clip-path: polygon(
-    0% 0%, 100% 0%,
-    100% 100%, 0% 100%,
-    4% 96%, 0% 90%,
-    5% 84%, 0% 78%,
-    5% 72%, 0% 66%,
-    5% 60%, 0% 54%,
-    5% 48%, 0% 42%,
-    5% 36%, 0% 30%,
-    5% 24%, 0% 18%,
-    4% 12%, 0% 6%
-  );
+.portal-side--hiphop {
+  left: var(--portal-split);
+  width: calc(100% - var(--portal-split));
 }
 
-/* Background image */
-body.landing .half::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background-image: var(--bgimg);
+.portal-side__image,
+.portal-side__veil {
+  position: absolute;
+  inset: 0;
+}
+
+.portal-side__image {
   background-size: cover;
   background-position: center;
   transform: scale(1.02);
-  filter: saturate(.95) contrast(1.07);
-  z-index: 0;
+  transition: transform 1140ms cubic-bezier(0.16, 0.84, 0.18, 1), filter 980ms ease;
 }
 
-/* Premium dark vignette */
-body.landing .half::after{
-  content:"";
-  position:absolute;
-  inset:0;
+.portal-side--tekno .portal-side__image {
+  background-image: url("/assets/landing-tekno.jpg");
+}
+
+.portal-side--hiphop .portal-side__image {
+  background-image: url("/assets/landing-hiphop.jpg");
+}
+
+.portal-side__veil {
   background:
-    radial-gradient(70% 70% at 20% 80%, rgba(0,0,0,.05), rgba(0,0,0,.78) 70%),
-    linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.20));
-  z-index: 1;
+    linear-gradient(0deg, rgba(4, 4, 4, 0.92), rgba(4, 4, 4, 0.35) 42%, rgba(4, 4, 4, 0.75)),
+    linear-gradient(140deg, rgba(227, 13, 13, 0.22), rgba(0, 0, 0, 0));
 }
 
-/* Clickable area */
-body.landing .halfHit{
-  position:absolute;
-  inset:0;
-  z-index: 4;
+.portal-side--hiphop .portal-side__veil {
+  background:
+    linear-gradient(0deg, rgba(4, 4, 4, 0.94), rgba(4, 4, 4, 0.38) 42%, rgba(4, 4, 4, 0.78)),
+    linear-gradient(220deg, rgba(227, 13, 13, 0.23), rgba(0, 0, 0, 0));
 }
 
-/* Content box */
-body.landing .inner{
-  position:absolute;
-  z-index: 6;
-  max-width: 560px;
-  padding: 24px 24px 18px;
-  border-radius: 18px;
-  background: rgba(0,0,0,.30);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,.10);
-  box-shadow: 0 18px 60px rgba(0,0,0,.45);
+.portal-side__body {
+  position: absolute;
+  z-index: 2;
+  bottom: clamp(1.2rem, 2.6vw, 2rem);
+  width: min(36rem, 86%);
+  display: grid;
+  gap: 0.55rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.26);
 }
 
-body.landing .tekno .inner{
-  left: 28px;
-  bottom: 28px;
+.portal-side--tekno .portal-side__body {
+  left: clamp(1rem, 2.4vw, 1.9rem);
 }
-body.landing .hiphop .inner{
-  right: 28px;
-  top: 28px;
+
+.portal-side--hiphop .portal-side__body {
+  right: clamp(1rem, 2.4vw, 1.9rem);
   text-align: right;
 }
 
-body.landing .kicker{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size: 11px;
-  letter-spacing: .22em;
+.portal-side__index {
+  font-family: "Space Mono", monospace;
+  font-size: clamp(2.3rem, 8vw, 5.2rem);
+  line-height: 0.8;
+  color: rgba(227, 13, 13, 0.62);
+}
+
+.portal-side__title {
+  font-family: "Bebas Neue", "Archivo", sans-serif;
+  font-size: clamp(2.6rem, 10vw, 7.4rem);
+  line-height: 0.83;
+  letter-spacing: 0.055em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.70);
-}
-body.landing .hiphop .kicker{ justify-content: flex-end; }
-
-body.landing .dot{
-  width:7px;
-  height:7px;
-  border-radius:999px;
-  background: rgba(255,40,40,.95);
-  box-shadow: 0 0 18px rgba(255,40,40,.55);
 }
 
-body.landing h1{
-  margin: 10px 0 8px;
-  font-size: clamp(44px, 5.2vw, 84px);
-  line-height: .95;
-  letter-spacing: -0.02em;
+.portal-side__line {
+  max-width: 48ch;
+  line-height: 1.66;
+  color: rgba(248, 248, 248, 0.92);
 }
 
-body.landing .half p{
-  margin: 0 0 12px;
-  color: rgba(255,255,255,.78);
-  max-width: 52ch;
-}
-body.landing .hiphop .half p{ margin-left: auto; }
-
-body.landing .enter{
-  font-size: 12px;
-  color: rgba(255,255,255,.72);
-}
-body.landing .enter a{
-  color: rgba(255,255,255,.92);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(255,40,40,.35);
-}
-body.landing .enter a:hover{
-  border-bottom-color: rgba(255,40,40,.90);
+.portal-side--hiphop .portal-side__line {
+  margin-left: auto;
 }
 
-/* Seam light (desktop) */
-body.landing .split::after{
-  content:"";
-  position:absolute;
-  left: 50%;
-  top: -10%;
-  width: 3px;
-  height: 120%;
-  transform: translateX(-50%) rotate(2deg);
-  background: linear-gradient(
-    to bottom,
-    rgba(255,40,40,0),
-    rgba(255,40,40,.65),
-    rgba(255,40,40,0)
-  );
-  filter: blur(.2px);
-  opacity: .8;
-  z-index: 10;
+.portal-side__actions {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.2rem;
+}
+
+.portal-side--hiphop .portal-side__actions {
+  justify-content: flex-end;
+}
+
+.portal-side__cta {
+  font-family: "Space Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.56);
+  padding-bottom: 0.2rem;
+}
+
+.portal-side__subcta {
+  font-family: "Space Mono", monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(220, 220, 220, 0.92);
+}
+
+.portal-side:focus-visible .portal-side__cta,
+.portal-side:hover .portal-side__cta {
+  border-bottom-color: rgba(227, 13, 13, 0.94);
+}
+
+.landing-portal[data-active="tekno"] .portal-side--hiphop .portal-side__image,
+.landing-portal[data-active="hiphop"] .portal-side--tekno .portal-side__image {
+  filter: grayscale(42%) brightness(0.7);
+}
+
+.landing-portal[data-active="tekno"] .portal-side--tekno .portal-side__image,
+.landing-portal[data-active="hiphop"] .portal-side--hiphop .portal-side__image,
+.portal-side:hover .portal-side__image,
+.portal-side:focus-visible .portal-side__image {
+  transform: scale(1.08);
+  filter: grayscale(0%);
+}
+
+.portal-seam {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--portal-split);
+  width: 2px;
+  z-index: 12;
   pointer-events: none;
+  transform: translateX(-50%);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.08) 24%,
+      rgba(255, 98, 98, 0.14) 50%,
+      rgba(255, 255, 255, 0.08) 76%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  opacity: 0.24;
+  filter: blur(0.4px);
+  transition: left 2240ms cubic-bezier(0.16, 0.84, 0.18, 1), opacity 1400ms ease;
 }
 
-/* Manifest card */
-body.landing .manifestCard{
+.portal-seam::before {
+  content: "";
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) rotate(-7deg);
-  z-index: 12;
-  display: block;
-  width: min(560px, 84vw);
-  padding: 18px;
-  border-radius: 16px;
+  width: clamp(120px, 12vw, 210px);
+  height: clamp(190px, 24vw, 340px);
+  transform: translate(-50%, -50%);
+  background:
+    radial-gradient(64% 58% at 50% 50%, rgba(255, 74, 74, 0.34), rgba(255, 74, 74, 0.06) 62%, rgba(255, 74, 74, 0) 100%),
+    radial-gradient(52% 48% at 50% 50%, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 100%);
+  opacity: 0.26;
+  filter: blur(28px);
+  animation: rift-heartbeat 11s ease-in-out infinite;
+  transition: opacity 1200ms ease, filter 1400ms ease;
+}
+
+.portal-seam::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(180px, 18vw, 300px);
+  height: clamp(180px, 18vw, 300px);
+  transform: translate(-50%, -50%);
+  background:
+    radial-gradient(60% 60% at 50% 50%, rgba(255, 96, 96, 0.21), rgba(255, 96, 96, 0) 78%),
+    repeating-radial-gradient(circle at 50% 50%, rgba(255, 120, 120, 0.18) 0 1px, rgba(255, 120, 120, 0) 1px 14px);
+  mix-blend-mode: screen;
+  filter: blur(20px);
+  opacity: 0.16;
+  animation: rift-heartbeat 9.6s ease-in-out infinite;
+  transition: opacity 1200ms ease, filter 1360ms ease;
+}
+
+.landing-portal[data-active="tekno"] .portal-seam,
+.landing-portal[data-active="hiphop"] .portal-seam {
+  opacity: 0.38;
+}
+
+.landing-portal[data-active="rift"] .portal-seam {
+  opacity: 0.5;
+}
+
+.landing-portal[data-active="tekno"] .portal-seam::after,
+.landing-portal[data-active="hiphop"] .portal-seam::after {
+  opacity: 0.26;
+}
+
+.landing-portal[data-active="rift"] .portal-seam::after {
+  opacity: 0.34;
+}
+
+.landing-portal[data-active="tekno"] .portal-seam::before,
+.landing-portal[data-active="hiphop"] .portal-seam::before {
+  opacity: 0.42;
+  filter: blur(22px);
+}
+
+.landing-portal[data-active="rift"] .portal-seam::before {
+  opacity: 0.56;
+  filter: blur(18px);
+}
+
+.portal-rift {
+  position: absolute;
+  top: 50%;
+  left: var(--portal-split);
+  width: var(--portal-rift-width);
+  height: var(--portal-rift-height);
+  transform: translate(-50%, -50%) scale(var(--portal-rift-scale));
+  z-index: 11;
+  isolation: isolate;
+  pointer-events: none;
+  opacity: var(--portal-rift-opacity);
+  border-radius: 50%;
+  background: radial-gradient(58% 58% at 50% 50%, rgba(12, 0, 0, 0.54), rgba(12, 0, 0, 0.16) 48%, rgba(12, 0, 0, 0) 100%);
+  box-shadow: 0 0 48px rgba(255, 72, 72, 0.16), inset 0 0 40px rgba(0, 0, 0, 0.38);
+  animation: rift-breathe 18s ease-in-out infinite;
+  filter: saturate(var(--portal-rift-intensity)) contrast(1.06) blur(0.5px);
+  transition:
+    left 2240ms cubic-bezier(0.16, 0.84, 0.18, 1),
+    width 2240ms cubic-bezier(0.16, 0.84, 0.18, 1),
+    height 2240ms cubic-bezier(0.16, 0.84, 0.18, 1),
+    transform 2240ms cubic-bezier(0.16, 0.84, 0.18, 1),
+    filter 1400ms ease,
+    opacity 1400ms ease;
+}
+
+.portal-rift::before {
+  content: "";
+  position: absolute;
+  inset: -42% -38%;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(46% 70% at 18% 50%, rgba(255, 126, 126, 0.6), rgba(255, 126, 126, 0) 74%),
+    radial-gradient(46% 70% at 82% 50%, rgba(255, 126, 126, 0.6), rgba(255, 126, 126, 0) 74%),
+    radial-gradient(42% 30% at 50% 50%, rgba(255, 106, 106, 0.2), rgba(255, 106, 106, 0) 100%);
+  mix-blend-mode: screen;
+  opacity: 0.2;
+  filter: blur(32px);
+  animation: rift-arch-drift 28s linear infinite, rift-flicker 9s ease-in-out infinite;
+  transition: opacity 1300ms ease, filter 1400ms ease;
+}
+
+.portal-rift::after {
+  content: "";
+  position: absolute;
+  inset: 12% 12%;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: 50%;
+  background:
+    radial-gradient(70% 70% at 50% 50%, rgba(8, 0, 0, 0.66), rgba(8, 0, 0, 0.26) 54%, rgba(8, 0, 0, 0) 100%),
+    radial-gradient(88% 74% at 50% 50%, rgba(255, 88, 88, 0.26), rgba(255, 88, 88, 0) 72%);
+  opacity: 0.22;
+  mix-blend-mode: screen;
+  filter: blur(14px);
+  animation: rift-core-pulse 11s ease-in-out infinite;
+  transition: opacity 1300ms ease, filter 1400ms ease;
+}
+
+.landing-portal[data-active="tekno"] .portal-rift,
+.landing-portal[data-active="hiphop"] .portal-rift {
+  pointer-events: auto;
+  filter: saturate(1.12) contrast(1.1) blur(0.24px);
+}
+
+.landing-portal[data-active="rift"] .portal-rift,
+.portal-rift:focus-within {
+  pointer-events: auto;
+  filter: saturate(1.2) contrast(1.14) blur(0.1px);
+}
+
+.landing-portal[data-active="tekno"] .portal-rift::before,
+.landing-portal[data-active="hiphop"] .portal-rift::before {
+  opacity: 0.42;
+  filter: blur(24px);
+}
+
+.landing-portal[data-active="tekno"] .portal-rift::after,
+.landing-portal[data-active="hiphop"] .portal-rift::after {
+  opacity: 0.4;
+  filter: blur(10px);
+}
+
+.landing-portal[data-active="rift"] .portal-rift::before,
+.portal-rift:focus-within::before {
+  opacity: 0.54;
+  filter: blur(20px);
+}
+
+.landing-portal[data-active="rift"] .portal-rift::after,
+.portal-rift:focus-within::after {
+  opacity: 0.46;
+  filter: blur(9px);
+}
+
+.landing-portal[data-rift-target="tekno"] .portal-rift::before,
+.landing-portal[data-rift-target="tekno"] .portal-rift::after {
+  filter: hue-rotate(-8deg) blur(12px);
+}
+
+.landing-portal[data-rift-target="hiphop"] .portal-rift::before,
+.landing-portal[data-rift-target="hiphop"] .portal-rift::after {
+  filter: hue-rotate(9deg) blur(12px);
+}
+
+.portal-rift__arches {
+  position: absolute;
+  inset: -18%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.52;
+  mix-blend-mode: screen;
+  transition: opacity 900ms ease, filter 900ms ease;
+}
+
+.portal-rift__arc {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 132, 132, 0.6);
+  border-left-color: transparent;
+  border-right-color: transparent;
+  filter: blur(0.45px);
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.portal-rift__arc::before {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 96, 96, 0.38);
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+.portal-rift__arc--outer {
+  width: 126%;
+  height: 94%;
+  animation: portal-arc-spin 20s linear infinite;
+}
+
+.portal-rift__arc--mid {
+  width: 104%;
+  height: 74%;
+  opacity: 0.82;
+  animation: portal-arc-spin 15s linear infinite reverse;
+}
+
+.portal-rift__arc--inner {
+  width: 78%;
+  height: 54%;
+  opacity: 0.66;
+  animation: portal-arc-breathe 8s ease-in-out infinite;
+}
+
+.landing-portal[data-active="tekno"] .portal-rift__arches,
+.landing-portal[data-active="hiphop"] .portal-rift__arches,
+.landing-portal[data-active="rift"] .portal-rift__arches,
+.portal-rift:focus-within .portal-rift__arches {
+  opacity: 0.92;
+}
+
+.landing-portal[data-rift-target="tekno"] .portal-rift__arches {
+  filter: hue-rotate(-8deg);
+}
+
+.landing-portal[data-rift-target="hiphop"] .portal-rift__arches {
+  filter: hue-rotate(9deg);
+}
+
+.portal-rift__orbs {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.3;
+  transition: opacity 900ms ease;
+}
+
+.portal-rift__orbs::before {
+  content: "";
+  position: absolute;
+  inset: -14% -35%;
+  background: conic-gradient(from 10deg at 50% 50%, rgba(255, 255, 255, 0) 0deg, rgba(255, 255, 255, 0.22) 42deg, rgba(255, 34, 34, 0.24) 112deg, rgba(255, 255, 255, 0) 190deg, rgba(255, 92, 92, 0.3) 255deg, rgba(255, 255, 255, 0) 360deg);
+  mix-blend-mode: screen;
+  opacity: 0.08;
+  filter: blur(22px);
+  animation: rift-spiral 24s linear infinite reverse;
+}
+
+.portal-rift__orbs::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(70% 40% at 50% 20%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 65%),
+    radial-gradient(88% 58% at 50% 78%, rgba(255, 76, 76, 0.24), rgba(255, 76, 76, 0) 72%);
+  opacity: 0.24;
+  filter: blur(12px);
+  animation: rift-mist 8s ease-in-out infinite;
+}
+
+.portal-rift__orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  opacity: 0.56;
+  box-shadow: 0 0 28px rgba(255, 94, 94, 0.35);
+  animation: rift-float 6.8s ease-in-out infinite;
+}
+
+.landing-portal[data-active="tekno"] .portal-rift__orbs,
+.landing-portal[data-active="hiphop"] .portal-rift__orbs,
+.landing-portal[data-active="rift"] .portal-rift__orbs,
+.portal-rift:focus-within .portal-rift__orbs {
+  opacity: 1;
+}
+
+.portal-rift__orb--one {
+  width: clamp(18px, 2vw, 34px);
+  height: clamp(18px, 2vw, 34px);
+  top: 17%;
+  left: 7%;
+  background: rgba(255, 255, 255, 0.72);
+  animation-delay: -0.5s;
+}
+
+.portal-rift__orb--two {
+  width: clamp(12px, 1.3vw, 21px);
+  height: clamp(12px, 1.3vw, 21px);
+  top: 37%;
+  right: 8%;
+  background: rgba(227, 13, 13, 0.86);
+  animation-delay: -2s;
+}
+
+.portal-rift__orb--three {
+  width: clamp(16px, 1.6vw, 26px);
+  height: clamp(16px, 1.6vw, 26px);
+  bottom: 26%;
+  left: 14%;
+  background: rgba(255, 126, 126, 0.75);
+  animation-delay: -3.2s;
+}
+
+.portal-rift__orb--four {
+  width: clamp(11px, 1.1vw, 17px);
+  height: clamp(11px, 1.1vw, 17px);
+  bottom: 16%;
+  right: 13%;
+  background: rgba(255, 255, 255, 0.88);
+  animation-delay: -1.3s;
+}
+
+.portal-rift__core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.74);
+  z-index: 15;
+  isolation: isolate;
+  width: min(18rem, 95%);
+  padding: 0.58rem 0.58rem;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 0.12rem;
+  text-align: center;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 700ms ease,
+    transform 1120ms cubic-bezier(0.16, 0.84, 0.18, 1),
+    visibility 0s linear 700ms;
+}
+
+.portal-rift__core::before {
+  content: "";
+  position: absolute;
+  inset: -54% -52%;
+  z-index: -1;
+  background:
+    radial-gradient(58% 54% at 50% 50%, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0) 100%),
+    radial-gradient(40% 26% at 50% 50%, rgba(255, 98, 98, 0.3), rgba(255, 98, 98, 0) 100%);
+  filter: blur(24px);
+}
+
+.portal-rift__manifest {
+  position: relative;
+  z-index: 2;
+  display: inline-grid;
+  justify-items: center;
   text-decoration: none;
-  color: rgba(255,255,255,.92);
-  background: rgba(0,0,0,.58);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,40,40,.25);
-  box-shadow: 0 30px 90px rgba(0,0,0,.55);
+  color: #ffffff !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal;
+  isolation: isolate;
+  padding: 0.22rem 0.74rem;
+  border-radius: 999px / 62%;
+  background:
+    radial-gradient(80% 70% at 50% 50%, rgba(0, 0, 0, 0.46), rgba(0, 0, 0, 0.14) 58%, rgba(0, 0, 0, 0) 100%),
+    radial-gradient(72% 62% at 50% 50%, rgba(255, 94, 94, 0.24), rgba(255, 94, 94, 0) 100%);
+  border: 0;
+  box-shadow: 0 0 40px rgba(255, 88, 88, 0.28);
+  backdrop-filter: blur(0.5px);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.96);
+  animation: portal-title-drift 9s ease-in-out infinite;
 }
-body.landing .manifestCard h3{
-  margin: 0 0 8px;
-  font-size: 12px;
-  letter-spacing: .22em;
+
+.portal-rift__manifest::before,
+.portal-rift__manifest::after {
+  content: "";
+  width: 68%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 122, 122, 0.88), rgba(255, 255, 255, 0));
+  opacity: 0.94;
+}
+
+.portal-rift__manifest:hover,
+.portal-rift__manifest:focus-visible {
+  transform: translateY(-1px);
+}
+
+.portal-rift__manifest-title {
+  position: relative;
+  z-index: 3;
+  display: block;
+  font-family: "Bebas Neue", "Archivo", sans-serif;
+  font-size: clamp(2.35rem, 5vw, 4.35rem);
+  letter-spacing: 0.12em;
+  line-height: 0.88;
+  color: #fff !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal;
+  -webkit-text-fill-color: #fff !important;
+  font-weight: 900;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 1),
+    0 0 14px rgba(255, 175, 175, 0.56),
+    0 0 28px rgba(255, 84, 84, 0.42);
+  -webkit-text-stroke: 0;
+}
+
+.landing-portal[data-active="rift"] .portal-rift__core,
+.portal-rift:focus-within .portal-rift__core {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+  transition-delay: 180ms;
+}
+
+.landing-portal[data-active="tekno"] .portal-rift__core,
+.landing-portal[data-active="hiphop"] .portal-rift__core {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition-delay: 220ms;
+}
+
+.landing-portal[data-rift-target="tekno"] .portal-rift__core,
+.landing-portal[data-rift-target="hiphop"] .portal-rift__core {
+  width: min(13.8rem, 96%);
+}
+
+.landing-portal[data-rift-target="tekno"] .portal-rift__manifest-title,
+.landing-portal[data-rift-target="hiphop"] .portal-rift__manifest-title {
+  font-size: clamp(1.84rem, 2.8vw, 2.7rem);
+  letter-spacing: 0.11em;
+}
+
+@keyframes rift-heartbeat {
+  0% {
+    opacity: 0.16;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+
+  50% {
+    opacity: 0.28;
+    transform: translate(-50%, -50%) scale(1.04);
+  }
+
+  100% {
+    opacity: 0.16;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+}
+
+@keyframes rift-arch-drift {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1.04);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes rift-core-pulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.98);
+  }
+
+  50% {
+    opacity: 0.48;
+    transform: scale(1.04);
+  }
+
+  100% {
+    opacity: 0.3;
+    transform: scale(0.98);
+  }
+}
+
+@keyframes portal-title-drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -1px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes portal-arc-spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes portal-arc-breathe {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(0.96);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) rotate(180deg) scale(1.04);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg) scale(0.96);
+  }
+}
+
+@keyframes rift-breathe {
+  0% {
+    box-shadow:
+      inset 36px 0 44px -36px rgba(255, 44, 44, 0.72),
+      inset -36px 0 44px -36px rgba(255, 44, 44, 0.72),
+      inset 0 0 132px rgba(0, 0, 0, 0.92),
+      0 0 24px rgba(0, 0, 0, 0.24);
+  }
+
+  50% {
+    box-shadow:
+      inset 46px 0 62px -38px rgba(255, 44, 44, 0.96),
+      inset -46px 0 62px -38px rgba(255, 44, 44, 0.96),
+      inset 0 0 152px rgba(0, 0, 0, 0.96),
+      0 0 30px rgba(255, 34, 34, 0.16);
+  }
+
+  100% {
+    box-shadow:
+      inset 36px 0 44px -36px rgba(255, 44, 44, 0.72),
+      inset -36px 0 44px -36px rgba(255, 44, 44, 0.72),
+      inset 0 0 132px rgba(0, 0, 0, 0.92),
+      0 0 24px rgba(0, 0, 0, 0.24);
+  }
+}
+
+@keyframes rift-flicker {
+  0% {
+    opacity: 0.64;
+  }
+
+  33% {
+    opacity: 0.82;
+  }
+
+  66% {
+    opacity: 0.57;
+  }
+
+  100% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes rift-spiral {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1.03);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes rift-mist {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.46;
+  }
+
+  50% {
+    transform: translate3d(0, -7px, 0) scale(1.04);
+    opacity: 0.66;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.46;
+  }
+}
+
+@keyframes rift-float {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: translate3d(0, -8px, 0) scale(1.12);
+    opacity: 0.98;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.7;
+  }
+}
+
+.portal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  justify-content: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 0.55rem;
+}
+
+.portal-footer a,
+.portal-footer span {
+  text-decoration: none;
+  font-family: "Space Mono", monospace;
   text-transform: uppercase;
-}
-body.landing .manifestCard p{
-  margin: 0 0 10px;
-  color: rgba(255,255,255,.72);
-  font-size: 13px;
-  line-height: 1.45;
-}
-body.landing .manifestCard .go{
-  font-size: 13px;
-  border-bottom: 1px solid rgba(255,40,40,.55);
-}
-body.landing .manifestCard:hover{
-  border-color: rgba(255,40,40,.55);
+  letter-spacing: 0.09em;
+  font-size: 0.64rem;
+  color: #e0e0e0;
+  padding: 0.42rem 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  min-height: 2rem;
+  display: inline-flex;
+  align-items: center;
 }
 
-/* =========================
-   MOBILE: both halves on ONE screen (diagonal split)
-========================= */
-@media (max-width: 900px){
-    /* smaller open distance on mobile */
-  body.landing.manifestOpen .tekno{  transform: translateX(-14px); }
-  body.landing.manifestOpen .hiphop{ transform: translateX( 14px); }
-/* desktop convenience: hovering the split also “opens” */
-@media (min-width: 901px){
-  body.landing .split:hover .tekno{  transform: translateX(-28px); }
-  body.landing .split:hover .hiphop{ transform: translateX( 28px); }
+.portal-footer a:hover,
+.portal-footer a:focus-visible {
+  border-bottom-color: rgba(227, 13, 13, 0.86);
 }
 
+.portal-footer span {
+  color: #cfcfcf;
+  border-bottom-color: rgba(227, 13, 13, 0.36);
+}
 
-  /* ===== Landing blijft split (GEEN scroll-stack) ===== */
-  body.landing{
-    overflow: hidden;
+@media (max-width: 1040px) {
+  .landing-portal {
+    width: min(96vw, 96vw);
   }
 
-  body.landing .split{
-    grid-template-columns: 1fr 1fr; /* blijf 2 helften */
+  .portal-canvas {
+    min-height: min(78svh, 700px);
   }
 
-  /* Clip paths blijven aan (dus NIET resetten naar none) */
-  /* Als je ergens nog oude regels had zoals:
-     .tekno,.hiphop{ clip-path:none; }  -> weg ermee
-  */
+  .portal-instruction {
+    font-size: 0.62rem;
+  }
+}
 
-  /* ===== Seam (rode lijn) zichtbaar op mobile ===== */
-  body.landing .split::after{
-    display: block;   /* belangrijk: sommige oudere versies zetten dit op display:none */
-    opacity: .90;
-    width: 3px;
+@media (max-width: 820px) {
+  .landing-portal {
+    grid-template-rows: auto auto auto;
+    gap: 0.7rem;
   }
 
-  /* ===== Genre cards (inner blocks) ===== */
-  body.landing .inner{
-    position: absolute;
-    z-index: 6;
-    max-width: none;
-    padding: 18px;
-    border-radius: 16px;
-    background: rgba(0,0,0,.40);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,.12);
-    box-shadow: 0 18px 50px rgba(0,0,0,.55);
-    transform: none; /* safety */
+  .portal-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .portal-controls {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.7rem;
+  }
+
+  .portal-canvas {
+    min-height: auto;
+    display: grid;
+    gap: 0;
+    border: 0;
+    overflow: visible;
+  }
+
+  .portal-instruction {
+    position: static;
+    transform: none;
+    justify-self: start;
+    margin-bottom: 0.42rem;
+  }
+
+  .portal-side {
+    position: relative;
+    clip-path: none;
+    min-height: min(56svh, 420px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .portal-side + .portal-side {
+    margin-top: 0.58rem;
+  }
+
+  .portal-side__body {
+    width: min(42rem, 90%);
+  }
+
+  .portal-side--hiphop .portal-side__body {
     text-align: left;
+    right: auto;
+    left: clamp(0.9rem, 2.6vw, 1.2rem);
   }
 
-  /* HIP HOP = boven */
-  body.landing .hiphop .inner{
-    top: 14px;
-    left: 14px;
-    right: 14px;
-    bottom: auto;
+  .portal-side--hiphop .portal-side__line {
+    margin-left: 0;
   }
 
-  /* TEKNO = onder */
-  body.landing .tekno .inner{
-    bottom: 14px;
-    left: 14px;
-    right: 14px;
+  .portal-side--hiphop .portal-side__actions {
+    justify-content: flex-start;
+  }
+
+  .portal-seam {
+    display: none;
+  }
+
+  .portal-rift {
+    position: static;
+    inset: auto;
+    left: auto;
     top: auto;
-  }
-
-  /* ===== Typo mobile tuning ===== */
-  body.landing h1{
-    font-size: clamp(28px, 7vw, 40px);
-    line-height: 1;
-  }
-
-  body.landing .half p{
-    font-size: 14px;
-    max-width: 100%;
-  }
-
-  body.landing .kicker{
-    font-size: 10px;
-    letter-spacing: .18em;
-  }
-
-  /* ===== Manifest card (midden, niet statisch) ===== */
-  body.landing .manifestCard{
-    width: min(92vw, 420px);
-    padding: 16px;
-    z-index: 12;
-
-    /* standaard hidden op mobile */
-    opacity: 0;
-    pointer-events: none;
-    transform: translate(-50%, -50%) scale(.96) rotate(-3deg);
-    transition:
-      opacity .35s ease,
-      transform .45s cubic-bezier(.2,.9,.2,1);
-  }
-
-  /* mobile reveal (tap/press intent) */
-  body.landing .split:active .manifestCard,
-  body.landing .split:focus-within .manifestCard{
+    bottom: auto;
+    transform: none;
+    clip-path: none;
+    width: 100%;
+    min-height: 188px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
     opacity: 1;
     pointer-events: auto;
-    transform: translate(-50%, -50%) scale(1) rotate(-3deg);
+    margin-top: 0.62rem;
+  }
+
+  .portal-rift__core {
+    width: min(19rem, 92%);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+    transition-delay: 0s;
   }
 }
 
-/* ===== Manifest reveal default (desktop / algemeen) ===== */
-.manifestCard{
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, -50%) scale(.96) rotate(-4deg);
-  transition:
-    opacity .35s ease,
-    transform .45s cubic-bezier(.2,.9,.2,1);
+@media (max-width: 560px) {
+  .portal-brand {
+    width: 100%;
+  }
+
+  .portal-brand__logo {
+    width: clamp(166px, 58vw, 252px);
+  }
+
+  .portal-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .portal-quick {
+    width: 100%;
+  }
+
+  .portal-side__title {
+    font-size: clamp(2.2rem, 14vw, 3.9rem);
+  }
 }
 
-/* Desktop reveal (hover intent) */
-body.landing .split:hover .manifestCard{
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, -50%) scale(1) rotate(-4deg);
+@media (prefers-reduced-motion: reduce) {
+  .landing-portal {
+    --portal-split: 50%;
+    --portal-rift-width: clamp(92px, 9vw, 142px);
+    --portal-rift-height: clamp(92px, 9vw, 142px);
+    --portal-rift-intensity: 0.9;
+  }
+
+  .portal-side,
+  .portal-side__image,
+  .portal-seam,
+  .portal-seam::after,
+  .portal-rift,
+  .portal-rift::before,
+  .portal-rift::after,
+  .portal-rift__arches,
+  .portal-rift__arc,
+  .portal-rift__orbs::before,
+  .portal-rift__orbs::after,
+  .portal-rift__orb,
+  .portal-rift__manifest {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .portal-rift {
+    opacity: var(--portal-rift-opacity);
+    transform: translate(-50%, -50%) scale(var(--portal-rift-scale));
+    filter: saturate(var(--portal-rift-intensity)) contrast(1.08);
+  }
+
+  .portal-rift__core {
+    transition: none !important;
+  }
+
+  .landing-portal[data-active="tekno"] .portal-rift__core,
+  .landing-portal[data-active="hiphop"] .portal-rift__core,
+  .landing-portal[data-active="rift"] .portal-rift__core,
+  .portal-rift:focus-within .portal-rift__core {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
-/* Extra finesse: glow bij hover (desktop) */
-body.landing .split:hover::after{
-  box-shadow: 0 0 40px rgba(255,0,0,.25);
-}
-/* ===== Mobile: manifest reveal via class (JS) ===== */
-body.landing .manifestCard{
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, -50%) scale(.96) rotate(-4deg);
-  transition:
-    opacity .25s ease,
-    transform .35s cubic-bezier(.2,.9,.2,1);
-}
-
-body.landing.manifestOpen .manifestCard{
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, -50%) scale(1) rotate(-4deg);
-}
-
-/* optional: extra glow on seam when open */
-body.landing.manifestOpen .split::after{
-  box-shadow: 0 0 40px rgba(255,0,0,.25);
-}
-/* ===== Split “opens” when manifest is revealed ===== */
-
-/* smooth movement */
-body.landing .tekno,
-body.landing .hiphop{
-  transition: transform .55s cubic-bezier(.2,.9,.2,1), filter .35s ease;
-  will-change: transform;
-}
-
-/* open distance (desktop) */
-body.landing.manifestOpen .tekno{  transform: translateX(-28px); }
-body.landing.manifestOpen .hiphop{ transform: translateX( 28px); }
-
-/* little extra depth */
-body.landing.manifestOpen .half::after{
-  background:
-    radial-gradient(70% 70% at 20% 80%, rgba(0,0,0,.02), rgba(0,0,0,.82) 70%),
-    linear-gradient(0deg, rgba(0,0,0,.40), rgba(0,0,0,.24));
-}
-
-/* make seam pop a bit when open */
-body.landing.manifestOpen .split::after{
-  opacity: 1;
-  width: 4px;
-}
-
-/* ===== Middle hotzone (touch + mouse) ===== */
-body.landing .manifestHotzone{
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 74px;              /* breedte “midden” zone */
-  height: 100%;
-  transform: translateX(-50%);
-  z-index: 20;              /* boven halves, onder manifestCard (die zit 12 maar mag hoger) */
-  background: transparent;
-  touch-action: none;
+@media (prefers-reduced-motion: reduce) and (max-width: 820px) {
+  .portal-rift {
+    transform: none;
+  }
 }

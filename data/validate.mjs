@@ -2,157 +2,350 @@ import fs from "node:fs";
 import path from "node:path";
 
 const ROOT = process.cwd();
+const errors = [];
+const warnings = [];
 
-function readJSON(rel){
-  const p = path.join(ROOT, rel);
-  const raw = fs.readFileSync(p, "utf8");
-  try{
+function readJSON(relPath) {
+  const fullPath = path.join(ROOT, relPath);
+  const raw = fs.readFileSync(fullPath, "utf8").replace(/^\uFEFF/, "");
+  try {
     return JSON.parse(raw);
-  }catch(e){
-    throw new Error(`JSON parse error in ${rel}: ${e.message}`);
+  } catch (error) {
+    throw new Error(`JSON parse error in ${relPath}: ${error.message}`);
   }
 }
 
-function isISODate(s){
-  return typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s);
+function err(message) {
+  errors.push(message);
 }
 
-function isTime(s){
-  // very loose HH:MM 24h
-  return typeof s === "string" && /^\d{2}:\d{2}$/.test(s);
+function warn(message) {
+  warnings.push(message);
 }
 
-function err(msg){ errors.push(msg); }
-function warn(msg){ warnings.push(msg); }
+function isObject(value) {
+  return value && typeof value === "object" && !Array.isArray(value);
+}
 
-let errors = [];
-let warnings = [];
+function isISODate(value) {
+  return typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
+}
 
-function validateArtists(artists){
-  const sides = ["tekno", "hiphop"];
-  for(const side of sides){
-    const list = artists?.[side];
-    if(!Array.isArray(list)){
-      err(`artists.json: "${side}" moet een array zijn.`);
+function isISODateTime(value) {
+  return typeof value === "string" && !Number.isNaN(Date.parse(value));
+}
+
+function isTime(value) {
+  return typeof value === "string" && /^\d{2}:\d{2}$/.test(value);
+}
+
+function isUrlOrEmpty(value) {
+  return value === "" || /^https?:\/\//i.test(value) || value.startsWith("../") || value.startsWith("/");
+}
+
+function validateArtists(artists) {
+  if (!isObject(artists)) {
+    err("artists.json moet een object zijn.");
+    return { allSlugs: new Set(), sideLookup: { tekno: new Set(), hiphop: new Set() } };
+  }
+
+  if (artists.updatedAt && !isISODateTime(artists.updatedAt)) {
+    warn("artists.json.updatedAt is geen geldige datetime.");
+  }
+
+  const allSlugs = new Set();
+  const sideLookup = { tekno: new Set(), hiphop: new Set() };
+
+  for (const side of ["tekno", "hiphop"]) {
+    const list = artists[side];
+    if (!Array.isArray(list)) {
+      err(`artists.json: '${side}' moet een array zijn.`);
       continue;
     }
 
-    const slugs = new Set();
-    for(const [i,a] of list.entries()){
-      const where = `artists.json:${side}[${i}]`;
-      if(!a || typeof a !== "object"){
-        err(`${where} is geen object.`);
+    for (const [index, artist] of list.entries()) {
+      const where = `artists.json:${side}[${index}]`;
+      if (!isObject(artist)) {
+        err(`${where} moet een object zijn.`);
         continue;
       }
 
-      if(!a.slug || typeof a.slug !== "string") err(`${where}.slug ontbreekt of is geen string.`);
-      if(!a.name || typeof a.name !== "string") err(`${where}.name ontbreekt of is geen string.`);
-      if(!a.role || typeof a.role !== "string") warn(`${where}.role ontbreekt (mag, maar liefst invullen).`);
+      if (typeof artist.slug !== "string" || !artist.slug.trim()) err(`${where}.slug ontbreekt of is ongeldig.`);
+      if (typeof artist.name !== "string" || !artist.name.trim()) err(`${where}.name ontbreekt of is ongeldig.`);
 
-      if(a.slug){
-        if(slugs.has(a.slug)) err(`${where}.slug "${a.slug}" is dubbel binnen "${side}".`);
-        slugs.add(a.slug);
+      if (artist.slug) {
+        if (sideLookup[side].has(artist.slug)) err(`${where}.slug '${artist.slug}' bestaat dubbel binnen ${side}.`);
+        sideLookup[side].add(artist.slug);
+
+        if (allSlugs.has(artist.slug)) warn(`${where}.slug '${artist.slug}' komt in meerdere sides voor.`);
+        allSlugs.add(artist.slug);
       }
 
-      if(a.links && typeof a.links !== "object") err(`${where}.links moet een object zijn als het bestaat.`);
+      if (artist.links && !Array.isArray(artist.links)) {
+        err(`${where}.links moet een array zijn.`);
+      }
+
+      if (Array.isArray(artist.links)) {
+        for (const [linkIndex, link] of artist.links.entries()) {
+          const lwhere = `${where}.links[${linkIndex}]`;
+          if (!isObject(link)) {
+            err(`${lwhere} moet een object zijn.`);
+            continue;
+          }
+          if (typeof link.label !== "string" || !link.label.trim()) warn(`${lwhere}.label ontbreekt.`);
+          if (typeof link.url !== "string" || !link.url.trim()) warn(`${lwhere}.url ontbreekt.`);
+        }
+      }
+
+      if (artist.booking && !isObject(artist.booking)) {
+        err(`${where}.booking moet een object zijn.`);
+      }
+
+      if (artist.booking && isObject(artist.booking) && artist.booking.types && !Array.isArray(artist.booking.types)) {
+        err(`${where}.booking.types moet een array zijn.`);
+      }
     }
   }
+
+  return { allSlugs, sideLookup };
 }
 
-function validateEvents(events, artists){
-  const sides = ["tekno", "hiphop"];
-  const validTicketModes = new Set(["external", "internal", "tba"]);
+function validateEvents(events, artistLookup) {
+  if (!isObject(events)) {
+    err("events.json moet een object zijn.");
+    return;
+  }
 
-  // Build artist slug lookup per side
-  const artistSlug = {
-    tekno: new Set((artists?.tekno || []).map(a => a.slug).filter(Boolean)),
-    hiphop: new Set((artists?.hiphop || []).map(a => a.slug).filter(Boolean))
-  };
+  if (events.updatedAt && !isISODateTime(events.updatedAt)) {
+    warn("events.json.updatedAt is geen geldige datetime.");
+  }
 
-  for(const side of sides){
-    const list = events?.[side];
-    if(!Array.isArray(list)){
-      err(`events.json: "${side}" moet een array zijn.`);
+  const validModes = new Set(["external", "internal", "tba"]);
+
+  if (events.sources) {
+    if (!isObject(events.sources)) {
+      err("events.json.sources moet een object zijn.");
+    } else {
+      for (const side of ["tekno", "hiphop"]) {
+        const sourceList = events.sources[side];
+        if (sourceList && !Array.isArray(sourceList)) {
+          err(`events.json.sources.${side} moet een array zijn.`);
+          continue;
+        }
+        for (const [idx, source] of (sourceList || []).entries()) {
+          const swhere = `events.json:sources.${side}[${idx}]`;
+          if (!isObject(source)) {
+            err(`${swhere} moet een object zijn.`);
+            continue;
+          }
+          if (!source.platform) warn(`${swhere}.platform ontbreekt.`);
+          if (source.url && !isUrlOrEmpty(source.url)) warn(`${swhere}.url lijkt ongeldig.`);
+        }
+      }
+    }
+  }
+
+  for (const side of ["tekno", "hiphop"]) {
+    const list = events[side];
+    if (!Array.isArray(list)) {
+      err(`events.json: '${side}' moet een array zijn.`);
       continue;
     }
 
     const ids = new Set();
 
-    for(const [i,e] of list.entries()){
-      const where = `events.json:${side}[${i}]`;
-      if(!e || typeof e !== "object"){
-        err(`${where} is geen object.`);
+    for (const [index, event] of list.entries()) {
+      const where = `events.json:${side}[${index}]`;
+      if (!isObject(event)) {
+        err(`${where} moet een object zijn.`);
         continue;
       }
 
-      if(!e.id || typeof e.id !== "string") err(`${where}.id ontbreekt of is geen string.`);
-      if(e.id){
-        if(ids.has(e.id)) err(`${where}.id "${e.id}" is dubbel binnen "${side}".`);
-        ids.add(e.id);
+      if (typeof event.id !== "string" || !event.id.trim()) err(`${where}.id ontbreekt.`);
+      if (event.id && ids.has(event.id)) err(`${where}.id '${event.id}' is dubbel binnen ${side}.`);
+      if (event.id) ids.add(event.id);
+
+      if (typeof event.title !== "string" || !event.title.trim()) err(`${where}.title ontbreekt.`);
+      if (!isISODate(event.date)) err(`${where}.date moet YYYY-MM-DD zijn.`);
+      if (event.time && !isTime(event.time)) warn(`${where}.time lijkt niet op HH:MM.`);
+
+      const mode = event?.tickets?.mode || "tba";
+      if (!validModes.has(mode)) err(`${where}.tickets.mode moet external, internal of tba zijn.`);
+      if (mode === "external" && !event?.tickets?.url) warn(`${where}: external ticket zonder url.`);
+      if (event?.tickets?.url && !isUrlOrEmpty(event.tickets.url)) warn(`${where}.tickets.url lijkt ongeldig.`);
+
+      if (event.source?.url && !isUrlOrEmpty(event.source.url)) warn(`${where}.source.url lijkt ongeldig.`);
+
+      if (event.lineup && !Array.isArray(event.lineup)) {
+        err(`${where}.lineup moet een array zijn.`);
       }
 
-      if(!e.title || typeof e.title !== "string") err(`${where}.title ontbreekt of is geen string.`);
-      if(!isISODate(e.date)) err(`${where}.date moet YYYY-MM-DD zijn.`);
-      if(e.time && !isTime(e.time)) warn(`${where}.time lijkt niet HH:MM (staat: "${e.time}")`);
-
-      // tickets
-      const mode = e?.tickets?.mode ?? "tba";
-      if(!validTicketModes.has(mode)){
-        err(`${where}.tickets.mode moet one of: external | internal | tba (staat: "${mode}")`);
-      }
-      if(mode === "external"){
-        const url = e?.tickets?.url ?? "";
-        if(!url) warn(`${where}: tickets.mode=external maar tickets.url is leeg.`);
-      }
-
-      // lineup slugs
-      if(e.lineup && !Array.isArray(e.lineup)) err(`${where}.lineup moet een array zijn als het bestaat.`);
-      const lineup = Array.isArray(e.lineup) ? e.lineup : [];
-      for(const [j,a] of lineup.entries()){
-        const lwhere = `${where}.lineup[${j}]`;
-        if(!a || typeof a !== "object"){
-          err(`${lwhere} is geen object.`);
+      for (const [lineupIndex, lineupEntry] of (event.lineup || []).entries()) {
+        const lwhere = `${where}.lineup[${lineupIndex}]`;
+        if (!isObject(lineupEntry)) {
+          err(`${lwhere} moet een object zijn.`);
           continue;
         }
-        if(a.slug){
-          if(!artistSlug[side].has(a.slug)){
-            warn(`${lwhere}.slug "${a.slug}" bestaat niet in artists.json (${side}).`);
-          }
-        }else{
-          warn(`${lwhere}.slug ontbreekt (handig voor doorklik).`);
+
+        if (!lineupEntry.slug && !lineupEntry.name) {
+          warn(`${lwhere} heeft geen slug of name.`);
+          continue;
+        }
+
+        if (lineupEntry.slug && !artistLookup.allSlugs.has(lineupEntry.slug)) {
+          warn(`${lwhere}.slug '${lineupEntry.slug}' bestaat niet in artists.json.`);
         }
       }
     }
   }
 }
 
-try{
-  const artists = readJSON("data/artists.json");
-  const events  = readJSON("data/events.json");
+function validatePartners(partners) {
+  if (!isObject(partners)) {
+    err("partners.json moet een object zijn.");
+    return;
+  }
 
-  validateArtists(artists);
-  validateEvents(events, artists);
+  const list = partners.partners;
+  if (!Array.isArray(list)) {
+    err("partners.json.partners moet een array zijn.");
+    return;
+  }
 
-}catch(e){
-  err(e.message);
+  for (const [index, partner] of list.entries()) {
+    const where = `partners.json:partners[${index}]`;
+    if (!isObject(partner)) {
+      err(`${where} moet een object zijn.`);
+      continue;
+    }
+
+    if (typeof partner.name !== "string" || !partner.name.trim()) err(`${where}.name ontbreekt.`);
+    if (partner.links && !Array.isArray(partner.links)) err(`${where}.links moet een array zijn.`);
+  }
 }
 
-const ok = errors.length === 0;
+function validateShop(shop, artistLookup) {
+  if (!isObject(shop)) {
+    err("shop.json moet een object zijn.");
+    return;
+  }
 
-console.log("— Kwartier West data validation —");
+  if (shop.updatedAt && !isISODateTime(shop.updatedAt)) warn("shop.json.updatedAt is geen geldige datetime.");
+
+  const items = shop.items;
+  if (!Array.isArray(items)) {
+    err("shop.json.items moet een array zijn.");
+    return;
+  }
+
+  const validOwnerType = new Set(["label", "artists"]);
+  const validStatus = new Set(["in_stock", "preorder", "sold_out", "coming_soon"]);
+  const validSides = new Set(["global", "tekno", "hiphop"]);
+  const ids = new Set();
+
+  for (const [index, item] of items.entries()) {
+    const where = `shop.json:items[${index}]`;
+    if (!isObject(item)) {
+      err(`${where} moet een object zijn.`);
+      continue;
+    }
+
+    if (typeof item.id !== "string" || !item.id.trim()) err(`${where}.id ontbreekt.`);
+    if (item.id && ids.has(item.id)) err(`${where}.id '${item.id}' is dubbel.`);
+    if (item.id) ids.add(item.id);
+
+    if (typeof item.title !== "string" || !item.title.trim()) err(`${where}.title ontbreekt.`);
+    if (!validOwnerType.has(item.ownerType)) err(`${where}.ownerType moet label of artists zijn.`);
+    if (!validStatus.has(item.status)) err(`${where}.status is ongeldig.`);
+    if (!validSides.has(item.side)) err(`${where}.side moet global, tekno of hiphop zijn.`);
+
+    if (item.ownerType === "artists") {
+      if (!item.artistSlug) err(`${where}.artistSlug is verplicht voor artist merch.`);
+      if (item.artistSlug && !artistLookup.allSlugs.has(item.artistSlug)) warn(`${where}.artistSlug '${item.artistSlug}' bestaat niet.`);
+    }
+
+    if (item.url && !isUrlOrEmpty(item.url)) warn(`${where}.url lijkt ongeldig.`);
+    if (item.sizes && !Array.isArray(item.sizes)) err(`${where}.sizes moet een array zijn.`);
+  }
+}
+
+function validateIntegrations(integrations) {
+  if (!isObject(integrations)) {
+    err("integrations.json moet een object zijn.");
+    return;
+  }
+
+  const allowedMethods = new Set(["GET", "POST"]);
+
+  for (const key of ["eventSync", "bookingWebhook", "shopApi"]) {
+    if (!isObject(integrations[key])) {
+      err(`integrations.json.${key} moet een object zijn.`);
+      continue;
+    }
+
+    const section = integrations[key];
+    const endpoint = section.endpoint;
+    if (endpoint && !isUrlOrEmpty(endpoint)) {
+      warn(`integrations.json.${key}.endpoint lijkt ongeldig.`);
+    }
+
+    const method = String(section.method || "").toUpperCase();
+    if (method && !allowedMethods.has(method)) {
+      err(`integrations.json.${key}.method moet GET of POST zijn.`);
+    }
+
+    if (section.timeoutMs != null) {
+      const timeout = Number(section.timeoutMs);
+      if (!Number.isFinite(timeout) || timeout <= 0) {
+        err(`integrations.json.${key}.timeoutMs moet een positief getal zijn.`);
+      }
+    }
+  }
+
+  const webhook = integrations.bookingWebhook;
+  if (isObject(webhook) && webhook.enabled) {
+    if (String(webhook.method || "").toUpperCase() && String(webhook.method || "").toUpperCase() !== "POST") {
+      err("integrations.json.bookingWebhook.method moet POST zijn wanneer enabled=true.");
+    }
+
+    const authMode = String(webhook.auth || "").toLowerCase();
+    if (authMode === "bearer-token" && !String(webhook.authToken || "").trim()) {
+      warn("integrations.json.bookingWebhook.authToken ontbreekt terwijl auth='bearer-token'.");
+    }
+  }
+}
+
+try {
+  const artists = readJSON("data/artists.json");
+  const events = readJSON("data/events.json");
+  const partners = readJSON("data/partners.json");
+  const shop = readJSON("data/shop.json");
+  const integrations = readJSON("data/integrations.json");
+
+  const artistLookup = validateArtists(artists);
+  validateEvents(events, artistLookup);
+  validatePartners(partners);
+  validateShop(shop, artistLookup);
+  validateIntegrations(integrations);
+} catch (error) {
+  err(error.message);
+}
+
+console.log("--- Kwartier West data validation ---");
 console.log(`Errors:   ${errors.length}`);
 console.log(`Warnings: ${warnings.length}`);
 console.log("");
 
-if(errors.length){
+if (errors.length) {
   console.log("ERRORS:");
-  for(const m of errors) console.log(" - " + m);
-  console.log("");
-}
-if(warnings.length){
-  console.log("WARNINGS:");
-  for(const m of warnings) console.log(" - " + m);
+  for (const message of errors) console.log(" - " + message);
   console.log("");
 }
 
-process.exit(ok ? 0 : 1);
+if (warnings.length) {
+  console.log("WARNINGS:");
+  for (const message of warnings) console.log(" - " + message);
+  console.log("");
+}
+
+process.exit(errors.length ? 1 : 0);

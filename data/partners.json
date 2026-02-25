@@ -1,48 +1,99 @@
 {
+  "updatedAt": "2026-02-23T23:55:00Z",
   "partners": [
     {
-      "slug": "iron-rig-soundsystem",
-      "name": "Iron Rig Soundsystem",
-      "type": "Sound system",
-      "region": "West Flanders, BE",
-      "bio": "Heavy rig, clean pressure. Built for long nights, proper control, no circus.",
-      "tags": ["Rig", "Tekno", "Outdoor/warehouse"],
+      "slug": "deeqstudio",
+      "name": "DEEQSTUDIO",
+      "type": "Creative direction / platform build",
+      "region": "Belgium",
+      "bio": "Design and systems partner behind the Kwartier West digital platform: visual language, structure and app-ready web architecture.",
+      "tags": ["Direction", "Brand systems", "Web/App"],
       "links": [
-        { "label": "Instagram", "url": "https://instagram.com/" }
+        {
+          "platform": "email",
+          "label": "Studio desk",
+          "url": "mailto:kwartierwest@gmail.com"
+        }
       ]
     },
     {
-      "slug": "westline-visuals",
-      "name": "Westline Visuals",
-      "type": "Video / Photo",
-      "region": "BE",
-      "bio": "Live coverage + aftermovies. Raw light, no over-editing, real atmosphere.",
-      "tags": ["Aftermovie", "Live", "Press kit"],
+      "slug": "apple-music-channel",
+      "name": "Apple Music",
+      "type": "Distribution channel",
+      "region": "Global",
+      "bio": "Global release channel used for selected catalog and artist visibility across the international streaming ecosystem.",
+      "tags": ["Streaming", "Distribution", "Catalog"],
       "links": [
-        { "label": "Portfolio", "url": "https://example.com" },
-        { "label": "Instagram", "url": "https://instagram.com/" }
+        {
+          "platform": "website",
+          "label": "Artist channel entry",
+          "url": "https://music.apple.com/be/artist/pandashaolin/1465535355"
+        }
       ]
     },
     {
-      "slug": "roomtone-studio",
-      "name": "Roomtone Studio",
-      "type": "Studio / Mixing",
-      "region": "West Flanders, BE",
-      "bio": "Tracking, mix, and cleanup. Built for artists who want clarity without losing edge.",
-      "tags": ["Recording", "Mix", "Master"],
+      "slug": "de-kweker-core",
+      "name": "De Kweker",
+      "type": "Flagship artist profile",
+      "region": "Bruges, BE",
+      "bio": "Core profile in the Hip hop lane, with a high-output release flow and a strong live identity across platforms.",
+      "tags": ["MC", "Live profile", "Bruges"],
       "links": [
-        { "label": "Website", "url": "https://example.com" }
+        {
+          "platform": "website",
+          "label": "kwkr.be",
+          "url": "https://kwkr.be"
+        },
+        {
+          "platform": "instagram",
+          "label": "@de.kweker",
+          "url": "https://www.instagram.com/de.kweker/"
+        },
+        {
+          "platform": "facebook",
+          "label": "De Kweker",
+          "url": "https://www.facebook.com/p/De-Kweker-61570442235326/"
+        },
+        {
+          "platform": "youtube",
+          "label": "@De.kweker",
+          "url": "https://www.youtube.com/@De.kweker"
+        },
+        {
+          "platform": "spotify",
+          "label": "Spotify artist",
+          "url": "https://open.spotify.com/artist/2v5Tuugqs8s4vaONc286EG"
+        }
       ]
     },
     {
-      "slug": "warehouse-crew",
-      "name": "Warehouse Crew",
-      "type": "Crew / Locations",
-      "region": "BE",
-      "bio": "Hosts + logistics. Entries, safety, flow — so the night stays solid.",
-      "tags": ["Host", "Logistics", "Safety"],
+      "slug": "kwartier-west-channels",
+      "name": "Kwartier West Channels",
+      "type": "Official socials",
+      "region": "Belgium",
+      "bio": "Official publishing and comms channels for event drops, artist announcements and operational updates.",
+      "tags": ["Official", "Event drops", "Community"],
       "links": [
-        { "label": "Contact", "url": "../contact/index.html" }
+        {
+          "platform": "instagram",
+          "label": "@kwtr_west",
+          "url": "https://www.instagram.com/kwtr_west/"
+        },
+        {
+          "platform": "facebook",
+          "label": "Facebook",
+          "url": "https://www.facebook.com/profile.php?id=61557994985369"
+        },
+        {
+          "platform": "soundcloud",
+          "label": "SoundCloud",
+          "url": "https://soundcloud.com/kwartier-west"
+        },
+        {
+          "platform": "linktree",
+          "label": "@kwartierwest",
+          "url": "https://linktr.ee/kwartierwest"
+        }
       ]
     }
   ]

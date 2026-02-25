@@ -1,44 +1,50 @@
-# Kwartier West (v1)
+# Kwartier West Website
 
-Split landing: Tekno / Hip hop
-Routes (static):
-- /index.html
-- /pages/tekno/index.html
-- /pages/hiphop/index.html
+Production-grade frontend for Kwartier West.
 
-Brand: zwart / rood / wit
+## Core goals
+- Two artist lanes: Tekno and Hip hop.
+- Booking flow for single artist, multiple artists, side collective, full label takeover.
+- Event hub with official social source references.
+- Shared storefront for Kwartier West merch + artist merch.
+- Data contracts prepared for future app/webhook integration.
+- International UX: language detection + persistent language switch across pages.
 
+## Routes
+- `/index.html`
+- `/pages/tekno/index.html`
+- `/pages/hiphop/index.html`
+- `/pages/events/index.html`
+- `/pages/booking/index.html`
+- `/pages/shop/index.html`
+- `/pages/partners/index.html`
+- `/pages/contact/index.html`
+- `/pages/manifest/index.html`
 
-find ALLE_WEBSITES/clients/kwartier-west -maxdepth 3 -type d
+## Data contracts
+- `data/artists.json`
+- `data/events.json`
+- `data/shop.json`
+- `data/partners.json`
+- `data/integrations.json`
 
+## Commands
+- `npm run dev`
+- `npm run validate`
+- `npm run site-check`
+- `npm run check`
 
-cat > ALLE_WEBSITES/clients/kwartier-west/index.html <<'EOF'
-<!doctype html>
-<html lang="nl">
-<head>
-  <meta charset="utf-8" />
-  <title>Kwartier West</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+## Internationalization
+- Base language: English.
+- Language switch is available globally in the navigation and on the landing page.
+- Language preference is saved in local storage and also synced via `?lang=<code>` in the URL.
+- Core UI translations are provided for: `en`, `nl`, `fr`, `de`, `es`, `pt`, `it`, `pl`, `ru`, `tr`, `ar`, `zh`.
 
-  <meta name="description" content="Kwartier West — collectief & organisatie voor hip hop en tekno." />
+## Integration handoff
+When backend/app is ready, connect:
+1. `data/integrations.json.eventSync.endpoint`
+2. `data/integrations.json.bookingWebhook.endpoint`
+3. `data/integrations.json.shopApi.endpoint`
 
-  <link rel="stylesheet" href="./css/base.css" />
-</head>
-<body class="split">
-
-  <a class="half tekno" href="./pages/tekno/index.html">
-    <div class="inner">
-      <h1>Tekno</h1>
-      <p>Soundsystem culture • underground • nacht</p>
-    </div>
-  </a>
-
-  <a class="half hiphop" href="./pages/hiphop/index.html">
-    <div class="inner">
-      <h1>Hip hop</h1>
-      <p>Bars • identiteit • verhaal</p>
-    </div>
-  </a>
-
-</body>
-</html>
+The frontend already emits structured booking payloads and consumes normalized data contracts.
+If `bookingWebhook.enabled=true`, booking submissions are POSTed automatically and still return mail + JSON fallback on failure.

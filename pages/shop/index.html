@@ -1,68 +1,54 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Kwartier West — Shop</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Shop — merch placeholder. Drops and checkout will be wired in later." />
-  <link rel="stylesheet" href="../../css/base.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n-title="meta.shop.title">Kwartier West - Shop</title>
+  <meta name="description" content="Storefront for Kwartier West merch and artist drops." data-i18n-content="meta.shop.description">
+  <link rel="stylesheet" href="../../css/base.css?v=20260224j">
 </head>
-<body>
+<body class="kw-page kw-shop-page">
   <div data-nav></div>
 
-  <div class="page">
-    <div class="topline">
-      <a class="back" href="../../index.html">← back</a>
-      <div class="kicker"><span class="dot"></span> Shop</div>
-    </div>
+  <main id="main-content" class="page-shell">
+    <header class="hero-surface shop-hero">
+      <p class="eyebrow" data-i18n="shop.hero.eyebrow">Merch / Storefront</p>
+      <h1 data-i18n="shop.hero.title">Kwartier West Shop</h1>
+      <p class="lead" data-i18n="shop.hero.lead">One storefront for label merch and artist drops.</p>
 
-    <div class="sectionCard">
-      <h1 style="margin:0 0 10px;">Merch</h1>
-      <p class="lead" style="margin:0; max-width:72ch;">
-        Placeholder store. Drops land here first.
-        Checkout, stock, and shipping get wired in later — same system as tickets/booking.
-      </p>
-    </div>
+      <div class="shop-controls">
+        <label class="shop-search-field">
+          <span data-i18n="shop.search.label">Search merch</span>
+          <input type="search" placeholder="Search item or artist" data-i18n-placeholder="shop.search.placeholder" data-shop-search>
+        </label>
 
-    <div class="grid">
-      <article class="card" style="grid-column: span 6;">
-        <div class="cardTop">
-          <h3>Hoodies</h3>
-          <div class="meta">TBA</div>
-        </div>
-        <p class="bio">
-          Heavy blanks, clean prints. Limited runs — no endless restocks.
-        </p>
-        <div class="chips"><span class="muted">soon</span></div>
-      </article>
+        <div class="shop-filter-rail" data-shop-filters></div>
+      </div>
 
-      <article class="card" style="grid-column: span 6;">
-        <div class="cardTop">
-          <h3>T-shirts</h3>
-          <div class="meta">TBA</div>
-        </div>
-        <p class="bio">
-          Straight fit. Proper fabric. Built to get worn, not posted.
-        </p>
-        <div class="chips"><span class="muted">soon</span></div>
-      </article>
+      <p class="shop-count muted" data-shop-count aria-live="polite">-</p>
+    </header>
 
-      <article class="card" style="grid-column: span 12;">
-        <div class="cardTop">
-          <h3>Drop notes</h3>
-          <div class="meta">Updates</div>
-        </div>
-        <p class="bio" style="max-width:90ch;">
-          When it’s live, it’s live. No fake countdowns.
-          If you need sizes, shipping, or pickup options — that lands with the real checkout.
-        </p>
-      </article>
-    </div>
-  </div>
+    <section class="surface shop-surface">
+      <div class="shop-stream" data-shop-items></div>
+    </section>
+  </main>
+
+  <div data-footer></div>
 
   <script type="module">
+    import { initI18nPage } from "../../js/core/i18n.js";
     import { renderNav } from "../../partials/nav.js";
+    import { renderFooter } from "../../partials/footer.js";
+    import { mountShopPage } from "../../js/shop.js";
+
+    initI18nPage();
     renderNav({ sideKey: "global", baseDepth: 2 });
+    renderFooter({ baseDepth: 2 });
+    mountShopPage({ baseDepth: 2 });
   </script>
 </body>
 </html>
+
+
+
+

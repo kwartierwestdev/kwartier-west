@@ -1,95 +1,165 @@
-function esc(s){
-  return String(s ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#39;");
+﻿import { loadArtists, loadEvents, normalizeLineup, pickSideCollection, splitEventsByDate } from "./core/content-api.js";
+import { escapeHTML, formatDateTime, sideShortLabel } from "./core/format.js";
+import { t } from "./core/i18n.js";
+
+function ticketCTA(eventItem) {
+  const mode = eventItem?.tickets?.mode || "tba";
+  const url = eventItem?.tickets?.url || "";
+  const label = eventItem?.tickets?.label || t("events.ticketsLabel");
+
+  if (mode === "external" && url) {
+    return `<a class="chip-link" href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(label)}</a>`;
+  }
+
+  if (mode === "internal") {
+    return `<a class="chip-link" href="../tickets/index.html">${t("events.ticketsLabel")}</a>`;
+  }
+
+  return `<span class="muted">${t("events.ticketsTba")}</span>`;
 }
 
-async function loadEvents(){
-  // Absolute path = stable from any page depth
-  const res = await fetch("/data/events.json", { cache: "no-store" });
-  if(!res.ok) throw new Error("Cannot load /data/events.json");
-  return res.json();
+function ticketRailCTA(eventItem) {
+  const mode = eventItem?.tickets?.mode || "tba";
+  const url = eventItem?.tickets?.url || "";
+  const label = eventItem?.tickets?.label || t("events.ticketsLabel");
+
+  if (mode === "external" && url) {
+    return `<a class="page-rail__event-link" href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(label)}</a>`;
+  }
+
+  if (mode === "internal") {
+    return `<a class="page-rail__event-link" href="../tickets/index.html">${t("events.ticketsLabel")}</a>`;
+  }
+
+  return `<span class="page-rail__event-link is-muted">${t("events.ticketsTba")}</span>`;
 }
 
-function niceDate(iso){
-  return iso || "";
-}
+function lineupHTML(eventItem, artistsData, sideKey) {
+  const lineup = normalizeLineup(eventItem?.lineup, artistsData, sideKey);
+  if (!lineup.length) return `<span class="muted">${t("events.lineupPending")}</span>`;
 
-function lineupList(sideKey, lineup){
-  const arr = Array.isArray(lineup) ? lineup : [];
-  if(!arr.length) return `<span class="muted">Line-up: TBA</span>`;
+  const items = lineup.map((entry) => {
+    const slug = String(entry?.slug || "");
+    const name = escapeHTML(entry?.name || t("artists.defaultName"));
+    if (!slug) return `<span>${name}</span>`;
 
-  const items = arr.map(a => {
-    if(a?.slug){
-      return `<a class="inlineLink" href="./artist.html?slug=${encodeURIComponent(a.slug)}">${esc(a.name || a.slug)}</a>`;
-    }
-    return `<span>${esc(a?.name || "")}</span>`;
+    return `<a class="inline-link" href="./artist.html?slug=${encodeURIComponent(slug)}">${name}</a>`;
   });
 
-  return `<span class="muted">Line-up:</span> ${items.join('<span class="sep">•</span>')}`;
+  return `<span class="muted">${t("events.lineup")}:</span> ${items.join('<span class="dot-sep"></span>')}`;
 }
 
-function ticketCta(tickets){
-  const mode = tickets?.mode || "tba";
-  const url = tickets?.url || "";
-
-  if(mode === "external" && url){
-    return `<a class="chip" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Tickets</a>`;
-  }
-  if(mode === "internal"){
-    return `<a class="chip" href="../tickets/index.html">Tickets</a>`;
-  }
-  return `<span class="muted">Tickets: TBA</span>`;
-}
-
-function bookingCta(){
-  return `<a class="chip" href="./booking.html">Book an act</a>`;
-}
-
-function item(sideKey, e){
-  const meta = [
-    niceDate(e.date),
-    e.time ? esc(e.time) : "",
-    e.city ? esc(e.city) : "",
-    e.venue ? esc(e.venue) : ""
-  ].filter(Boolean).join(" • ");
+function eventCard(eventItem, artistsData, sideKey) {
+  const dateLabel = formatDateTime(eventItem?.date, eventItem?.time);
+  const location = [eventItem?.region, eventItem?.venue].filter(Boolean).map(escapeHTML).join(" - ");
+  const sourceLink = eventItem?.source?.url
+    ? `<a class="inline-link" href="${escapeHTML(eventItem.source.url)}" target="_blank" rel="noopener noreferrer">${t("events.source")}: ${escapeHTML(eventItem?.source?.platform || t("events.sourceDefault"))}</a>`
+    : "";
 
   return `
-    <div class="event">
-      <div class="eventMain">
-        <div class="eventTitle">${esc(e.title)}</div>
-        <div class="eventMeta">${esc(meta)}</div>
-        <div class="eventLineup">${lineupList(sideKey, e.lineup)}</div>
-        ${e.notes ? `<div class="eventNotes muted">${esc(e.notes)}</div>` : ""}
+    <article class="event-card">
+      <div class="event-card__main">
+        <div class="event-card__title-row">
+          <h3>${escapeHTML(eventItem?.title || t("events.untitled"))}</h3>
+          <span class="status-pill">${escapeHTML(eventItem?.status || t("events.filter.upcoming"))}</span>
+        </div>
+
+        <p class="event-card__meta">${escapeHTML(dateLabel)}${location ? ` <span class="dot-sep"></span> ${location}` : ""}</p>
+        <p class="event-card__lineup">${lineupHTML(eventItem, artistsData, sideKey)}</p>
+        ${sourceLink ? `<p class="event-card__source">${sourceLink}</p>` : ""}
       </div>
 
-      <div class="eventSide">
-        ${e.status ? `<div class="eventStatus">${esc(e.status)}</div>` : ""}
-        <div class="eventCtas">
-          ${ticketCta(e.tickets)}
-          ${bookingCta()}
-        </div>
+      <div class="event-card__actions">
+        ${ticketCTA(eventItem)}
+        <a class="chip-link" href="./booking.html?type=collective_side">${t("events.bookSide", { side: escapeHTML(sideShortLabel(sideKey)) })}</a>
       </div>
+    </article>
+  `;
+}
+
+function renderRailEvents(sideEvents, sideKey) {
+  const mount = document.querySelector("[data-rail-events]");
+  if (!mount) return;
+
+  const { upcoming, past } = splitEventsByDate(sideEvents);
+  const ordered = upcoming.length ? upcoming : past.slice().reverse();
+  const limited = ordered.slice(0, 4);
+
+  if (!limited.length) {
+    mount.innerHTML = `<p class="muted">${t("events.none")}</p>`;
+    return;
+  }
+
+  mount.innerHTML = `
+    <div class="page-rail__event-list">
+      ${limited
+        .map((eventItem) => {
+          const dateLabel = formatDateTime(eventItem?.date, eventItem?.time);
+          const location = [eventItem?.region, eventItem?.venue].filter(Boolean).map(escapeHTML).join(" - ");
+          const status = escapeHTML(eventItem?.status || t("events.filter.upcoming"));
+          const title = escapeHTML(eventItem?.title || t("events.untitled"));
+          const bookLabel = t("events.bookSide", { side: escapeHTML(sideShortLabel(sideKey)) });
+          const side = escapeHTML(sideShortLabel(sideKey));
+
+          return `
+            <article class="page-rail__event">
+              <div class="page-rail__event-top">
+                <p class="page-rail__event-status">${status}</p>
+                <p class="page-rail__event-side">${side}</p>
+              </div>
+              <h4>${title}</h4>
+              <p class="page-rail__event-meta">${escapeHTML(dateLabel)}${location ? ` <span class="dot-sep"></span> ${location}` : ""}</p>
+              <div class="page-rail__event-links">
+                ${ticketRailCTA(eventItem)}
+                <a class="page-rail__event-link" href="./booking.html?type=collective_side">${bookLabel}</a>
+              </div>
+            </article>
+          `;
+        })
+        .join("")}
     </div>
   `;
 }
 
-export async function renderEvents(sideKey){
-  const el = document.querySelector("[data-events]");
-  if(!el) return;
+export async function renderEvents(sideKey, { baseDepth = 0 } = {}) {
+  const mount = document.querySelector("[data-events]");
+  if (mount) {
+    mount.innerHTML = `<p class="muted">${t("events.loading")}</p>`;
+  }
 
-  try{
-    const data = await loadEvents();
-    const list = data?.[sideKey] || [];
+  try {
+    const [eventsData, artistsData] = await Promise.all([
+      loadEvents({ baseDepth }),
+      loadArtists({ baseDepth })
+    ]);
 
-    el.innerHTML = list.length
-      ? `<div class="events">${list.map(e => item(sideKey, e)).join("")}</div>`
-      : `<p class="muted">No events yet.</p>`;
-  }catch(err){
-    console.error(err);
-    el.innerHTML = `<p class="muted">Could not load events.</p>`;
+    const sideEvents = pickSideCollection(eventsData, sideKey).slice();
+    sideEvents.sort((a, b) => String(a?.date || "").localeCompare(String(b?.date || "")));
+
+    renderRailEvents(sideEvents, sideKey);
+
+    if (!sideEvents.length) {
+      if (mount) {
+        mount.innerHTML = `<p class="muted">${t("events.none")}</p>`;
+      }
+      return;
+    }
+
+    const { upcoming, past } = splitEventsByDate(sideEvents);
+    const ordered = [...upcoming, ...past.reverse()];
+
+    if (mount) {
+      mount.innerHTML = `
+        <div class="event-list">
+          ${ordered.map((eventItem) => eventCard(eventItem, artistsData, sideKey)).join("")}
+        </div>
+      `;
+    }
+  } catch (error) {
+    console.error(error);
+    if (mount) {
+      mount.innerHTML = `<p class="muted">${t("events.error")}</p>`;
+    }
+    renderRailEvents([], sideKey);
   }
 }

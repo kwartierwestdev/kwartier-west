@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title data-i18n-title="meta.teknoBooking.title">Kwartier West - Tekno booking</title>
-  <meta name="description" content="Book Tekno artists or the full Tekno collective." data-i18n-content="meta.teknoBooking.description">
+  <title data-i18n-title="meta.booking.title">Kwartier West - Central booking desk</title>
+  <meta name="description" content="Central booking desk for Tekno, Hip hop and full label takeovers." data-i18n-content="meta.booking.description">
   <link rel="stylesheet" href="../../css/base.css?v=20260224j">
 </head>
-<body class="kw-page kw-side-tekno">
+<body class="kw-page">
   <div data-nav></div>
 
   <main id="main-content" class="page-shell">
     <header class="hero-surface">
-      <p class="eyebrow" data-i18n="booking.hero.eyebrowTekno">Booking / Tekno</p>
-      <h1 data-i18n="nav.bookTekno">Book Tekno</h1>
+      <p class="eyebrow" data-i18n="booking.hero.eyebrow">Booking / Central desk</p>
+      <h1 data-i18n="booking.hero.title">Book Kwartier West</h1>
       <p class="lead" data-i18n="booking.hero.lead">One intake for every scenario: solo artist, multiple artists, side collective or full takeover.</p>
       <div class="inline-actions">
-        <a class="chip-link" href="../tekno/index.html#artists" data-i18n="nav.teknoArtists">Tekno artists</a>
+        <a class="chip-link" href="../events/index.html" data-i18n="booking.link.events">Event hub</a>
       </div>
     </header>
 
@@ -38,9 +38,9 @@
     import { mountBookingDesk } from "../../js/booking.js";
 
     initI18nPage();
-    renderNav({ sideKey: "tekno", baseDepth: 2 });
+    renderNav({ sideKey: "global", baseDepth: 2 });
     renderFooter({ baseDepth: 2 });
-    mountBookingDesk({ sideKey: "tekno", baseDepth: 2 });
+    mountBookingDesk({ sideKey: "all", baseDepth: 2 });
   </script>
 </body>
 </html>

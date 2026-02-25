@@ -1,65 +1,52 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Kwartier West — Tickets</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Tickets — links, status, and how entry works for Kwartier West events." />
-  <link rel="stylesheet" href="../../css/base.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n-title="meta.tickets.title">Kwartier West - Tickets</title>
+  <meta name="description" content="Ticketing and access information for Kwartier West events." data-i18n-content="meta.tickets.description">
+  <link rel="stylesheet" href="../../css/base.css?v=20260224j">
 </head>
-<body>
+<body class="kw-page">
   <div data-nav></div>
 
-  <div class="page">
-    <div class="topline">
-      <a class="back" href="../../index.html">← back</a>
-      <div class="kicker"><span class="dot"></span> Tickets</div>
-    </div>
-
-    <div class="sectionCard">
-      <h1>Tickets</h1>
-      <p class="lead">
-        Ticketing is currently handled per event.
-        Some nights use an external link, some are list-only, some are <strong>TBA</strong>.
-        The event page is always the source of truth.
-      </p>
-
-      <div class="chips" style="margin-top:12px;">
-        <a class="chip" href="../tekno/index.html#events">Tek events</a>
-        <a class="chip" href="../hiphop/index.html#events">Hip hop events</a>
-        <a class="chip" href="../contact/index.html">Questions</a>
+  <main id="main-content" class="page-shell">
+    <header class="hero-surface">
+      <p class="eyebrow" data-i18n="tickets.hero.eyebrow">Tickets / Access flow</p>
+      <h1 data-i18n="tickets.hero.title">Tickets</h1>
+      <p class="lead" data-i18n="tickets.hero.lead">Tickets are published per event. Some events run through external partners, others through guest list or internal flow. The event hub remains the single source of truth.</p>
+      <div class="inline-actions">
+        <a class="cta-btn" href="../events/index.html" data-i18n="tickets.hero.events">Open event hub</a>
+        <a class="chip-link" href="../contact/index.html" data-i18n="tickets.hero.support">Ticket support</a>
       </div>
-    </div>
+    </header>
 
-    <div class="sectionCard">
-      <h2>How it works</h2>
-      <p class="lead">
-        <strong>External link:</strong> you buy tickets on the organiser’s platform. <br>
-        <strong>Internal / list:</strong> you’re confirmed by the crew (DM/email) and your name is on the door. <br>
-        <strong>TBA:</strong> details drop when the venue + capacity are locked.
-      </p>
-    </div>
+    <section class="surface prose-block">
+      <h2 data-i18n="tickets.status.title">Ticket status</h2>
+      <ul>
+        <li><strong data-i18n="tickets.status.external.label">External:</strong> <span data-i18n="tickets.status.external.body">Purchase on the organiser's platform.</span></li>
+        <li><strong data-i18n="tickets.status.internal.label">Internal:</strong> <span data-i18n="tickets.status.internal.body">Kwartier West flow (later linked to app and QR check-in).</span></li>
+        <li><strong data-i18n="tickets.status.tba.label">TBA:</strong> <span data-i18n="tickets.status.tba.body">Details follow once venue, capacity and production lock are final.</span></li>
+      </ul>
+    </section>
+  </main>
 
-    <div class="sectionCard">
-      <h2>Entry</h2>
-      <p class="lead">
-        Bring your confirmation. Show up on time. Respect the room. <br>
-        No drama at the door — if the crew says “not tonight”, it’s not a debate.
-      </p>
-    </div>
-
-    <div class="sectionCard" style="max-width:820px;">
-      <h2>App-ready</h2>
-      <p class="lead">
-        This page becomes the future flow: purchase, QR, check-in, history. One system for site + app.
-        Until then: follow the ticket status on each event.
-      </p>
-    </div>
-  </div>
+  <div data-footer></div>
 
   <script type="module">
+    import { initI18nPage } from "../../js/core/i18n.js";
     import { renderNav } from "../../partials/nav.js";
+    import { renderFooter } from "../../partials/footer.js";
+    initI18nPage();
     renderNav({ sideKey: "global", baseDepth: 2 });
+    renderFooter({ baseDepth: 2 });
   </script>
 </body>
 </html>
+
+
+
+
+
+
+

@@ -1,130 +1,118 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n-title="meta.home.title">Kwartier West</title>
+  <meta name="description" content="Kwartier West: Tekno and Hip hop collectives, events, bookings and merch." data-i18n-content="meta.home.description">
+
   <link rel="icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 
-  <meta charset="utf-8" />
-  <title>Kwartier West</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Kwartier West — two sides: tek side & hip hop side. Same underground ethic." />
-  <link rel="stylesheet" href="./css/base.css" />
-  <link rel="stylesheet" href="./css/landing.css" />
+  <link rel="stylesheet" href="./css/base.css?v=20260224j">
+  <link rel="stylesheet" href="./css/landing.css?v=20260224j">
 </head>
-
 <body class="landing">
-  <main class="split" aria-label="Kwartier West split landing">
-    <div class="manifestHotzone" aria-hidden="true"></div>
+  <a class="skip-link skip-link--landing" href="#landing-quick" data-i18n="nav.skip">Skip to content</a>
 
+  <main id="main-content" class="landing-portal" data-portal data-active="none" aria-label="Kwartier West portal" data-i18n-aria-label="landing.portal.aria">
+    <h1 class="sr-only" data-i18n="meta.home.title">Kwartier West</h1>
 
-    <!-- TEKNO -->
-    <section class="half tekno" style="--bgimg:url('/assets/landing-tekno.jpg');" aria-label="Tek side">
-      <a class="halfHit" href="./pages/tekno/index.html" aria-label="Enter Tekno"></a>
+    <header class="portal-topbar">
+      <a class="portal-brand" href="./index.html" aria-current="page">
+        <span class="portal-brand__logo" aria-hidden="true"></span>
+        <span class="sr-only">Kwartier West</span>
+      </a>
 
-      <div class="inner">
-        <div class="kicker"><span class="dot"></span> tek-side</div>
-        <h1>TEKNO</h1>
-        <p>Explore our underground social movement.</p>
-
-        <nav class="enter" aria-label="Tekno quick links">
-          <span>Enter:</span>
-          <a class="enterLink" href="./pages/tekno/index.html#events">events</a>
-          <span class="sepDot">•</span>
-          <a class="enterLink" href="./pages/tekno/index.html#artists">artists</a>
-          <span class="sepDot">•</span>
-          <a class="enterLink" href="./pages/tekno/booking.html">booking</a>
+      <div class="portal-controls">
+        <nav id="landing-quick" class="portal-quick" aria-label="Quick links" data-i18n-aria-label="landing.quick.aria">
+          <a href="./pages/booking/index.html" data-i18n="landing.quick.booking">Booking desk</a>
         </nav>
+
+        <label class="portal-lang">
+          <span data-i18n="common.language">Language</span>
+          <select data-lang-switch></select>
+        </label>
+      </div>
+    </header>
+
+    <section class="portal-canvas" data-portal-canvas aria-describedby="portal-instruction">
+      <p id="portal-instruction" class="portal-instruction" data-i18n="landing.portal.instruction">
+        Choose a side. Press Enter.
+      </p>
+
+      <a class="portal-side portal-side--tekno" data-portal-side="tekno" href="./pages/tekno/index.html" aria-label="Open Tekno portal" data-i18n-aria-label="landing.tekno.aria">
+        <span class="portal-side__image" aria-hidden="true"></span>
+        <span class="portal-side__veil" aria-hidden="true"></span>
+        <span class="portal-side__body">
+          <span class="portal-side__index" aria-hidden="true">01</span>
+          <span class="eyebrow" data-i18n="landing.tekno.eyebrow">Tekno collective</span>
+          <span class="portal-side__title" data-i18n="landing.tekno.title">Tekno</span>
+          <span class="portal-side__line" data-i18n="landing.tekno.desc">Hardtek, acid pressure and soundsystem discipline.</span>
+          <span class="portal-side__actions">
+            <span class="portal-side__cta" data-i18n="landing.tekno.open">Open Tekno</span>
+            <span class="portal-side__subcta" data-i18n="landing.tekno.book">Book Tekno</span>
+          </span>
+        </span>
+      </a>
+
+      <a class="portal-side portal-side--hiphop" data-portal-side="hiphop" href="./pages/hiphop/index.html" aria-label="Open Hip hop portal" data-i18n-aria-label="landing.hiphop.aria">
+        <span class="portal-side__image" aria-hidden="true"></span>
+        <span class="portal-side__veil" aria-hidden="true"></span>
+        <span class="portal-side__body">
+          <span class="portal-side__index" aria-hidden="true">02</span>
+          <span class="eyebrow" data-i18n="landing.hiphop.eyebrow">Hip hop collective</span>
+          <span class="portal-side__title" data-i18n="landing.hiphop.title">Hip hop</span>
+          <span class="portal-side__line" data-i18n="landing.hiphop.desc">Bars, producers and live energy with character.</span>
+          <span class="portal-side__actions">
+            <span class="portal-side__cta" data-i18n="landing.hiphop.open">Open Hip hop</span>
+            <span class="portal-side__subcta" data-i18n="landing.hiphop.book">Book Hip hop</span>
+          </span>
+        </span>
+      </a>
+
+      <div class="portal-seam" aria-hidden="true"></div>
+
+      <div class="portal-rift" aria-live="polite">
+        <div class="portal-rift__arches" aria-hidden="true">
+          <span class="portal-rift__arc portal-rift__arc--outer"></span>
+          <span class="portal-rift__arc portal-rift__arc--mid"></span>
+          <span class="portal-rift__arc portal-rift__arc--inner"></span>
+        </div>
+
+        <div class="portal-rift__orbs" aria-hidden="true">
+          <span class="portal-rift__orb portal-rift__orb--one"></span>
+          <span class="portal-rift__orb portal-rift__orb--two"></span>
+          <span class="portal-rift__orb portal-rift__orb--three"></span>
+          <span class="portal-rift__orb portal-rift__orb--four"></span>
+        </div>
+
+        <div class="portal-rift__core">
+          <a class="portal-rift__manifest" href="./pages/events/index.html" aria-label="Enter the main Kwartier West site" data-i18n-aria-label="landing.rift.main.aria">
+            <span class="portal-rift__manifest-title" data-i18n="landing.rift.main.title">Enter The West</span>
+          </a>
+        </div>
       </div>
     </section>
 
-    <!-- HIP HOP -->
-    <section class="half hiphop" style="--bgimg:url('/assets/landing-hiphop.jpg');" aria-label="Hip hop side">
-      <a class="halfHit" href="./pages/hiphop/index.html" aria-label="Enter Hip hop"></a>
-
-      <div class="inner">
-        <div class="kicker"><span class="dot"></span> West-side</div>
-        <h1>HIP HOP </h1>
-        <p>A lyrical journey through rhythm, rhyme, and the streets.</p>
-
-        <nav class="enter" aria-label="Hip hop quick links">
-          <span>Enter:</span>
-          <a class="enterLink" href="./pages/hiphop/index.html#events">events</a>
-          <span class="sepDot">•</span>
-          <a class="enterLink" href="./pages/hiphop/index.html#artists">artists</a>
-          <span class="sepDot">•</span>
-          <a class="enterLink" href="./pages/hiphop/booking.html">booking</a>
-        </nav>
-      </div>
-    </section>
-
-    <!-- MANIFEST -->
-    <a class="manifestCard" href="./pages/manifest/index.html" aria-label="Open manifest">
-      <h3>This is the West</h3>
-      <p>Two sides, one backbone. We build nights, stages, and a real lane for independent artists.</p>
-      <span class="go">Open manifest →</span>
-    </a>
-<script>
-  (function(){
-    const body = document.body;
-    if(!body.classList.contains("landing")) return;
-
-    // zone around center (in px). Larger = easier to trigger.
-    const BAND = 140;
-
-    let raf = 0;
-    function onMove(e){
-      if(raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        const x = e.clientX;
-        const center = window.innerWidth / 2;
-        const near = Math.abs(x - center) < BAND;
-        body.classList.toggle("isOpen", near);
-      });
-    }
-
-    function onLeave(){
-      body.classList.remove("isOpen");
-    }
-
-    window.addEventListener("mousemove", onMove, { passive: true });
-    window.addEventListener("mouseleave", onLeave);
-
-    // Also open if you hover the manifest card itself (safe for slower movement)
-    const card = document.querySelector(".manifestCard");
-    if(card){
-      card.addEventListener("mouseenter", () => body.classList.add("isOpen"));
-      card.addEventListener("mouseleave", () => body.classList.remove("isOpen"));
-    }
-  })();
-  
-</script>
-<script>
-(function(){
-  const body = document.body;
-  if(!body.classList.contains("landing")) return;
-
-  const hot = document.querySelector(".manifestHotzone");
-  if(!hot) return;
-
-  const open = () => body.classList.add("manifestOpen");
-  const close = () => body.classList.remove("manifestOpen");
-
-  // Touch: show while finger is in the middle zone
-  hot.addEventListener("touchstart", (e) => { open(); }, { passive: true });
-  hot.addEventListener("touchmove",  (e) => { open(); }, { passive: true });
-  hot.addEventListener("touchend",   close, { passive: true });
-  hot.addEventListener("touchcancel",close, { passive: true });
-
-  // Mouse: show on hover (useful when testing in devtools)
-  hot.addEventListener("mouseenter", open);
-  hot.addEventListener("mouseleave", close);
-})();
-</script>
-
+    <footer class="portal-footer">
+      <a href="./pages/events/index.html" data-i18n="landing.footer.events">Live event hub</a>
+      <a href="./pages/partners/index.html" data-i18n="landing.footer.partners">Partners</a>
+      <a href="./pages/contact/index.html" data-i18n="landing.footer.contact">Contact</a>
+      <span data-i18n="landing.footer.powered">Powered by deeqstudio</span>
+    </footer>
   </main>
-  
+
+  <script type="module">
+    import { initI18nPage } from "./js/core/i18n.js";
+    import { initLandingPortal } from "./js/landing-portal.js";
+
+    initI18nPage();
+    initLandingPortal();
+  </script>
 </body>
 </html>
+
+

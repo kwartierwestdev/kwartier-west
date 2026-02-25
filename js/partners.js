@@ -1,80 +1,74 @@
-/* Kwartier West — partners.js
-   Loads /data/partners.json and renders partner cards in the unified design system.
-*/
+import { loadPartners } from "./core/content-api.js";
+import { asArray, escapeHTML } from "./core/format.js";
+import { t } from "./core/i18n.js";
+import { renderSocialRail } from "./core/social-links.js";
 
-function esc(s=""){
-  return String(s)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#39;");
+function initials(name = "") {
+  const parts = String(name || "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2);
+
+  if (!parts.length) return "KW";
+  return parts.map((part) => part.charAt(0).toUpperCase()).join("");
 }
 
-async function loadPartners(){
-  // Absolute path = stable from any page depth
-  const res = await fetch("/data/partners.json", { cache: "no-store" });
-  if(!res.ok) throw new Error("Cannot load /data/partners.json");
-  return res.json();
+function renderTags(tags) {
+  const list = asArray(tags).filter(Boolean).slice(0, 3);
+  if (!list.length) return "";
+  return `<div class="partner-card__tags">${list.map((tag) => `<span class="tag-pill">${escapeHTML(tag)}</span>`).join("")}</div>`;
 }
 
-function linkChip(l){
-  const label = esc(l?.label || "Link");
-  const url = String(l?.url || "").trim();
-  if(!url) return "";
-
-  const isExternal = /^https?:\/\//i.test(url);
-  const attrs = isExternal ? ` target="_blank" rel="noopener noreferrer"` : "";
-  return `<a class="chip" href="${esc(url)}"${attrs}>${label}</a>`;
-}
-
-function card(p){
-  const name = esc(p?.name || "");
-  const type = esc(p?.type || "");
-  const region = esc(p?.region || "");
-  const bio = esc(p?.bio || "");
-  const tags = Array.isArray(p?.tags) ? p.tags : [];
-  const links = Array.isArray(p?.links) ? p.links : [];
+function partnerCard(partner) {
+  const name = escapeHTML(partner?.name || "Partner");
+  const type = escapeHTML(partner?.type || "");
+  const region = escapeHTML(partner?.region || "");
+  const links = renderSocialRail(partner?.links, {
+    variant: "full",
+    limit: 5,
+    className: "partner-card__socials"
+  });
 
   return `
-    <article class="card" style="grid-column: span 6;">
-      <div class="cardTop">
-        <h3>${name}</h3>
-        <div class="meta">${type}</div>
+    <article class="tile-card tile-card--partner">
+      <div class="partner-card__head">
+        <div class="partner-card__mark" aria-hidden="true">${escapeHTML(initials(partner?.name || ""))}</div>
+
+        <div class="partner-card__title">
+          <h3>${name}</h3>
+          ${type ? `<p class="muted">${type}</p>` : ""}
+        </div>
       </div>
 
-      <p class="bio" style="margin-bottom:12px;">${bio}</p>
+      ${region ? `<p class="partner-card__meta muted">${region}</p>` : ""}
+      ${renderTags(partner?.tags)}
 
-      <div class="muted" style="font-size:12px; margin-bottom:10px;">
-        ${region ? esc(region) : ""}
-        ${tags.length ? ` <span class="sep">•</span> ${tags.map(esc).join('<span class="sep">•</span>')}` : ""}
-      </div>
-
-      <div class="chips">
-        ${links.length ? links.map(linkChip).join("") : `<span class="muted">Links: TBA</span>`}
+      <div class="partner-card__actions">
+        ${links || `<span class="muted">${t("partners.linksPending")}</span>`}
       </div>
     </article>
   `;
 }
 
-export async function renderPartners(){
+export async function renderPartners({ baseDepth = 0 } = {}) {
   const mount = document.querySelector("[data-partners]");
-  if(!mount) return;
+  if (!mount) return;
 
-  mount.innerHTML = `<div class="muted">Loading partners…</div>`;
+  mount.innerHTML = `<p class="muted">${t("partners.loading")}</p>`;
 
-  try{
-    const data = await loadPartners();
-    const list = Array.isArray(data?.partners) ? data.partners : [];
+  try {
+    const data = await loadPartners({ baseDepth });
+    const partners = asArray(data?.partners);
 
-    if(!list.length){
-      mount.innerHTML = `<div class="muted">No partners yet.</div>`;
+    if (!partners.length) {
+      mount.innerHTML = `<p class="muted">${t("partners.empty")}</p>`;
       return;
     }
 
-    mount.innerHTML = `<div class="grid">${list.map(card).join("")}</div>`;
-  }catch(err){
-    console.error(err);
-    mount.innerHTML = `<div class="muted">Could not load partners.</div>`;
+    mount.innerHTML = `<div class="tile-grid">${partners.map((partner) => partnerCard(partner)).join("")}</div>`;
+  } catch (error) {
+    console.error(error);
+    mount.innerHTML = `<p class="muted">${t("partners.error")}</p>`;
   }
 }

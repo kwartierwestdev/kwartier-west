@@ -1,84 +1,150 @@
+import { sideLabel } from "../js/core/format.js";
+import { attachLanguageSwitchers, t } from "../js/core/i18n.js";
+import { mountPageRail } from "../js/core/page-rail.js";
+
+function pathPrefix(baseDepth = 0) {
+  return "../".repeat(Math.max(0, Number(baseDepth) || 0));
+}
+
+function normalizePathname(pathname = "") {
+  return String(pathname).replace(/index\.html$/i, "");
+}
+
+function isLinkActive(href) {
+  const current = normalizePathname(window.location.pathname || "");
+  const target = normalizePathname(new URL(href, window.location.origin).pathname);
+  return current === target || current.startsWith(`${target}/`);
+}
+
+function sideLinks(prefix, sideKey) {
+  if (sideKey === "tekno") {
+    return [
+      { href: `${prefix}pages/tekno/index.html#artists`, label: t("nav.teknoArtists") },
+      { href: `${prefix}pages/tekno/booking.html`, label: t("nav.bookTekno") }
+    ];
+  }
+
+  if (sideKey === "hiphop") {
+    return [
+      { href: `${prefix}pages/hiphop/index.html#artists`, label: t("nav.hiphopArtists") },
+      { href: `${prefix}pages/hiphop/booking.html`, label: t("nav.bookHiphop") }
+    ];
+  }
+
+  return [];
+}
+
 export function renderNav({ sideKey = "global", baseDepth = 0 } = {}) {
-  const prefix = "../".repeat(baseDepth);
-
-  const linksMain = [
-    // Home eruit
-    { href: `${prefix}pages/events/index.html`, label: "Events" },
-    { href: `${prefix}pages/tekno/index.html`, label: "Tekno" },
-    { href: `${prefix}pages/hiphop/index.html`, label: "Hip hop" },
-    { href: `${prefix}pages/tickets/index.html`, label: "Tickets" },
-    { href: `${prefix}pages/shop/index.html`, label: "Shop" },
-    { href: `${prefix}pages/contact/index.html`, label: "Contact" },
-  ];
-
-  const linksSide =
-    sideKey === "tekno"
-      ? [
-          { href: `${prefix}pages/tekno/booking.html`, label: "Booking" },
-          { href: `${prefix}pages/tekno/index.html#artists`, label: "Artists" },
-        ]
-      : sideKey === "hiphop"
-      ? [
-          { href: `${prefix}pages/hiphop/booking.html`, label: "Booking" },
-          { href: `${prefix}pages/hiphop/index.html#artists`, label: "Artists" },
-        ]
-      : [{ href: `${prefix}pages/manifest/index.html`, label: "Manifest" }];
-
-  const allLinks = [...linksMain, ...linksSide];
-
   const host = document.querySelector("[data-nav]");
   if (!host) return;
 
+  const prefix = pathPrefix(baseDepth);
+
+  const main = [
+    { href: `${prefix}pages/events/index.html`, label: t("nav.events") },
+    { href: `${prefix}pages/tekno/index.html`, label: t("nav.tekno") },
+    { href: `${prefix}pages/hiphop/index.html`, label: t("nav.hiphop") },
+    { href: `${prefix}pages/booking/index.html`, label: t("nav.bookings") },
+    { href: `${prefix}pages/shop/index.html`, label: t("nav.shop") }
+  ];
+
+  const support = [
+    { href: `${prefix}pages/tickets/index.html`, label: t("tickets.hero.title") },
+    { href: `${prefix}pages/manifest/index.html`, label: t("nav.manifest") },
+    { href: `${prefix}pages/partners/index.html`, label: t("nav.partners") },
+    { href: `${prefix}pages/contact/index.html`, label: t("nav.contact") }
+  ];
+
+  const secondary = sideLinks(prefix, sideKey);
+  const all = [...main, ...secondary, ...support];
+
   host.innerHTML = `
-    <nav class="kwNav" aria-label="Kwartier West navigation">
-      <div class="kwNavInner">
-        <a class="kwBrand" href="${prefix}index.html" aria-label="Kwartier West landing">
-          <span class="kwMark" aria-hidden="true"></span>
-          <span>Kwartier West</span>
+    <a class="skip-link" href="#main-content">${t("nav.skip")}</a>
+
+    <nav class="kw-nav" aria-label="${t("nav.mainAria")}">
+      <div class="kw-nav__inner">
+        <a class="kw-brand" href="${prefix}index.html" aria-label="${t("nav.homeAria")}">
+          <span class="kw-brand__logo" aria-hidden="true"></span>
+          <span class="kw-brand__side">${sideLabel(sideKey)}</span>
+          <span class="sr-only">Kwartier West</span>
         </a>
 
-        <div class="kwLinks">
-          ${linksMain.map(a => `<a class="kwLink" href="${a.href}">${a.label}</a>`).join("")}
+        <div class="kw-links kw-links--main">
+          ${main
+            .map((item) => {
+              const active = isLinkActive(item.href);
+              return `<a class="kw-link${active ? " is-active" : ""}" href="${item.href}"${active ? ' aria-current="page"' : ""}>${item.label}</a>`;
+            })
+            .join("")}
         </div>
 
-        <div class="kwLinks kwLinksSide">
-          ${linksSide.map(a => `<a class="kwLink" href="${a.href}">${a.label}</a>`).join("")}
+        <div class="kw-lang-wrap">
+          <label class="kw-lang-label">${t("common.language")}</label>
+          <select class="kw-lang-select" data-lang-switch></select>
         </div>
 
-        <div class="kwBurger" aria-hidden="true">
-          <button class="kwBurgerBtn" type="button" aria-expanded="false" aria-controls="kwDrawer">
-            Menu
-          </button>
-        </div>
+        <button class="kw-nav__toggle" type="button" aria-expanded="false" aria-controls="kw-drawer">${t("nav.menu")}</button>
       </div>
 
-      <div class="kwDrawer" id="kwDrawer">
-        <div class="kwDrawerGrid">
-          ${allLinks.map(a => `<a href="${a.href}">${a.label}</a>`).join("")}
+      <div class="kw-drawer" id="kw-drawer" hidden>
+        <div class="kw-drawer__grid">
+          ${all
+            .map((item) => {
+              const active = isLinkActive(item.href);
+              return `<a class="kw-drawer__link${active ? " is-active" : ""}" href="${item.href}"${active ? ' aria-current="page"' : ""}>${item.label}</a>`;
+            })
+            .join("")}
+        </div>
+        <div class="kw-drawer__meta">
+          <label class="kw-drawer__lang-label">${t("common.language")}</label>
+          <select class="kw-drawer__lang-select" data-lang-switch></select>
         </div>
       </div>
     </nav>
   `;
 
-  const mq = window.matchMedia("(max-width: 900px)");
-  const btn = host.querySelector(".kwBurgerBtn");
-  const drawer = host.querySelector(".kwDrawer");
-  const burgerWrap = host.querySelector(".kwBurger");
-
-  function syncBurger() {
-    const isMobile = mq.matches;
-    if (burgerWrap) burgerWrap.style.display = isMobile ? "flex" : "none";
-    if (drawer) drawer.classList.remove("isOpen");
-    if (btn) btn.setAttribute("aria-expanded", "false");
+  try {
+    mountPageRail({ sideKey, baseDepth });
+  } catch (error) {
+    console.error("Rail mount failed", error);
   }
 
-  syncBurger();
-  mq.addEventListener?.("change", syncBurger);
+  attachLanguageSwitchers(host);
 
-  if (btn && drawer) {
-    btn.addEventListener("click", () => {
-      const open = drawer.classList.toggle("isOpen");
-      btn.setAttribute("aria-expanded", open ? "true" : "false");
-    });
+  const button = host.querySelector(".kw-nav__toggle");
+  const drawer = host.querySelector(".kw-drawer");
+
+  if (!button || !drawer) return;
+
+  function closeDrawer() {
+    button.setAttribute("aria-expanded", "false");
+    drawer.hidden = true;
+    drawer.classList.remove("is-open");
   }
+
+  function openDrawer() {
+    button.setAttribute("aria-expanded", "true");
+    drawer.hidden = false;
+    drawer.classList.add("is-open");
+  }
+
+  button.addEventListener("click", () => {
+    const expanded = button.getAttribute("aria-expanded") === "true";
+    if (expanded) closeDrawer();
+    else openDrawer();
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 980) closeDrawer();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeDrawer();
+  });
+
+  drawer.addEventListener("click", (event) => {
+    if (event.target instanceof HTMLElement && event.target.matches("a")) {
+      closeDrawer();
+    }
+  });
 }

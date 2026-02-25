@@ -1,31 +1,20 @@
-function esc(s){
-  return String(s ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#39;");
-}
+﻿import { t } from "../js/core/i18n.js";
 
-export function renderSideSwitch(sideKey){
-  // bovenaan in renderSideSwitch
-if (window.matchMedia("(min-width: 901px)").matches) return;
+export function renderSideSwitch(sideKey) {
+  if (!["tekno", "hiphop"].includes(sideKey)) return;
 
   const mount = document.querySelector("[data-sideswitch]");
-  if(!mount) return;
+  if (!mount) return;
 
   const other = sideKey === "tekno" ? "hiphop" : "tekno";
-  const otherLabel = sideKey === "tekno" ? "Hip hop" : "Tekno";
-  const thisLabel  = sideKey === "tekno" ? "Tekno" : "Hip hop";
-  const otherHref  = `../${other}/index.html`;
+  const otherLabel = other === "tekno" ? t("nav.tekno") : t("nav.hiphop");
+  const thisLabel = sideKey === "tekno" ? t("nav.tekno") : t("nav.hiphop");
 
   mount.innerHTML = `
-    <div class="sideSwitch" role="navigation" aria-label="Side switch">
-      <div class="sideSwitchPill">
-        <span class="sideHere">${esc(thisLabel)}</span>
-        <span class="sideSep">→</span>
-        <a class="sideGo" href="${esc(otherHref)}">Switch to ${esc(otherLabel)}</a>
-      </div>
+    <div class="side-switch" role="navigation" aria-label="${t("nav.sideSwitchAria")}">
+      <span class="side-switch__label">${thisLabel}</span>
+      <a class="side-switch__link" href="../${other}/index.html">${otherLabel}</a>
+      <a class="side-switch__link" href="../booking/index.html?side=${sideKey}">${t("nav.bookingDesk")}</a>
     </div>
   `;
 }

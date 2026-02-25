@@ -1,74 +1,58 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Kwartier West — Manifest</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="This is the West — the code behind Kwartier West." />
-  <link rel="stylesheet" href="../../css/base.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n-title="meta.manifest.title">Kwartier West - Manifest</title>
+  <meta name="description" content="Manifest of Kwartier West: vision, values and operational rules." data-i18n-content="meta.manifest.description">
+  <link rel="stylesheet" href="../../css/base.css?v=20260224j">
 </head>
-<body>
+<body class="kw-page">
   <div data-nav></div>
 
-  <div class="page">
-    <div class="topline">
-      <a class="back" href="../../index.html">← back</a>
-      <div class="kicker"><span class="dot"></span> This is the West</div>
-    </div>
+  <main id="main-content" class="page-shell">
+    <header class="hero-surface">
+      <p class="eyebrow" data-i18n="manifest.hero.eyebrow">This is the West</p>
+      <h1 data-i18n="manifest.hero.title">Manifest</h1>
+      <p class="lead" data-i18n="manifest.hero.lead">Kwartier West is an operational label with two full lanes: Tekno and Hip hop. We build artist trajectories, events and productions with the same quality standard on both sides.</p>
+    </header>
 
-    <div class="sectionCard">
-      <h1>Manifest</h1>
-      <p class="lead">
-        Kwartier West isn’t a label. Not a costume. Not a brand cosplay.
-        It’s a two-sided operation built on one backbone:
-        <strong>pressure, respect, and real work.</strong>
-      </p>
-    </div>
+    <section class="surface prose-block">
+      <h2 data-i18n="manifest.why.title">Why two sides</h2>
+      <p data-i18n="manifest.why.body">Tekno and Hip hop require a different stage language, but they share the same infrastructure: planning, production, booking discipline and community building. Keeping that backbone central keeps the organisation scalable.</p>
+    </section>
 
-    <div class="sectionCard">
-      <h2>The two sides</h2>
-      <p class="lead">
-        <strong>Tek side:</strong> late nights, rigs, repetition, tribe heat. No “techno” polish — just movement. <br>
-        <strong>Hip hop side:</strong> bars with weight, delivery with intent, presence on stage. No gimmicks. <br>
-        Different sound. Same ethic: <strong>underground, honest, independent.</strong>
-      </p>
-    </div>
-
-    <div class="sectionCard">
-      <h2>Our rules</h2>
-      <p class="lead">
-        We move clean. We show up on time. We respect the room. <br>
-        No drama farming. No clout begging. No fake “family” talk. <br>
-        If you’re here, you’re here to build — not to be seen building.
-      </p>
-    </div>
-
-    <div class="sectionCard">
-      <h2>What we don’t do</h2>
-      <p class="lead">
-        No hype factory. No trend-chasing. No “everyone can be an artist” charity. <br>
-        We don’t sign you. We don’t own you. We don’t sell your story.
-      </p>
-    </div>
-
-    <div class="sectionCard">
-      <h2>How you enter</h2>
-      <p class="lead">
-        Pick a side — or stand in the middle and listen first. <br>
-        When you book, you book the energy. The setting. The fit. Not just a name.
-      </p>
-
-      <div class="chips" style="margin-top:12px;">
-        <a class="chip" href="../tekno/index.html">Enter Tek</a>
-        <a class="chip" href="../hiphop/index.html">Enter Hip hop</a>
-        <a class="chip" href="../contact/index.html">Contact</a>
+    <section class="surface prose-block">
+      <h2 data-i18n="manifest.rules.title">Our rules</h2>
+      <ul>
+        <li data-i18n="manifest.rules.one">Artists remain owners of their identity and story.</li>
+        <li data-i18n="manifest.rules.two">Events are programmed on quality and safety, not hype.</li>
+        <li data-i18n="manifest.rules.three">Communication with promoters and venues stays tight, transparent and fast.</li>
+        <li data-i18n="manifest.rules.four">Data from web, booking flow and events is prepared for app integration.</li>
+      </ul>
+      <div class="inline-actions">
+        <a class="cta-btn" href="../booking/index.html" data-i18n="manifest.cta.booking">Start booking</a>
+        <a class="chip-link" href="../events/index.html" data-i18n="manifest.cta.events">View events</a>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
+
+  <div data-footer></div>
 
   <script type="module">
+    import { initI18nPage } from "../../js/core/i18n.js";
     import { renderNav } from "../../partials/nav.js";
+    import { renderFooter } from "../../partials/footer.js";
+    initI18nPage();
     renderNav({ sideKey: "global", baseDepth: 2 });
+    renderFooter({ baseDepth: 2 });
   </script>
 </body>
 </html>
+
+
+
+
+
+
+

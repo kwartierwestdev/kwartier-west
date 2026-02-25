@@ -1,37 +1,51 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Kwartier West — Artist</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="../../css/base.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n-title="meta.hiphopArtist.title">Kwartier West - Hip hop artist</title>
+  <meta name="description" content="Artist detail page for Hip hop talents within Kwartier West." data-i18n-content="meta.hiphopArtist.description">
+  <link rel="stylesheet" href="../../css/base.css?v=20260224j">
 </head>
-<body>
+<body class="kw-page kw-side-hiphop">
   <div data-nav></div>
 
-  <div class="page">
-    <div class="topline">
-      <a class="back" href="./index.html">← back</a>
-      <div class="kicker"><span class="dot"></span> Hip hop • Artist</div>
-    </div>
+  <main id="main-content" class="page-shell">
+    <header class="hero-surface">
+      <p class="eyebrow" data-i18n="artist.hero.eyebrowHiphop">Hip hop / Artist profile</p>
+      <h1 data-i18n="artists.profile" data-artist-page-title>Profile</h1>
+      <p class="lead" data-i18n="artist.loading" data-artist-page-lead>Loading artist...</p>
+      <div class="inline-actions">
+        <a class="chip-link" href="./index.html#artists" data-i18n="nav.hiphopArtists">Hip hop artists</a>
+        <a class="chip-link" href="./booking.html" data-i18n="nav.bookHiphop">Book Hip hop</a>
+      </div>
+    </header>
 
     <div data-sideswitch></div>
 
-    <!-- IMPORTANT: this must match what artist-detail.js queries -->
-    <div data-artist-root></div>
-  </div>
+    <section class="surface">
+      <div data-artist-root></div>
+    </section>
+  </main>
+
+  <div data-footer></div>
 
   <script type="module">
+    import { initI18nPage } from "../../js/core/i18n.js";
     import { renderNav } from "../../partials/nav.js";
+    import { renderFooter } from "../../partials/footer.js";
     import { renderSideSwitch } from "../../partials/side-switch.js";
     import { renderArtistDetail } from "../../js/artist-detail.js";
 
+    initI18nPage();
     renderNav({ sideKey: "hiphop", baseDepth: 2 });
+    renderFooter({ baseDepth: 2 });
     renderSideSwitch("hiphop");
-
-    // IMPORTANT: pass sideKey so it reads the right array
     renderArtistDetail("hiphop", { baseDepth: 2 });
-
   </script>
 </body>
 </html>
+
+
+
+

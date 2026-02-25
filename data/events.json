@@ -1,38 +1,244 @@
 {
-  "hiphop": [
-    {
-      "id": "hiphop-showcase-01",
-      "title": "Example Showcase",
-      "date": "2026-02-28",
-      "time": "20:00",
-      "region": "West Flanders",
-      "venue": "TBA",
-      "lineup": [
-        { "slug": "de-kweker" }
-      ],
-      "tickets": {
-        "mode": "tba",
-        "url": ""
+  "updatedAt": "2026-02-24T16:26:00Z",
+  "sources": {
+    "tekno": [
+      {
+        "platform": "Instagram",
+        "account": "@kwtr_west",
+        "url": "https://www.instagram.com/kwtr_west"
       },
-      "notes": "Details soon."
-    }
-  ],
+      {
+        "platform": "Facebook",
+        "account": "Kwartier West",
+        "url": "https://www.facebook.com/profile.php?id=61557994985369"
+      }
+    ],
+    "hiphop": [
+      {
+        "platform": "Instagram",
+        "account": "@kwtr_west",
+        "url": "https://www.instagram.com/kwtr_west"
+      },
+      {
+        "platform": "Facebook",
+        "account": "Kwartier West",
+        "url": "https://www.facebook.com/profile.php?id=61557994985369"
+      }
+    ]
+  },
   "tekno": [
     {
-      "id": "tekno-night-01",
-      "title": "Example Night",
-      "date": "2026-02-14",
+      "id": "tek-pressure-unit-2026-03-14",
+      "title": "Pressure Unit - Roeselare",
+      "date": "2026-03-14",
       "time": "23:00",
       "region": "Roeselare",
-      "venue": "TBA",
+      "venue": "Warehouse location (invite release)",
+      "status": "Upcoming",
       "lineup": [
-        { "slug": "hyperion" }
+        { "slug": "onschuldig" },
+        { "slug": "hyperion" },
+        { "slug": "mombietekk" }
+      ],
+      "tickets": {
+        "mode": "external",
+        "label": "Reserve spot",
+        "url": "https://www.instagram.com/kwtr_west"
+      },
+      "source": {
+        "platform": "Instagram",
+        "url": "https://www.instagram.com/kwtr_west",
+        "syncedAt": "2026-02-23T18:05:00Z"
+      },
+      "notes": "Final address is shared with confirmed attendees on event day."
+    },
+    {
+      "id": "tek-east-yard-2026-04-04",
+      "title": "East Yard Sessions",
+      "date": "2026-04-04",
+      "time": "22:30",
+      "region": "Ghent",
+      "venue": "East Yard",
+      "status": "Upcoming",
+      "lineup": [
+        { "slug": "woebn" },
+        { "slug": "spoorloos" },
+        { "slug": "kulture" }
+      ],
+      "tickets": {
+        "mode": "internal",
+        "label": "Request list",
+        "url": ""
+      },
+      "source": {
+        "platform": "Instagram",
+        "url": "https://www.instagram.com/kwtr_west",
+        "syncedAt": "2026-02-23T18:05:00Z"
+      },
+      "notes": "List-only access with limited capacity."
+    },
+    {
+      "id": "tek-teknorelics-eye-of-the-temple-2026-03-28",
+      "title": "Teknorelics: Eye of the Temple",
+      "date": "2026-03-28",
+      "time": "22:00",
+      "region": "Bruges",
+      "venue": "Het Entrepot",
+      "status": "Upcoming",
+      "lineup": [
+        { "slug": "jenesaispas" },
+        { "name": "Albiovix" },
+        { "name": "Eli" },
+        { "name": "Kalki" },
+        { "name": "Ruffhouss" },
+        { "name": "23 Shayatin" },
+        { "name": "Sirius" }
+      ],
+      "tickets": {
+        "mode": "external",
+        "label": "Get tickets (Vestaire)",
+        "url": "https://www.facebook.com/events/het-entrepot/teknorelics-eye-of-the-temple/861823126331426"
+      },
+      "source": {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/events/het-entrepot/teknorelics-eye-of-the-temple/861823126331426",
+        "syncedAt": "2026-02-24T16:02:00Z"
+      },
+      "notes": "Teknorelics night with multi-artist line-up in Het Entrepot, Bruges."
+    },
+    {
+      "id": "tek-westfront-ii-2025-07-19",
+      "title": "Westfront II",
+      "date": "2025-07-19",
+      "time": "20:00",
+      "region": "Roeselare",
+      "venue": "TRAX concertgebouw",
+      "status": "Completed",
+      "lineup": [
+        { "slug": "mombietekk" },
+        { "slug": "spoorloos" },
+        { "name": "Alexer & Bwart" },
+        { "name": "Eli" },
+        { "name": "Radze" },
+        { "slug": "kulture" },
+        { "slug": "masschie" },
+        { "slug": "hyperion" },
+        { "slug": "woebn" },
+        { "name": "Xinnix & Schizotek" }
       ],
       "tickets": {
         "mode": "tba",
+        "label": "Tickets",
         "url": ""
       },
-      "notes": "Details soon."
+      "source": {
+        "platform": "Midwest",
+        "url": "https://www.midwest.be/activiteiten/detail/28861/westfront-ii",
+        "syncedAt": "2026-02-24T16:26:00Z"
+      },
+      "notes": "Kwartier West event in collaboration with regional soundsystems. Doors 20:00."
+    },
+    {
+      "id": "tek-perron23-2025-12-13",
+      "title": "Perron23",
+      "date": "2025-12-13",
+      "time": "21:00",
+      "region": "Ganshoren",
+      "venue": "Jeugdhuis Tongeluk",
+      "status": "Completed",
+      "lineup": [
+        { "slug": "kulture" },
+        { "name": "Lillie" },
+        { "name": "Nate23" },
+        { "name": "Anneloog" },
+        { "name": "W1LDCARD" },
+        { "name": "Survitek" },
+        { "name": "Yoene303" }
+      ],
+      "tickets": {
+        "mode": "tba",
+        "label": "Tickets",
+        "url": ""
+      },
+      "source": {
+        "platform": "AllEvents",
+        "url": "https://allevents.in/ganshoren/perron23/200029152074138",
+        "syncedAt": "2026-02-24T16:26:00Z"
+      },
+      "notes": "Kwartier West x Spoorloos Soundsystem collaboration night."
+    }
+  ],
+  "hiphop": [
+    {
+      "id": "hiphop-showcase-bruges-2026-03-07",
+      "title": "West Mic Showcase",
+      "date": "2026-03-07",
+      "time": "20:30",
+      "region": "Bruges",
+      "venue": "Club room",
+      "status": "Upcoming",
+      "lineup": [
+        { "slug": "de-kweker" },
+        { "slug": "mc-tubbie" },
+        { "slug": "thepanda" }
+      ],
+      "tickets": {
+        "mode": "external",
+        "label": "Get tickets",
+        "url": "https://www.instagram.com/kwtr_west"
+      },
+      "source": {
+        "platform": "Instagram",
+        "url": "https://www.instagram.com/kwtr_west",
+        "syncedAt": "2026-02-23T18:05:00Z"
+      },
+      "notes": "Doors 19:30. Limited pre-sale allocation."
+    },
+    {
+      "id": "hiphop-band-night-2026-04-11",
+      "title": "Live Pen Session",
+      "date": "2026-04-11",
+      "time": "21:00",
+      "region": "Kortrijk",
+      "venue": "Stagebox",
+      "status": "Upcoming",
+      "lineup": [
+        { "slug": "duvve" },
+        { "slug": "bruce" },
+        { "slug": "creamz" }
+      ],
+      "tickets": {
+        "mode": "internal",
+        "label": "Request access",
+        "url": ""
+      },
+      "source": {
+        "platform": "Instagram",
+        "url": "https://www.instagram.com/kwtr_west",
+        "syncedAt": "2026-02-23T18:05:00Z"
+      },
+      "notes": "Hybrid showcase with DJ + live segments."
+    },
+    {
+      "id": "hiphop-bambino-goes-west-2025-07-05",
+      "title": "Bambino Goes West",
+      "date": "2025-07-05",
+      "time": "17:00",
+      "region": "Roeselare",
+      "venue": "Bambino cafe",
+      "status": "Completed",
+      "lineup": [],
+      "tickets": {
+        "mode": "tba",
+        "label": "Tickets",
+        "url": ""
+      },
+      "source": {
+        "platform": "AllEvents",
+        "url": "https://allevents.in/roeselare/bambino-goes-west/200028396260123",
+        "syncedAt": "2026-02-24T16:26:00Z"
+      },
+      "notes": "Past Kwartier West event in Roeselare."
     }
   ]
 }

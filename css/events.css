@@ -1,187 +1,27 @@
-/* css/events.css — scoped extras for the Rolls Royce Events page */
-/* Events page background */
-/* css/events.css — scoped extras for the Rolls Royce Events page */
-
-/* Always keep base body background simple */
-body.events{
-  background: #000;
-}
-
-/* Events page background (image + base dark wash) */
-body.events::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-
+body.events-page {
   background:
-    linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.78)),
-    url("/assets/bg.jpg") center / cover no-repeat fixed;
-
-  filter: contrast(1.06) saturate(.95);
+    linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    radial-gradient(900px 340px at 100% 0%, rgba(227, 13, 13, 0.2), transparent 72%),
+    linear-gradient(170deg, #040404, #0a0a0a 46%, #060606);
+  background-size: 34px 34px, 34px 34px, auto, auto;
 }
 
-/* Red glow layer (separate so you can tune it) */
-body.events::after{
-  content:"";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-
-  background:
-    radial-gradient(1200px 600px at 50% 20%, rgba(255,40,40,.10), transparent 60%),
-    radial-gradient(900px 520px at 15% 55%, rgba(255,40,40,.08), transparent 60%),
-    radial-gradient(900px 520px at 85% 40%, rgba(255,40,40,.07), transparent 60%);
+.hero-surface--events {
+  border-left-color: color-mix(in srgb, var(--accent) 70%, #fff);
 }
 
-
-.eventHeroTop{
-  position: relative;
-  z-index: 1;
-  display:flex;
-  align-items:flex-start;
-  justify-content: space-between;
-  gap: 18px;
+.hero-surface--events::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 3.7rem;
+  width: 2px;
+  height: 2.2rem;
+  background: rgba(227, 13, 13, 0.55);
 }
 
-.eventHeroTools{
-  display:flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-  min-width: 260px;
-}
-
-.filterPills{
-  display:flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
-.pillBtn{
-  appearance: none;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.04);
-  color: rgba(255,255,255,.86);
-  border-radius: 999px;
-  padding: 9px 12px;
-  font-size: 12px;
-  cursor: pointer;
-  transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
-}
-.pillBtn:hover{
-  border-color: rgba(255,40,40,.22);
-  box-shadow: 0 0 22px rgba(255,40,40,.14);
-}
-.pillBtn.isActive{
-  border-color: rgba(255,40,40,.35);
-  box-shadow: 0 0 26px rgba(255,40,40,.16);
-  transform: translateY(-1px);
-}
-
-.miniMeta{
-  white-space: nowrap;
-}
-
-.eventHeroFeatured{
-  position: relative;
-  z-index: 1;
-  margin-top: 14px;
-  display:grid;
-  grid-template-columns: 1.15fr .85fr;
-  gap: 14px;
-}
-
-.featureCard{
-  border-radius: 16px;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.08);
-  box-shadow: var(--shadow);
-  padding: 16px;
-  overflow: hidden;
-}
-
-.featureKicker{
-  display:flex;
-  align-items:center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.badgeSide{
-  font-size: 11px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.78);
-  display:inline-flex;
-  align-items:center;
-  gap: 10px;
-}
-.badgeSide::before{
-  content:"";
-  width:7px;height:7px;border-radius:999px;
-  background: rgba(255,40,40,.95);
-  box-shadow: 0 0 18px rgba(255,40,40,.55);
-}
-
-.featureTitle{
-  margin: 0 0 6px;
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: -0.01em;
-}
-.featureMeta{
-  color: rgba(255,255,255,.70);
-  font-size: 12px;
-  line-height: 1.45;
-}
-.featureLineup{
-  margin-top: 10px;
-  font-size: 12.5px;
-  color: rgba(255,255,255,.74);
-}
-
-.featureCtas{
-  margin-top: 12px;
-  display:flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.ctaBtn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding: 9px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.10);
-  text-decoration:none;
-  font-size: 12px;
-  color: rgba(255,255,255,.90);
-}
-.ctaBtn:hover{
-  border-color: rgba(255,40,40,.22);
-  box-shadow: 0 0 22px rgba(255,40,40,.14);
-}
-
-@media (max-width: 900px){
-  .eventHeroTop{
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .eventHeroTools{
-    align-items: flex-start;
-    min-width: 0;
-  }
-  .filterPills{
-    justify-content: flex-start;
-  }
-  .eventHeroFeatured{
-    grid-template-columns: 1fr;
-  }
+.filter-stack {
+  border-left: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 0.58rem 0 0.4rem 0.56rem;
 }

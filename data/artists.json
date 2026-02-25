@@ -1,46 +1,234 @@
 {
+  "updatedAt": "2026-02-23T23:55:00Z",
   "hiphop": [
-   
-    
+    {
+      "slug": "de-kweker",
+      "name": "De Kweker",
+      "role": "MC / Artist",
+      "city": "Bruges, BE",
+      "lang": "NL",
+      "photo": "/assets/img/artists/hiphop/de-kweker-kwartier.webp",
+      "bio": "Story-driven MC from Bruges with direct stage presence and cinematic writing.",
+      "headline": "Concrete stories, razor bars, heavy stage control.",
+      "story": "De Kweker moves between raw street detail and cinematic framing. The writing is built to hit live first: clear themes, hard cadence and memorable hooks that keep weight in the room.",
+      "live": "Live sets are paced like a narrative arc: tension up front, hard mid-section pressure and explosive crowd interaction in the closing run.",
+      "focus": [
+        "Narrative bars with clear themes",
+        "Host-ready festival and club sets",
+        "High-impact collaborations and features"
+      ],
+      "tags": [
+        "Live MC",
+        "Story-driven",
+        "NL"
+      ],
+      "priority": 100,
+      "collective": "hiphop",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple",
+          "collective"
+        ]
+      },
+      "links": [
+        {
+          "platform": "website",
+          "label": "kwkr.be",
+          "url": "https://kwkr.be"
+        },
+        {
+          "platform": "instagram",
+          "label": "@de.kweker",
+          "url": "https://www.instagram.com/de.kweker/"
+        },
+        {
+          "platform": "facebook",
+          "label": "De Kweker",
+          "url": "https://www.facebook.com/p/De-Kweker-61570442235326/"
+        },
+        {
+          "platform": "tiktok",
+          "label": "@de.kweker",
+          "url": "https://www.tiktok.com/@de.kweker"
+        },
+        {
+          "platform": "youtube",
+          "label": "@De.kweker",
+          "url": "https://www.youtube.com/@De.kweker"
+        },
+        {
+          "platform": "spotify",
+          "label": "De Kweker",
+          "url": "https://open.spotify.com/artist/2v5Tuugqs8s4vaONc286EG"
+        },
+        {
+          "platform": "website",
+          "label": "Apple Music",
+          "url": "https://music.apple.com/us/artist/de-kweker/1760181514"
+        },
+        {
+          "platform": "soundcloud",
+          "label": "De Kweker",
+          "url": "https://soundcloud.com/dekweker"
+        }
+      ],
+      "profileStyle": "spotlight",
+      "signatureLine": "Voice of Bruges, built for full-room impact."
+    },
     {
       "slug": "mc-tubbie",
       "name": "MC Tubbie",
-      "role": "Rapper",
+      "role": "Rapper / Freestyle MC",
       "city": "West Flanders, BE",
       "lang": "NL",
       "photo": "/assets/img/artists/hiphop/mc-tubbie.jpg",
-      "bio": "Known for weekly freestyles and strong collaborations across the West Flemish scene.",
-      "links": []
+      "bio": "Freestyle-focused rapper with weekly output and high-pressure cypher energy.",
+      "headline": "Fast cadence, freestyle reflex, crowd-first delivery.",
+      "story": "MC Tubbie built his lane around consistency: short-form freestyles, fast reactions and constant output that keeps the audience close to the process.",
+      "live": "Setups are compact and direct: no dead space, quick transitions and room interaction from first verse to final drop.",
+      "focus": [
+        "Freestyle sessions",
+        "Cypher showcases",
+        "Feature-ready verses"
+      ],
+      "tags": [
+        "Freestyle",
+        "Showcase",
+        "NL"
+      ],
+      "priority": 70,
+      "collective": "hiphop",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "linktree",
+          "label": "mc.tubbie",
+          "url": "https://linktr.ee/mc.tubbie"
+        },
+        {
+          "platform": "soundcloud",
+          "label": "MC Tubbie",
+          "url": "https://soundcloud.com/gemak-kelijk"
+        },
+        {
+          "platform": "youtube",
+          "label": "@mctubbie1672",
+          "url": "https://www.youtube.com/@mctubbie1672"
+        },
+        {
+          "platform": "instagram",
+          "label": "@tubbieontheroad",
+          "url": "https://www.instagram.com/tubbieontheroad/"
+        },
+        {
+          "platform": "facebook",
+          "label": "Youth Warrior Sound",
+          "url": "https://www.facebook.com/youthwarriorsound/"
+        }
+      ]
     },
     {
       "slug": "thepanda",
       "name": "ThePANDA",
-      "role": "Rapper",
+      "role": "Rapper / Performer",
       "city": "Brussels, BE",
       "lang": "EN",
       "photo": "/assets/img/artists/hiphop/thepanda.jpg",
-      "bio": "English-spitting voice of the crew — representing Kwartier West in Brussels.",
-      "links": []
-    },
-     {
-      "slug": "de-kweker",
-      "name": "De Kweker",
-      "role": "MC",
-      "city": "Bruges, BE",
-      "lang": "NL",
-      "photo": "/assets/img/artists/hiphop/de-kweker.jpg",
-      "bio": "Raw and local. Story-driven hip hop rooted in West Flanders.",
-      "links": [{ "label": "Website", "url": "https://kwkr.be" }]
+      "bio": "English-language performer balancing melodic hooks with technical bars.",
+      "headline": "Melodic tension meets direct bars.",
+      "story": "ThePANDA represents the English lane inside the collective. The writing approach blends clean hook architecture with darker verse textures.",
+      "live": "Live format leans on contrast: atmospheric openings, tighter mid-set flows and a percussive final section for bigger rooms.",
+      "focus": [
+        "English lyric writing",
+        "Hook and verse contrast",
+        "Cross-genre collaborations"
+      ],
+      "tags": [
+        "EN",
+        "Live rap",
+        "Brussels"
+      ],
+      "priority": 68,
+      "collective": "hiphop",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "website",
+          "label": "Apple Music",
+          "url": "https://music.apple.com/be/artist/pandashaolin/1465535355"
+        },
+        {
+          "platform": "instagram",
+          "label": "Collective IG",
+          "url": "https://www.instagram.com/kwtr_west/"
+        },
+        {
+          "platform": "soundcloud",
+          "label": "Collective SoundCloud",
+          "url": "https://soundcloud.com/kwartier-west"
+        }
+      ]
     },
     {
       "slug": "duvve",
       "name": "Duvve",
-      "role": "Rapper / Live performer",
+      "role": "Rapper / Live Performer",
       "city": "West Flanders, BE",
       "lang": "NL",
       "photo": "/assets/img/artists/hiphop/duvve.jpg",
-      "bio": "High-energy rapper known for intense live shows — often backed by a live band.",
-      "links": []
+      "bio": "Performance-centered rapper with heavy focus on stage movement and audience response.",
+      "headline": "High-energy rap with band-level stage urgency.",
+      "story": "Duvve brings a physically active style to the lineup, shaped by live circuits and crew-driven shows where tempo and engagement stay high.",
+      "live": "The set structure is dynamic: quick pace changes, direct hooks and crowd cues tuned for small clubs and larger festival slots.",
+      "focus": [
+        "Stage control",
+        "Live crowd interaction",
+        "Collaborative showcases"
+      ],
+      "tags": [
+        "Live band",
+        "Show energy"
+      ],
+      "priority": 64,
+      "collective": "hiphop",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "youtube",
+          "label": "TXMUSIC session",
+          "url": "https://www.youtube.com/watch?v=xFmQNG0r0xE"
+        },
+        {
+          "platform": "instagram",
+          "label": "Collective IG",
+          "url": "https://www.instagram.com/kwtr_west/"
+        },
+        {
+          "platform": "soundcloud",
+          "label": "Collective SoundCloud",
+          "url": "https://soundcloud.com/kwartier-west"
+        }
+      ]
     },
     {
       "slug": "bruce",
@@ -49,8 +237,40 @@
       "city": "West Flanders, BE",
       "lang": "NL",
       "photo": "/assets/img/artists/hiphop/bruce.jpg",
-      "bio": "Producer with a clean ear for drums and mood — built for rappers and live energy.",
-      "links": []
+      "bio": "Producer focused on deep drums, dark melodic layers and mix-ready arrangement.",
+      "headline": "Precision drum work and shadow-heavy tone design.",
+      "story": "Bruce builds tracks from rhythm first. The production language is clean but weighty, with low-end discipline and cinematic transitions.",
+      "live": "Studio-oriented workflow, available for songwriting sessions, custom production and collaborative arrangement pipelines.",
+      "focus": [
+        "Beat production",
+        "Arrangement and structure",
+        "Session-ready stems"
+      ],
+      "tags": [
+        "Producer",
+        "Mix-ready"
+      ],
+      "priority": 58,
+      "collective": "hiphop",
+      "booking": {
+        "available": true,
+        "types": [
+          "studio",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "instagram",
+          "label": "Collective IG",
+          "url": "https://www.instagram.com/kwtr_west/"
+        },
+        {
+          "platform": "soundcloud",
+          "label": "Collective SoundCloud",
+          "url": "https://soundcloud.com/kwartier-west"
+        }
+      ]
     },
     {
       "slug": "creamz",
@@ -59,40 +279,92 @@
       "city": "West Flanders, BE",
       "lang": "NL",
       "photo": "/assets/img/artists/hiphop/creamz.jpg",
-      "bio": "Beatmaker focused on texture, bounce and detail — from sketch to finished record.",
-      "links": []
+      "bio": "Beatmaker shaping bounce-first grooves with textured drum layers.",
+      "headline": "Bounce architecture with detailed texture work.",
+      "story": "Creamz develops beats that leave room for vocal character while still pushing rhythmic identity. The lane is practical and performance-ready.",
+      "live": "Best deployed in studio and writing camps: idea sketching, loop expansion and full-song development with artists.",
+      "focus": [
+        "Beat design",
+        "Producer sessions",
+        "Drop-focused arrangements"
+      ],
+      "tags": [
+        "Beatmaker",
+        "Studio sessions"
+      ],
+      "priority": 54,
+      "collective": "hiphop",
+      "booking": {
+        "available": true,
+        "types": [
+          "studio",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "instagram",
+          "label": "Collective IG",
+          "url": "https://www.instagram.com/kwtr_west/"
+        },
+        {
+          "platform": "soundcloud",
+          "label": "Collective SoundCloud",
+          "url": "https://soundcloud.com/kwartier-west"
+        }
+      ]
     }
   ],
   "tekno": [
     {
       "slug": "onschuldig",
       "name": "Onschuldig",
-      "role": "Tekno / Acid",
+      "role": "Label Head / Producer",
       "city": "Roeselare, BE",
       "lang": "EN",
       "photo": "/assets/img/artists/tekno/onschuldig.png",
-      "bio": "Founder. Producer. Provides unique Tekno & Acid.",
-      "links": []
-    },
-    {
-      "slug": "woebn",
-      "name": "Woebn",
-      "role": "DJ / Live",
-      "city": "West Flanders, BE",
-      "lang": "EN",
-      "photo": "/assets/img/artists/tekno/woebn.png",
-      "bio": "Tek side operator. Real nights, real pressure.",
-      "links": []
-    },
-    {
-      "slug": "spoorloos",
-      "name": "Spoorloos",
-      "role": "DJ / Live",
-      "city": "West Flanders, BE",
-      "lang": "EN",
-      "photo": "/assets/img/artists/tekno/spoorloos.png",
-      "bio": "Tek side operator. Real nights, real pressure.",
-      "links": []
+      "bio": "Label head and Tekno architect with hardtek pressure and acid-driven long-form sets.",
+      "headline": "System discipline, acid grit, controlled escalation.",
+      "story": "Onschuldig defines the technical spine of the Tekno lane: machine-heavy sequencing, strict system awareness and no-compromise pace control.",
+      "live": "Live runs start with low-end tension and push toward fast, surgical peaks. Transitions stay tight and system-aware.",
+      "focus": [
+        "Hardtek structure",
+        "Acid layering",
+        "Long-form rave pacing"
+      ],
+      "tags": [
+        "Label Head",
+        "Hardtek",
+        "Acid"
+      ],
+      "lead": true,
+      "priority": 100,
+      "collective": "tekno",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple",
+          "collective"
+        ]
+      },
+      "links": [
+        {
+          "platform": "soundcloud",
+          "label": "Onschuldig",
+          "url": "https://soundcloud.com/onschuldig"
+        },
+        {
+          "platform": "instagram",
+          "label": "Collective IG",
+          "url": "https://www.instagram.com/kwtr_west/"
+        },
+        {
+          "platform": "soundcloud",
+          "label": "Kwartier West",
+          "url": "https://soundcloud.com/kwartier-west"
+        }
+      ]
     },
     {
       "slug": "hyperion",
@@ -101,8 +373,124 @@
       "city": "West Flanders, BE",
       "lang": "EN",
       "photo": "/assets/img/artists/tekno/hyperion.png",
-      "bio": "Tek side operator. Real nights, real pressure.",
-      "links": []
+      "bio": "Fast, raw pressure sets with rigid dynamics and rave-focused impact.",
+      "headline": "Direct hardtek velocity with no dead air.",
+      "story": "Hyperion is tuned for night pressure: quick decisions, dense kick patterns and a no-frills sequencing style.",
+      "live": "Set architecture favors intensity over ornament. BPM climbs quickly and stays locked through the core window.",
+      "focus": [
+        "Peak-time control",
+        "Fast transitions",
+        "High-pressure rooms"
+      ],
+      "tags": [
+        "Night sets",
+        "Hardtek"
+      ],
+      "priority": 70,
+      "collective": "tekno",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "soundcloud",
+          "label": "Hyperion",
+          "url": "https://soundcloud.com/user-347588809"
+        },
+        {
+          "platform": "instagram",
+          "label": "Collective IG",
+          "url": "https://www.instagram.com/kwtr_west/"
+        }
+      ]
+    },
+    {
+      "slug": "woebn",
+      "name": "Woebn",
+      "role": "DJ / Live",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/woebn.png",
+      "bio": "Known for high-BPM shifts and sustained late-night pressure.",
+      "headline": "High-BPM discipline with clean break timing.",
+      "story": "Woebn drives sets from momentum math: short breath points, long tension arcs and aggressive timing around transitions.",
+      "live": "Most effective in peak windows where pace and precision matter more than stylistic detours.",
+      "focus": [
+        "Peak-time sequencing",
+        "High-BPM movement",
+        "Warehouse crowd control"
+      ],
+      "tags": [
+        "Peak-time",
+        "Hardtek"
+      ],
+      "priority": 68,
+      "collective": "tekno",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "soundcloud",
+          "label": "Woebn",
+          "url": "https://soundcloud.com/woebn"
+        },
+        {
+          "platform": "instagram",
+          "label": "@_woebn_",
+          "url": "https://www.instagram.com/_woebn_/"
+        }
+      ]
+    },
+    {
+      "slug": "spoorloos",
+      "name": "Spoorloos",
+      "role": "DJ / Live",
+      "city": "West Flanders, BE",
+      "lang": "EN",
+      "photo": "/assets/img/artists/tekno/spoorloos.png",
+      "bio": "Dark tribal textures and no-break pacing for long-system nights.",
+      "headline": "Tribal drive and tunnel-vision momentum.",
+      "story": "Spoorloos favors deep rhythmic hypnosis, pulling the room forward with layered percussion and minimal melodic clutter.",
+      "live": "Designed for long durations: controlled ramp-up, dense middle pressure and heavy closing sequences.",
+      "focus": [
+        "Tribal movement",
+        "Long-form pacing",
+        "Night-drive structures"
+      ],
+      "tags": [
+        "Tribal",
+        "Night drive"
+      ],
+      "priority": 66,
+      "collective": "tekno",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "soundcloud",
+          "label": "Spoorloos",
+          "url": "https://soundcloud.com/spoorloostekno"
+        },
+        {
+          "platform": "instagram",
+          "label": "@spoorlooostekno",
+          "url": "https://www.instagram.com/spoorlooostekno/"
+        }
+      ]
     },
     {
       "slug": "jenesaispas",
@@ -111,8 +499,40 @@
       "city": "West Flanders, BE",
       "lang": "EN",
       "photo": "/assets/img/artists/tekno/jenesaispas.png",
-      "bio": "Tek side operator. Real nights, real pressure.",
-      "links": []
+      "bio": "Chaotic cuts, unstable textures and hard warehouse transitions.",
+      "headline": "Controlled chaos with warehouse edge.",
+      "story": "Jenesaispas works with contrast: fractured layers, abrupt movement and pressure-first arrangement choices.",
+      "live": "Short transition windows and deliberate shocks keep the floor active during intense late segments.",
+      "focus": [
+        "Warehouse texture",
+        "Broken-rhythm transitions",
+        "Fast impact routing"
+      ],
+      "tags": [
+        "Warehouse",
+        "Chaos control"
+      ],
+      "priority": 62,
+      "collective": "tekno",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "instagram",
+          "label": "Collective IG",
+          "url": "https://www.instagram.com/kwtr_west/"
+        },
+        {
+          "platform": "soundcloud",
+          "label": "Kwartier West",
+          "url": "https://soundcloud.com/kwartier-west"
+        }
+      ]
     },
     {
       "slug": "kulture",
@@ -121,8 +541,40 @@
       "city": "West Flanders, BE",
       "lang": "EN",
       "photo": "/assets/img/artists/tekno/kulture.png",
-      "bio": "Tek side operator. Real nights, real pressure.",
-      "links": []
+      "bio": "Percussive momentum with compact hard sets and floor-focused timing.",
+      "headline": "Percussive pressure and fast floor feedback.",
+      "story": "Kulture leans into rhythm-first arrangement. The profile is direct, physical and tuned for high-energy dance floors.",
+      "live": "Set design stays tight: percussive hooks, kick-forward loops and efficient transitions to maintain crowd velocity.",
+      "focus": [
+        "Percussive structure",
+        "Rave momentum",
+        "Compact high-impact sets"
+      ],
+      "tags": [
+        "Percussive",
+        "Rave energy"
+      ],
+      "priority": 60,
+      "collective": "tekno",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "soundcloud",
+          "label": "Kulture",
+          "url": "https://soundcloud.com/kulture23"
+        },
+        {
+          "platform": "instagram",
+          "label": "@kulture_stn",
+          "url": "https://www.instagram.com/kulture_stn/"
+        }
+      ]
     },
     {
       "slug": "kumatekz",
@@ -131,8 +583,40 @@
       "city": "West Flanders, BE",
       "lang": "EN",
       "photo": "/assets/img/artists/tekno/kumatekz.png",
-      "bio": "Tek side operator. Real nights, real pressure.",
-      "links": []
+      "bio": "Industrial accents with heavy low-end balance and strict set architecture.",
+      "headline": "Industrial weight and low-end authority.",
+      "story": "Kumatekz brings a metallic palette and mechanical movement to the collective, centered on tension and release through bass control.",
+      "live": "Works best in dark-room windows where low-end impact and long pressure curves can develop fully.",
+      "focus": [
+        "Industrial tone design",
+        "Sub-bass management",
+        "Dark-room pacing"
+      ],
+      "tags": [
+        "Industrial",
+        "Low-end"
+      ],
+      "priority": 58,
+      "collective": "tekno",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "soundcloud",
+          "label": "KumaTEKZ",
+          "url": "https://soundcloud.com/kumatekz23"
+        },
+        {
+          "platform": "instagram",
+          "label": "Collective IG",
+          "url": "https://www.instagram.com/kwtr_west/"
+        }
+      ]
     },
     {
       "slug": "masschie",
@@ -141,8 +625,40 @@
       "city": "West Flanders, BE",
       "lang": "EN",
       "photo": "/assets/img/artists/tekno/masschie.png",
-      "bio": "Tek side operator. Real nights, real pressure.",
-      "links": []
+      "bio": "Acid-leading patterns with relentless groove sections for indoor and open-air slots.",
+      "headline": "Acid lines, fast movement, no wasted bars.",
+      "story": "Masschie combines acidic melodic pressure with groove continuity, keeping the dancefloor locked without flattening dynamics.",
+      "live": "Live windows revolve around drive and consistency: fast entry, broad middle pressure, hard close.",
+      "focus": [
+        "Acid phrase control",
+        "Open-air readiness",
+        "Groove continuity"
+      ],
+      "tags": [
+        "Acid",
+        "Open-air"
+      ],
+      "priority": 56,
+      "collective": "tekno",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "soundcloud",
+          "label": "Masschie",
+          "url": "https://soundcloud.com/masschie_sc"
+        },
+        {
+          "platform": "instagram",
+          "label": "Collective IG",
+          "url": "https://www.instagram.com/kwtr_west/"
+        }
+      ]
     },
     {
       "slug": "mombietekk",
@@ -151,10 +667,41 @@
       "city": "West Flanders, BE",
       "lang": "EN",
       "photo": "/assets/img/artists/tekno/mombietekk.png",
-      "bio": "Tek side operator. Real nights, real pressure.",
-      "links": []
+      "bio": "Punchy high-BPM sets focused on direct rave sequencing.",
+      "headline": "Relentless BPM push with rave-first decisions.",
+      "story": "Mombietekk sits in the high-speed corner of the lane, prioritizing movement and impact over decorative progression.",
+      "live": "Best placed in late-night sections where pace can stay aggressive and transitions can fire quickly.",
+      "focus": [
+        "High-BPM delivery",
+        "Rave-first sequencing",
+        "Late-night impact"
+      ],
+      "tags": [
+        "High BPM",
+        "Rave-first"
+      ],
+      "priority": 54,
+      "collective": "tekno",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "soundcloud",
+          "label": "Mombietekk",
+          "url": "https://soundcloud.com/gillian-mombert"
+        },
+        {
+          "platform": "instagram",
+          "label": "Collective IG",
+          "url": "https://www.instagram.com/kwtr_west/"
+        }
+      ]
     },
-    
     {
       "slug": "psamtek",
       "name": "Psamtek",
@@ -162,10 +709,40 @@
       "city": "West Flanders, BE",
       "lang": "EN",
       "photo": "/assets/img/artists/tekno/psamtek.png",
-      "bio": "Tek side operator. Real nights, real pressure.",
-      "links": []
+      "bio": "Closing-set specialist with hard sequence work and relentless finishing pressure.",
+      "headline": "Closing pressure with disciplined sequence control.",
+      "story": "Psamtek is built for end-of-night moments where momentum must stay sharp and physical until the final minute.",
+      "live": "The lane emphasizes closure design: final-act pacing, dense rhythm stacking and high-energy exits.",
+      "focus": [
+        "Closing-set architecture",
+        "Hard sequence routing",
+        "Final-window energy"
+      ],
+      "tags": [
+        "Closing sets",
+        "Hard sequence"
+      ],
+      "priority": 52,
+      "collective": "tekno",
+      "booking": {
+        "available": true,
+        "types": [
+          "solo",
+          "multiple"
+        ]
+      },
+      "links": [
+        {
+          "platform": "instagram",
+          "label": "Collective IG",
+          "url": "https://www.instagram.com/kwtr_west/"
+        },
+        {
+          "platform": "soundcloud",
+          "label": "Kwartier West",
+          "url": "https://soundcloud.com/kwartier-west"
+        }
+      ]
     }
-    
-    
   ]
 }

@@ -1,233 +1,207 @@
-// js/events-page.js
-// Global Events hub: loads /data/events.json (stable on Vercel) and renders a premium list + featured.
-// Later swap loadEvents() to your API endpoint without touching the page HTML.
-console.log("events-page.js LOADED", import.meta.url);
+import {
+  flattenEvents,
+  loadArtists,
+  loadEvents,
+  normalizeLineup,
+  splitEventsByDate
+} from "./core/content-api.js";
+import { escapeHTML, formatDateTime, sideLabel, sideShortLabel } from "./core/format.js";
+import { t } from "./core/i18n.js";
 
-function esc(s){
-  return String(s ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#39;");
+function listLineup(eventItem, artistsData) {
+  const lineup = normalizeLineup(eventItem?.lineup, artistsData, eventItem?.sideKey);
+  if (!lineup.length) return `<span class="muted">${t("events.lineupPending")}</span>`;
+
+  return lineup
+    .map((entry) => {
+      const path = `../${entry.sideKey}/artist.html?slug=${encodeURIComponent(entry.slug || "")}`;
+      const label = escapeHTML(entry.name || t("artists.defaultName"));
+      if (!entry.slug) return `<span>${label}</span>`;
+      return `<a class="inline-link" href="${path}">${label}</a>`;
+    })
+    .join('<span class="dot-sep"></span>');
 }
 
-async function loadEvents(){
-  // Absolute path = stable from any page depth (local + Vercel + custom domain)
-  const res = await fetch("/data/events.json", { cache: "no-store" });
-  if(!res.ok) throw new Error("Cannot load /data/events.json");
-  return res.json();
-}
+function ticketCTA(eventItem) {
+  const mode = eventItem?.tickets?.mode || "tba";
+  const url = eventItem?.tickets?.url || "";
+  const label = eventItem?.tickets?.label || t("events.ticketsLabel");
 
-function parseDateISO(d){
-  // YYYY-MM-DD
-  if(!d) return null;
-  const t = Date.parse(d);
-  return Number.isFinite(t) ? t : null;
-}
-
-function bySoonest(a,b){
-  const da = parseDateISO(a.date) ?? Infinity;
-  const db = parseDateISO(b.date) ?? Infinity;
-  return da - db;
-}
-
-function flatten(data){
-  const hiphop = Array.isArray(data?.hiphop) ? data.hiphop.map(e => ({...e, sideKey:"hiphop"})) : [];
-  const tekno  = Array.isArray(data?.tekno)  ? data.tekno.map(e => ({...e, sideKey:"tekno"})) : [];
-  return [...hiphop, ...tekno].sort(bySoonest);
-}
-
-function sideLabel(sideKey){
-  return sideKey === "tekno" ? "TEK" : "HIP HOP";
-}
-
-function metaLine(e){
-  const bits = [
-    e.date || "",
-    e.time || "",
-    e.region || e.city || "",
-    e.venue || ""
-  ].filter(Boolean);
-  return bits.join(" • ");
-}
-
-function lineupHTML(e){
-  const arr = Array.isArray(e.lineup) ? e.lineup : [];
-  if(!arr.length) return `<span class="muted">Line-up: TBA</span>`;
-
-  // From /pages/events/ -> artist pages are siblings:
-  // ../tekno/artist.html?slug=...
-  // ../hiphop/artist.html?slug=...
-  const items = arr.map(a => {
-    const slug = a?.slug;
-    const name = esc(a?.name || a?.slug || "");
-    if(slug){
-      const href = `../${e.sideKey}/artist.html?slug=${encodeURIComponent(slug)}`;
-      return `<a class="inlineLink" href="${href}">${name}</a>`;
-    }
-    return `<span>${name}</span>`;
-  });
-
-  return `<span class="muted">Line-up:</span> ${items.join('<span class="sep">•</span>')}`;
-}
-
-function ticketsCTA(e){
-  const mode = e?.tickets?.mode || "tba";
-  const url  = e?.tickets?.url || "";
-
-  if(mode === "external" && url){
-    return `<a class="ctaBtn" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Tickets</a>`;
+  if (mode === "external" && url) {
+    return `<a class="chip-link" href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(label)}</a>`;
   }
-  if(mode === "internal"){
-    return `<a class="ctaBtn" href="../tickets/index.html">Tickets</a>`;
+  if (mode === "internal") {
+    return `<a class="chip-link" href="../tickets/index.html">${t("events.ticketsLabel")}</a>`;
   }
-  return `<span class="muted">Tickets: TBA</span>`;
+  return `<span class="muted">${t("events.ticketsTba")}</span>`;
 }
 
-function bookingCTA(e){
-  return `<a class="ctaBtn" href="../${e.sideKey}/booking.html">Book an act</a>`;
+function sourceMarkup(eventItem) {
+  const source = eventItem?.source;
+  if (!source?.url) return "";
+  const platform = source?.platform || t("events.sourceDefault");
+  return `<a class="chip-link" href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(platform)} ${t("events.source")}</a>`;
 }
 
-function featureCard(e){
+function featuredCard(eventItem, artistsData) {
+  const title = escapeHTML(eventItem?.title || t("events.untitled"));
+  const meta = escapeHTML(formatDateTime(eventItem?.date, eventItem?.time));
+  const location = [eventItem?.region, eventItem?.venue].filter(Boolean).map(escapeHTML).join(" - ");
+
   return `
-    <div class="featureCard">
-      <div class="featureKicker">
-        <div class="badgeSide">${sideLabel(e.sideKey)}</div>
-        ${e.status ? `<div class="eventStatus">${esc(e.status)}</div>` : ``}
+    <article class="feature-card">
+      <div class="feature-card__top">
+        <span class="status-pill">${escapeHTML(sideShortLabel(eventItem?.sideKey))}</span>
+        <span class="status-pill">${escapeHTML(eventItem?.status || t("events.filter.upcoming"))}</span>
       </div>
 
-      <div class="featureTitle">${esc(e.title || "Untitled")}</div>
-      <div class="featureMeta">${esc(metaLine(e) || "Details TBA")}</div>
+      <h3>${title}</h3>
+      <p class="feature-card__meta">${meta}${location ? ` <span class="dot-sep"></span> ${location}` : ""}</p>
 
-      <div class="featureLineup">${lineupHTML(e)}</div>
-      ${e.notes ? `<div class="eventNotes muted" style="margin-top:10px;">${esc(e.notes)}</div>` : ""}
+      <p class="feature-card__lineup"><span class="muted">${t("events.lineup")}:</span> ${listLineup(eventItem, artistsData)}</p>
 
-      <div class="featureCtas">
-        ${ticketsCTA(e)}
-        ${bookingCTA(e)}
-        <a class="ctaBtn" href="../${e.sideKey}/index.html#events">Open ${sideLabel(e.sideKey)} page</a>
+      <div class="inline-actions">
+        ${ticketCTA(eventItem)}
+        <a class="chip-link" href="../${escapeHTML(eventItem.sideKey)}/booking.html?type=collective_side">${t("events.bookSide", { side: escapeHTML(sideLabel(eventItem.sideKey)) })}</a>
+        ${sourceMarkup(eventItem)}
       </div>
-    </div>
+    </article>
   `;
 }
 
-function listItem(e){
-  const meta = esc(metaLine(e));
-  const side = sideLabel(e.sideKey);
-
-  const sideChip = `<span class="eventStatus">${side}</span>`;
-
-  const ticket = (e?.tickets?.mode === "external" && e?.tickets?.url)
-    ? `<a class="chip" href="${esc(e.tickets.url)}" target="_blank" rel="noopener noreferrer">Tickets</a>`
-    : (e?.tickets?.mode === "internal")
-      ? `<a class="chip" href="../tickets/index.html">Tickets</a>`
-      : `<span class="muted">Tickets: TBA</span>`;
+function listItem(eventItem, artistsData) {
+  const dateLabel = escapeHTML(formatDateTime(eventItem?.date, eventItem?.time));
+  const location = [eventItem?.region, eventItem?.venue].filter(Boolean).map(escapeHTML).join(" - ");
+  const sideChip = `<span class="status-pill">${escapeHTML(sideShortLabel(eventItem.sideKey))}</span>`;
+  const statusChip = `<span class="status-pill">${escapeHTML(
+    eventItem?.status || (eventItem.__isPast ? t("events.filter.past") : t("events.filter.upcoming"))
+  )}</span>`;
+  const source = sourceMarkup(eventItem);
 
   return `
-    <div class="event" data-side="${esc(e.sideKey)}">
-      <div class="eventMain">
-        <div class="eventTitle">${esc(e.title)}</div>
-        <div class="eventMeta">${meta}</div>
-        <div class="eventLineup">${lineupHTML(e)}</div>
-        ${e.notes ? `<div class="eventNotes muted">${esc(e.notes)}</div>` : ""}
-
-        <div style="height:10px;"></div>
-        <div class="chips">
-          <a class="chip" href="../${e.sideKey}/index.html">Open ${side}</a>
-          <a class="chip" href="../${e.sideKey}/booking.html">Booking</a>
-        </div>
+    <article class="event-card" data-side="${escapeHTML(eventItem.sideKey)}" data-scope="${eventItem.__isPast ? "past" : "upcoming"}">
+      <div class="event-card__main">
+        <h3 class="event-card__title">${escapeHTML(eventItem?.title || t("events.untitled"))}</h3>
+        <p class="event-card__meta">${dateLabel}${location ? ` <span class="dot-sep"></span> ${location}` : ""}</p>
+        <p class="event-card__lineup"><span class="event-card__label">${t("events.lineup")}:</span> ${listLineup(eventItem, artistsData)}</p>
+        ${source ? `<p class="event-card__source">${source}</p>` : ""}
       </div>
 
-      <div class="eventSide">
-        ${sideChip}
-        <div class="eventCtas">
-          ${ticket}
-          <a class="chip" href="../${e.sideKey}/booking.html">Book an act</a>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function setActiveFilter(root, key){
-  root.querySelectorAll("[data-filter]").forEach(btn => {
-    const on = btn.getAttribute("data-filter") === key;
-    btn.classList.toggle("isActive", on);
-    btn.setAttribute("aria-selected", on ? "true" : "false");
-  });
-}
-
-function applyFilter(listRoot, key){
-  const items = listRoot.querySelectorAll("[data-side]");
-  items.forEach(el => {
-    const side = el.getAttribute("data-side");
-    const show = (key === "all") ? true : side === key;
-    el.style.display = show ? "" : "none";
-  });
-}
-
-export async function mountEventsPage(){
-  const mount = document.querySelector("[data-events-page]");
-  const featured = document.querySelector("[data-featured]");
-  const countEl = document.querySelector("[data-count]");
-  const root = document.querySelector(".eventHero");
-
-  if(!mount || !featured || !root) return;
-
-  mount.innerHTML = `<div class="muted">Loading events…</div>`;
-  featured.innerHTML = ``;
-
-  try{
-    const data = await loadEvents();
-    const all = flatten(data);
-
-    if(countEl){
-      countEl.textContent = `${all.length} event${all.length === 1 ? "" : "s"}`;
-    }
-
-    if(!all.length){
-      featured.innerHTML = `
-        <div class="featureCard">
-          <div class="featureTitle">No events yet.</div>
-          <div class="featureMeta">When it’s live, it’s live.</div>
-          <div class="featureCtas">
-            <a class="ctaBtn" href="../tekno/booking.html">Tek booking</a>
-            <a class="ctaBtn" href="../hiphop/booking.html">Hip hop booking</a>
+      <div class="event-card__actions">
+        <div class="event-card__badges">${sideChip}${statusChip}</div>
+        <div class="event-card__cta-group">
+          <div class="event-card__cta">${ticketCTA(eventItem)}</div>
+          <div class="event-card__cta">
+            <a class="chip-link" href="../${escapeHTML(eventItem.sideKey)}/booking.html?type=collective_side">${t("events.bookSide", {
+              side: escapeHTML(sideLabel(eventItem.sideKey))
+            })}</a>
           </div>
         </div>
-      `;
-      mount.innerHTML = `<p class="muted">No events listed.</p>`;
+      </div>
+    </article>
+  `;
+}
+
+function applyFilter({ side = "all", scope = "upcoming" } = {}) {
+  const items = document.querySelectorAll("[data-events-page] [data-side]");
+  let visible = 0;
+
+  for (const item of items) {
+    const sideMatch = side === "all" || item.getAttribute("data-side") === side;
+    const scopeMatch = scope === "all" || item.getAttribute("data-scope") === scope;
+    const show = sideMatch && scopeMatch;
+    item.hidden = !show;
+    item.setAttribute("aria-hidden", show ? "false" : "true");
+    if (show) visible += 1;
+  }
+
+  const visibleNode = document.querySelector("[data-visible-count]");
+  if (visibleNode) {
+    visibleNode.textContent = t("events.visible", { count: visible });
+  }
+}
+
+function setupFilterButtons() {
+  let side = "all";
+  let scope = "upcoming";
+
+  const sideButtons = document.querySelectorAll("[data-filter-side]");
+  const scopeButtons = document.querySelectorAll("[data-filter-scope]");
+
+  function paint() {
+    sideButtons.forEach((button) => {
+      const active = button.getAttribute("data-filter-side") === side;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+
+    scopeButtons.forEach((button) => {
+      const active = button.getAttribute("data-filter-scope") === scope;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+
+    applyFilter({ side, scope });
+  }
+
+  sideButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      side = button.getAttribute("data-filter-side") || "all";
+      paint();
+    });
+  });
+
+  scopeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      scope = button.getAttribute("data-filter-scope") || "upcoming";
+      paint();
+    });
+  });
+
+  paint();
+}
+
+export async function mountEventsPage({ baseDepth = 0 } = {}) {
+  const listRoot = document.querySelector("[data-events-page]");
+  const featuredRoot = document.querySelector("[data-featured]");
+  const totalNode = document.querySelector("[data-count]");
+
+  if (!listRoot || !featuredRoot) return;
+
+  listRoot.innerHTML = `<p class="muted">${t("events.loading")}</p>`;
+
+  try {
+    const [eventsData, artistsData] = await Promise.all([
+      loadEvents({ baseDepth }),
+      loadArtists({ baseDepth })
+    ]);
+
+    const merged = flattenEvents(eventsData);
+    const { upcoming, past } = splitEventsByDate(merged);
+    const ordered = [...upcoming, ...past.slice().reverse()].map((eventItem) => ({
+      ...eventItem,
+      __isPast: past.includes(eventItem)
+    }));
+
+    if (totalNode) {
+      totalNode.textContent = t("events.total", { count: merged.length });
+    }
+
+    if (!ordered.length) {
+      featuredRoot.innerHTML = `<p class="muted">${t("events.none")}</p>`;
+      listRoot.innerHTML = `<p class="muted">${t("events.none")}</p>`;
       return;
     }
 
-    // Featured: soonest upcoming
-    featured.innerHTML = featureCard(all[0]);
+    const featured = upcoming[0] || ordered[0];
+    featuredRoot.innerHTML = featuredCard(featured, artistsData);
 
-    // List
-    mount.innerHTML = `<div class="events">${all.map(listItem).join("")}</div>`;
+    listRoot.innerHTML = `<div class="event-list">${ordered.map((eventItem) => listItem(eventItem, artistsData)).join("")}</div>`;
 
-    // Filtering
-    let current = "all";
-    root.querySelectorAll("[data-filter]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        current = btn.getAttribute("data-filter") || "all";
-        setActiveFilter(root, current);
-        applyFilter(mount, current);
-      });
-    });
-
-    setActiveFilter(root, current);
-    applyFilter(mount, current);
-
-  }catch(err){
-    console.error(err);
-    mount.innerHTML = `<p class="muted">Could not load events.</p>`;
-    featured.innerHTML = `
-      <div class="featureCard">
-        <div class="featureTitle">Events temporarily offline</div>
-        <div class="featureMeta">Data source not reachable.</div>
-      </div>
-    `;
+    setupFilterButtons();
+  } catch (error) {
+    console.error(error);
+    featuredRoot.innerHTML = `<p class="muted">${t("events.error")}</p>`;
+    listRoot.innerHTML = `<p class="muted">${t("events.error")}</p>`;
   }
 }

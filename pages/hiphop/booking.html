@@ -1,70 +1,50 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Kwartier West — Hip Hop Booking</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Book a hip hop act — clean intake, proper follow-up." />
-  <link rel="stylesheet" href="../../css/base.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n-title="meta.hiphopBooking.title">Kwartier West - Hip hop booking</title>
+  <meta name="description" content="Book Hip hop artists or the full Hip hop collective." data-i18n-content="meta.hiphopBooking.description">
+  <link rel="stylesheet" href="../../css/base.css?v=20260224j">
 </head>
-<body>
+<body class="kw-page kw-side-hiphop">
   <div data-nav></div>
 
-  <div class="page">
-    <div class="topline">
-      <a class="back" href="./index.html">← back</a>
-      <div class="kicker"><span class="dot"></span> Hip hop side • Booking</div>
-    </div>
-
-    <div data-sideswitch></div>
-
-    <div class="sectionCard">
-      <h1>Book a hip hop act</h1>
-      <p class="lead">
-        Give us the brief and the constraints. We’ll match the right pen, the right presence,
-        and the right pocket of energy for your room. Clean comms. No weird back-and-forth.
-      </p>
-
-      <div class="chips" style="margin-top:12px;">
-        <a class="chip" href="../hiphop/index.html#artists">Browse artists</a>
-        <a class="chip" href="../contact/index.html">General contact</a>
+  <main id="main-content" class="page-shell">
+    <header class="hero-surface">
+      <p class="eyebrow" data-i18n="booking.hero.eyebrowHiphop">Booking / Hip hop</p>
+      <h1 data-i18n="nav.bookHiphop">Book Hip hop</h1>
+      <p class="lead" data-i18n="booking.hero.lead">One intake for every scenario: solo artist, multiple artists, side collective or full takeover.</p>
+      <div class="inline-actions">
+        <a class="chip-link" href="../hiphop/index.html#artists" data-i18n="nav.hiphopArtists">Hip hop artists</a>
       </div>
-    </div>
+    </header>
 
-    <form class="card" style="max-width:760px;">
-      <div class="kicker" style="margin-bottom:12px;">
-        <span class="dot"></span> Booking intake
-      </div>
+    <section class="surface">
+      <div data-booking-form></div>
+    </section>
 
-      <label class="muted" style="display:block; font-size:12px; margin:10px 0 6px;">
-        Name / organisation
-      </label>
-      <input class="field" type="text" placeholder="promoter / venue / org" autocomplete="name" />
+    <section class="surface">
+      <div data-booking-result></div>
+    </section>
+  </main>
 
-      <label class="muted" style="display:block; font-size:12px; margin:10px 0 6px;">
-        Email
-      </label>
-      <input class="field" type="email" placeholder="you@domain.com" autocomplete="email" />
-
-      <label class="muted" style="display:block; font-size:12px; margin:10px 0 6px;">
-        Date / venue / brief
-      </label>
-      <textarea class="field" style="min-height:140px; resize:vertical;"
-        placeholder="Date + city + venue • set length • mic / monitors • budget range • crowd / vibe • lineup notes"></textarea>
-
-      <div style="height:12px;"></div>
-
-      <div class="muted" style="font-size:12px;">
-        Submitting + tracking becomes an app path later. For now: this page is the intake.
-      </div>
-    </form>
-  </div>
+  <div data-footer></div>
 
   <script type="module">
+    import { initI18nPage } from "../../js/core/i18n.js";
     import { renderNav } from "../../partials/nav.js";
-    import { renderSideSwitch } from "../../partials/side-switch.js";
+    import { renderFooter } from "../../partials/footer.js";
+    import { mountBookingDesk } from "../../js/booking.js";
+
+    initI18nPage();
     renderNav({ sideKey: "hiphop", baseDepth: 2 });
-    renderSideSwitch("hiphop");
+    renderFooter({ baseDepth: 2 });
+    mountBookingDesk({ sideKey: "hiphop", baseDepth: 2 });
   </script>
 </body>
 </html>
+
+
+
+

@@ -1,69 +1,72 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Kwartier West — Events</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Kwartier West events — tek & hip hop. Tickets, line-ups, info and booking." />
-  <link rel="stylesheet" href="../../css/base.css" />
-  <link rel="stylesheet" href="../../css/events.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n-title="meta.events.title">Kwartier West - Events</title>
+  <meta name="description" content="Event hub with Tekno and Hip hop line-ups, tickets and official social sources." data-i18n-content="meta.events.description">
+  <link rel="stylesheet" href="../../css/base.css?v=20260224j">
+  <link rel="stylesheet" href="../../css/events.css?v=20260224a">
 </head>
-
-<body class="events">
+<body class="kw-page events-page">
   <div data-nav></div>
 
-  <div class="page">
-    <div class="topline">
-      <a class="back" href="../../index.html">← back</a>
-      <div class="kicker"><span class="dot"></span> Events</div>
-    </div>
+  <main id="main-content" class="page-shell">
+    <header class="hero-surface hero-surface--events">
+      <p class="eyebrow" data-i18n="events.hero.eyebrow">Kwartier West / Event hub</p>
+      <h1 data-i18n="events.hero.title">Live Event Feed</h1>
+      <p class="lead" data-i18n="events.hero.lead">One feed for Tekno and Hip hop: line-up, tickets and booking path.</p>
 
-    <!-- HERO -->
-    <section class="sectionCard eventHero" aria-label="Events overview">
-      <div class="eventHeroTop">
-        <div>
-          <h1 style="margin:0 0 8px;">Events</h1>
-          <p class="lead" style="margin:0; max-width:80ch;">
-            Two lanes, one backbone. Tek pressure and Hip hop nights — curated, not random.
-            Tickets link out for now. Later this page plugs into the app flow.
-          </p>
+      <div class="filter-stack" aria-label="Event filters" data-i18n-aria-label="events.filtersAria">
+        <div class="inline-actions filter-row" role="group" aria-label="Filter by collective" data-i18n-aria-label="events.filter.groupSide">
+          <button class="pill-btn is-active" type="button" data-filter-side="all" aria-pressed="true" data-i18n="events.filter.all">All</button>
+          <button class="pill-btn" type="button" data-filter-side="tekno" aria-pressed="false" data-i18n="events.filter.tekno">Tekno</button>
+          <button class="pill-btn" type="button" data-filter-side="hiphop" aria-pressed="false" data-i18n="events.filter.hiphop">Hip hop</button>
         </div>
 
-        <div class="eventHeroTools">
-          <div class="filterPills" role="tablist" aria-label="Filter events">
-            <button class="pillBtn isActive" data-filter="all" role="tab" aria-selected="true">All</button>
-            <button class="pillBtn" data-filter="tekno" role="tab" aria-selected="false">Tek</button>
-            <button class="pillBtn" data-filter="hiphop" role="tab" aria-selected="false">Hip hop</button>
-          </div>
-
-          <div class="miniMeta muted">
-            <span data-count>—</span>
-            <span class="sep">•</span>
-            Updated live
-          </div>
+        <div class="inline-actions filter-row" role="group" aria-label="Filter by timeline" data-i18n-aria-label="events.filter.groupScope">
+          <button class="pill-btn is-active" type="button" data-filter-scope="upcoming" aria-pressed="true" data-i18n="events.filter.upcoming">Upcoming</button>
+          <button class="pill-btn" type="button" data-filter-scope="all" aria-pressed="false" data-i18n="events.filter.allEvents">All events</button>
+          <button class="pill-btn" type="button" data-filter-scope="past" aria-pressed="false" data-i18n="events.filter.past">Past</button>
         </div>
+
+        <p class="muted" aria-live="polite"><span data-count>-</span> <span class="dot-sep"></span> <span data-visible-count>-</span></p>
       </div>
+    </header>
 
-      <div class="eventHeroFeatured" data-featured></div>
+    <section class="surface">
+      <div class="section-header">
+        <h2 data-i18n="events.section.featured">Featured</h2>
+        <a class="chip-link" href="../booking/index.html?type=collective_full" data-i18n="events.cta.takeover">Book full takeover</a>
+      </div>
+      <div data-featured></div>
     </section>
 
-    <!-- LIST -->
-    <section class="sectionCard" aria-label="All events">
-      <h2>Upcoming</h2>
+    <section class="surface">
+      <div class="section-header">
+        <h2 data-i18n="events.section.overview">Event overview</h2>
+        <a class="chip-link" href="../contact/index.html" data-i18n="events.cta.production">Contact production</a>
+      </div>
       <div data-events-page></div>
-
-      <div class="eventFooter muted" style="font-size:12px; margin-top:12px;">
-        Roadmap: booking → payment → QR → check-in (site + app). This page stays the source of truth.
-      </div>
     </section>
-  </div>
+  </main>
+
+  <div data-footer></div>
 
   <script type="module">
+    import { initI18nPage } from "../../js/core/i18n.js";
     import { renderNav } from "../../partials/nav.js";
+    import { renderFooter } from "../../partials/footer.js";
     import { mountEventsPage } from "../../js/events-page.js";
 
+    initI18nPage();
     renderNav({ sideKey: "global", baseDepth: 2 });
-    mountEventsPage();
+    renderFooter({ baseDepth: 2 });
+    mountEventsPage({ baseDepth: 2 });
   </script>
 </body>
 </html>
+
+
+
+

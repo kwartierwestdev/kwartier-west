@@ -1,48 +1,50 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Kwartier West — Partners</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Partners of Kwartier West — soundsystems, crews, studios and visuals we trust." />
-  <link rel="stylesheet" href="../../css/base.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n-title="meta.partners.title">Kwartier West - Partners</title>
+  <meta name="description" content="Trusted partners of Kwartier West across production, visuals, sound and operations." data-i18n-content="meta.partners.description">
+  <link rel="stylesheet" href="../../css/base.css?v=20260224j">
 </head>
-<body>
+<body class="kw-page">
   <div data-nav></div>
 
-  <div class="page">
-    <div class="topline">
-      <a class="back" href="../../index.html">← back</a>
-      <div class="kicker"><span class="dot"></span> Partners</div>
-    </div>
-
-    <div class="sectionCard">
-      <h1>Partners</h1>
-      <p class="lead" style="max-width:78ch;">
-        Not sponsors. Not random logos.
-        These are the people and systems we actually move with — rigs, crews, studios, visuals.
-        Same ethic: clean work, no noise.
-      </p>
-
-      <div class="chips" style="margin-top:12px;">
-        <a class="chip" href="../tekno/index.html">Tek side</a>
-        <a class="chip" href="../hiphop/index.html">Hip hop side</a>
-        <a class="chip" href="../contact/index.html">Contact</a>
+  <main id="main-content" class="page-shell">
+    <header class="hero-surface">
+      <p class="eyebrow" data-i18n="partners.hero.eyebrow">Network / Trusted partners</p>
+      <h1 data-i18n="partners.hero.title">Partners</h1>
+      <p class="lead" data-i18n="partners.hero.lead">No random sponsor wall. This is the network actively involved in events, visuals, logistics and studio support.</p>
+      <div class="inline-actions">
+        <a class="chip-link" href="../events/index.html" data-i18n="partners.hero.events">Event hub</a>
+        <a class="chip-link" href="../contact/index.html" data-i18n="partners.hero.become">Become a partner</a>
       </div>
-    </div>
+    </header>
 
-    <section class="sectionCard" aria-label="Partner list">
-      <h2>Trusted links</h2>
+    <section class="surface">
       <div data-partners></div>
     </section>
-  </div>
+  </main>
+
+  <div data-footer></div>
 
   <script type="module">
+    import { initI18nPage } from "../../js/core/i18n.js";
     import { renderNav } from "../../partials/nav.js";
+    import { renderFooter } from "../../partials/footer.js";
     import { renderPartners } from "../../js/partners.js";
 
+    initI18nPage();
     renderNav({ sideKey: "global", baseDepth: 2 });
-    renderPartners();
+    renderFooter({ baseDepth: 2 });
+    renderPartners({ baseDepth: 2 });
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
