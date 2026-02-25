@@ -131,7 +131,7 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
         </div>
 
         <div class="artist-hero__body">
-          <p class="eyebrow">${escapeHTML(sideLabel(currentSide))} collective</p>
+          <p class="eyebrow">${escapeHTML(sideLabel(currentSide))} ${escapeHTML(t("artist.collectiveSuffix"))}</p>
           <h1>${name}</h1>
           <p class="artist-hero__meta">${role}${city ? ` <span class="dot-sep"></span> ${city}` : ""}${lang ? ` <span class="dot-sep"></span> ${lang}` : ""}</p>
           ${summary ? `<p class="artist-hero__summary">${summary}</p>` : ""}

@@ -1,83 +1,109 @@
 {
-  "updatedAt": "2026-02-25T10:00:00Z",
-  "partners": [
-    {
-      "slug": "all-tek-soundsystem",
-      "name": "All-Tek Soundsystem",
-      "type": "Soundsystem partner",
-      "region": "Belgium",
-      "logo": "assets/partners/all-tek-soundsystem.svg",
-      "bio": "Soundsystem partner active in the Kwartier West network.",
-      "tags": ["Soundsystem", "Tekno", "Collab"],
-      "links": []
-    },
-    {
-      "slug": "absurd-soundsystem",
-      "name": "Absurd Soundsystem",
-      "type": "Soundsystem partner",
-      "region": "Belgium",
-      "logo": "assets/partners/absurd-soundsystem.svg",
-      "bio": "Soundsystem crew collaborating on selected Kwartier West productions.",
-      "tags": ["Soundsystem", "Tekno", "Rave"],
-      "links": []
-    },
-    {
-      "slug": "imakari-projects",
-      "name": "Imakari projects",
-      "type": "Project partner",
-      "region": "Belgium",
-      "logo": "assets/partners/imakari-projects.svg",
-      "bio": "Project partner within the extended Kwartier West event and production lane.",
-      "tags": ["Projects", "Production", "Collab"],
-      "links": []
-    },
-    {
-      "slug": "deeqstudio",
-      "name": "DEEQSTUDIO",
-      "type": "Web dev / Design / Media management",
-      "region": "Belgium",
-      "logo": "assets/partners/deeqstudio-wordmark.svg",
-      "logoMode": "wordmark",
-      "bio": "Digital partner for Kwartier West: web development, design systems and media management.",
-      "tags": ["Web", "Design", "Media"],
-      "links": [
-        {
-          "platform": "email",
-          "label": "Studio desk",
-          "url": "mailto:info@deeqstudio.com"
-        }
-      ]
-    },
-    {
-      "slug": "kwartier-west-channels",
-      "name": "Kwartier West Channels",
-      "type": "Official socials",
-      "region": "Belgium",
-      "bio": "Official publishing and comms channels for event drops, artist announcements and operational updates.",
-      "tags": ["Official", "Event drops", "Community"],
-      "internal": true,
-      "links": [
-        {
-          "platform": "instagram",
-          "label": "@kwtr_west",
-          "url": "https://www.instagram.com/kwtr_west/"
-        },
-        {
-          "platform": "facebook",
-          "label": "Facebook",
-          "url": "https://www.facebook.com/profile.php?id=61557994985369"
-        },
-        {
-          "platform": "soundcloud",
-          "label": "SoundCloud",
-          "url": "https://soundcloud.com/kwartier-west"
-        },
-        {
-          "platform": "linktree",
-          "label": "@kwartierwest",
-          "url": "https://linktr.ee/kwartierwest"
-        }
-      ]
-    }
-  ]
+    "updatedAt":  "2026-02-25T10:00:00Z",
+    "partners":  [
+                     {
+                         "slug":  "all-tek-soundsystem",
+                         "name":  "All-Tek Soundsystem",
+                         "type":  "Soundsystempartner",
+                         "region":  "Belgie",
+                         "logo":  "assets/partners/all-tek-soundsystem.svg",
+                         "bio":  "Soundsystempartner actief binnen het Kwartier West-netwerk.",
+                         "tags":  [
+                                      "Soundsystem",
+                                      "Tekno",
+                                      "Samenwerking"
+                                  ],
+                         "links":  [
+
+                                   ]
+                     },
+                     {
+                         "slug":  "absurd-soundsystem",
+                         "name":  "Absurd Soundsystem",
+                         "type":  "Soundsystempartner",
+                         "region":  "Belgie",
+                         "logo":  "assets/partners/absurd-soundsystem.svg",
+                         "bio":  "Soundsystemcrew die samenwerkt op geselecteerde Kwartier West-producties.",
+                         "tags":  [
+                                      "Soundsystem",
+                                      "Tekno",
+                                      "Rave"
+                                  ],
+                         "links":  [
+
+                                   ]
+                     },
+                     {
+                         "slug":  "imakari-projects",
+                         "name":  "Imakari projects",
+                         "type":  "Projectpartner",
+                         "region":  "Belgie",
+                         "logo":  "assets/partners/imakari-projects.svg",
+                         "bio":  "Projectpartner binnen de bredere event- en productielane van Kwartier West.",
+                         "tags":  [
+                                      "Projecten",
+                                      "Productie",
+                                      "Samenwerking"
+                                  ],
+                         "links":  [
+
+                                   ]
+                     },
+                     {
+                         "slug":  "deeqstudio",
+                         "name":  "DEEQSTUDIO",
+                         "type":  "Webdevelopment / Design / Mediabeheer",
+                         "region":  "Belgie",
+                         "logo":  "assets/partners/deeqstudio-wordmark.svg",
+                         "logoMode":  "wordmark",
+                         "bio":  "Digitale partner van Kwartier West: webdevelopment, designsystemen en mediabeheer.",
+                         "tags":  [
+                                      "Web",
+                                      "Design",
+                                      "Media"
+                                  ],
+                         "links":  [
+                                       {
+                                           "platform":  "email",
+                                           "label":  "Studio",
+                                           "url":  "mailto:info@deeqstudio.com"
+                                       }
+                                   ]
+                     },
+                     {
+                         "slug":  "kwartier-west-channels",
+                         "name":  "Kwartier West Channels",
+                         "type":  "Officiele socials",
+                         "region":  "Belgie",
+                         "bio":  "Officiele publicatie- en communicatiekanalen voor eventdrops, artiestenupdates en operationele meldingen.",
+                         "tags":  [
+                                      "Officieel",
+                                      "Eventdrops",
+                                      "Community"
+                                  ],
+                         "internal":  true,
+                         "links":  [
+                                       {
+                                           "platform":  "instagram",
+                                           "label":  "@kwtr_west",
+                                           "url":  "https://www.instagram.com/kwtr_west/"
+                                       },
+                                       {
+                                           "platform":  "facebook",
+                                           "label":  "Facebook",
+                                           "url":  "https://www.facebook.com/profile.php?id=61557994985369"
+                                       },
+                                       {
+                                           "platform":  "soundcloud",
+                                           "label":  "SoundCloud",
+                                           "url":  "https://soundcloud.com/kwartier-west"
+                                       },
+                                       {
+                                           "platform":  "linktree",
+                                           "label":  "@kwartierwest",
+                                           "url":  "https://linktr.ee/kwartierwest"
+                                       }
+                                   ]
+                     }
+                 ]
 }

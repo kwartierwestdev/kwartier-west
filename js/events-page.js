@@ -8,6 +8,18 @@ import {
 import { escapeHTML, formatDateTime, sideLabel, sideShortLabel } from "./core/format.js";
 import { t } from "./core/i18n.js";
 
+function localizedEventStatus(eventItem) {
+  const raw = String(eventItem?.status || "").trim().toLowerCase();
+  if (raw === "completed" || raw === "past" || raw === "voorbij" || raw === "voorbije") {
+    return t("events.filter.past");
+  }
+  if (raw === "upcoming" || raw === "komend") {
+    return t("events.filter.upcoming");
+  }
+  if (eventItem?.__isPast) return t("events.filter.past");
+  return eventItem?.status ? String(eventItem.status) : t("events.filter.upcoming");
+}
+
 function listLineup(eventItem, artistsData) {
   const lineup = normalizeLineup(eventItem?.lineup, artistsData, eventItem?.sideKey);
   if (!lineup.length) return `<span class="muted">${t("events.lineupPending")}</span>`;
@@ -31,7 +43,7 @@ function ticketCTA(eventItem) {
     return `<a class="chip-link" href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(label)}</a>`;
   }
   if (mode === "internal") {
-    return `<a class="chip-link" href="../tickets/index.html">${t("events.ticketsLabel")}</a>`;
+    return `<a class="chip-link" href="../tickets/index.html">${escapeHTML(eventItem?.tickets?.label || t("events.ticketRequest"))}</a>`;
   }
   return `<span class="muted">${t("events.ticketsTba")}</span>`;
 }
@@ -40,7 +52,7 @@ function sourceMarkup(eventItem) {
   const source = eventItem?.source;
   if (!source?.url) return "";
   const platform = source?.platform || t("events.sourceDefault");
-  return `<a class="chip-link" href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(platform)} ${t("events.source")}</a>`;
+  return `<a class="chip-link" href="${escapeHTML(source.url)}" target="_blank" rel="noopener noreferrer">${t("events.source")}: ${escapeHTML(platform)}</a>`;
 }
 
 function featuredCard(eventItem, artistsData) {
@@ -52,7 +64,7 @@ function featuredCard(eventItem, artistsData) {
     <article class="feature-card">
       <div class="feature-card__top">
         <span class="status-pill">${escapeHTML(sideShortLabel(eventItem?.sideKey))}</span>
-        <span class="status-pill">${escapeHTML(eventItem?.status || t("events.filter.upcoming"))}</span>
+        <span class="status-pill">${escapeHTML(localizedEventStatus(eventItem))}</span>
       </div>
 
       <h3>${title}</h3>
@@ -73,9 +85,7 @@ function listItem(eventItem, artistsData) {
   const dateLabel = escapeHTML(formatDateTime(eventItem?.date, eventItem?.time));
   const location = [eventItem?.region, eventItem?.venue].filter(Boolean).map(escapeHTML).join(" - ");
   const sideChip = `<span class="status-pill">${escapeHTML(sideShortLabel(eventItem.sideKey))}</span>`;
-  const statusChip = `<span class="status-pill">${escapeHTML(
-    eventItem?.status || (eventItem.__isPast ? t("events.filter.past") : t("events.filter.upcoming"))
-  )}</span>`;
+  const statusChip = `<span class="status-pill">${escapeHTML(localizedEventStatus(eventItem))}</span>`;
   const source = sourceMarkup(eventItem);
 
   return `

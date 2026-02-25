@@ -99,7 +99,7 @@ h1,
 h2,
 h3 {
   margin: 0;
-  line-height: 1;
+  line-height: 1.04;
   text-transform: uppercase;
 }
 
@@ -561,7 +561,7 @@ textarea {
 .hero-surface,
 .surface {
   position: relative;
-  padding: 1rem 0 1.1rem 1rem;
+  padding: 1rem clamp(0.74rem, 1.2vw, 1rem) 1.1rem clamp(0.74rem, 1.2vw, 1rem);
   border-left: 1px solid rgba(255, 255, 255, 0.22);
   overflow: visible;
   background:
@@ -590,7 +590,66 @@ textarea {
   padding-bottom: 1.2rem;
 }
 
+.hero-surface--lane {
+  --lane-focus: 50%;
+  min-height: clamp(200px, 30vw, 340px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center var(--lane-focus);
+  overflow: hidden;
+}
+
+.hero-surface--lane > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-surface--lane .eyebrow,
+.hero-surface--lane h1,
+.hero-surface--lane .lead {
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.46);
+}
+
+.hero-surface--lane-tekno {
+  --lane-focus: 48%;
+  min-height: clamp(240px, 34vw, 420px);
+  background-image:
+    linear-gradient(95deg, rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0.62) 48%, rgba(5, 5, 5, 0.8)),
+    radial-gradient(880px 320px at 18% 0%, rgba(217, 9, 9, 0.34), rgba(217, 9, 9, 0) 74%),
+    url("../assets/landing-tekno.jpg");
+}
+
+.hero-surface--lane-hiphop {
+  --lane-focus: 46%;
+  min-height: clamp(240px, 34vw, 420px);
+  background-image:
+    linear-gradient(95deg, rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0.62) 48%, rgba(5, 5, 5, 0.8)),
+    radial-gradient(880px 320px at 82% 0%, rgba(255, 45, 45, 0.32), rgba(255, 45, 45, 0) 74%),
+    url("../assets/landing-hiphop.jpg");
+}
+
+.hero-surface--lane-global {
+  background-image:
+    linear-gradient(95deg, rgba(5, 5, 5, 0.84), rgba(5, 5, 5, 0.66) 48%, rgba(5, 5, 5, 0.84)),
+    linear-gradient(90deg, rgba(217, 9, 9, 0.2), rgba(255, 45, 45, 0.15) 50%, rgba(217, 9, 9, 0.2)),
+    url("../assets/landing-tekno.jpg"),
+    url("../assets/landing-hiphop.jpg");
+  background-size: cover, cover, 56% 100%, 56% 100%;
+  background-position: center, center, left center, right center;
+}
+
 .hero-surface h1 {
+  overflow-wrap: anywhere;
+}
+
+.hero-surface h2,
+.surface h2,
+.event-card__title,
+.feature-card h3,
+.artist-card h3,
+.artist-hero h1,
+.page-rail__event h4 {
   overflow-wrap: anywhere;
 }
 
@@ -721,6 +780,20 @@ textarea {
   overflow: auto;
   padding-right: 0.12rem;
   scrollbar-width: thin;
+}
+
+@media (min-width: 1181px) and (max-width: 1460px), (min-width: 1181px) and (max-height: 940px) {
+  .page-shell {
+    --page-rail-width: clamp(220px, 22vw, 280px);
+  }
+
+  .page-rail__stack {
+    position: static;
+    top: auto;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
 }
 
 .page-rail__panel {
@@ -2592,7 +2665,19 @@ input[disabled] {
   .hero-surface,
   .surface {
     padding-left: 0.74rem;
-    padding-right: 0.12rem;
+    padding-right: 0.74rem;
+  }
+
+  .hero-surface--lane-global {
+    background-size: cover, cover, cover, cover;
+    background-position: center, center, left 26% center, right 74% center;
+  }
+
+  .hero-surface--lane,
+  .hero-surface--lane-tekno,
+  .hero-surface--lane-hiphop,
+  .hero-surface--lane-global {
+    min-height: clamp(170px, 46vw, 280px);
   }
 
   h1 {

@@ -1,6 +1,17 @@
-﻿import { loadArtists, loadEvents, normalizeLineup, pickSideCollection, splitEventsByDate } from "./core/content-api.js";
+import { loadArtists, loadEvents, normalizeLineup, pickSideCollection, splitEventsByDate } from "./core/content-api.js";
 import { escapeHTML, formatDateTime, sideShortLabel } from "./core/format.js";
 import { t } from "./core/i18n.js";
+
+function localizedEventStatus(eventItem) {
+  const raw = String(eventItem?.status || "").trim().toLowerCase();
+  if (raw === "completed" || raw === "past" || raw === "voorbij" || raw === "voorbije") {
+    return t("events.filter.past");
+  }
+  if (raw === "upcoming" || raw === "komend") {
+    return t("events.filter.upcoming");
+  }
+  return eventItem?.status ? String(eventItem.status) : t("events.filter.upcoming");
+}
 
 function ticketCTA(eventItem) {
   const mode = eventItem?.tickets?.mode || "tba";
@@ -12,7 +23,7 @@ function ticketCTA(eventItem) {
   }
 
   if (mode === "internal") {
-    return `<a class="chip-link" href="../tickets/index.html">${t("events.ticketsLabel")}</a>`;
+    return `<a class="chip-link" href="../tickets/index.html">${escapeHTML(eventItem?.tickets?.label || t("events.ticketRequest"))}</a>`;
   }
 
   return `<span class="muted">${t("events.ticketsTba")}</span>`;
@@ -34,7 +45,7 @@ function railPrimaryTarget(eventItem, sideKey) {
   if (mode === "internal") {
     return {
       url: "../tickets/index.html",
-      label: t("events.ticketsLabel"),
+      label: eventItem?.tickets?.label || t("events.ticketRequest"),
       external: false
     };
   }
@@ -81,7 +92,7 @@ function eventCard(eventItem, artistsData, sideKey) {
       <div class="event-card__main">
         <div class="event-card__title-row">
           <h3>${escapeHTML(eventItem?.title || t("events.untitled"))}</h3>
-          <span class="status-pill">${escapeHTML(eventItem?.status || t("events.filter.upcoming"))}</span>
+          <span class="status-pill">${escapeHTML(localizedEventStatus(eventItem))}</span>
         </div>
 
         <p class="event-card__meta">${escapeHTML(dateLabel)}${location ? ` <span class="dot-sep"></span> ${location}` : ""}</p>
@@ -116,7 +127,7 @@ function renderRailEvents(sideEvents, sideKey) {
         .map((eventItem) => {
           const dateLabel = formatDateTime(eventItem?.date, eventItem?.time);
           const location = [eventItem?.region, eventItem?.venue].filter(Boolean).map(escapeHTML).join(" - ");
-          const status = escapeHTML(eventItem?.status || t("events.filter.upcoming"));
+          const status = escapeHTML(localizedEventStatus(eventItem));
           const title = escapeHTML(eventItem?.title || t("events.untitled"));
           const target = railPrimaryTarget(eventItem, sideKey);
           const href = escapeHTML(target.url);

@@ -1,21 +1,21 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="nl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title data-i18n-title="meta.events.title">Kwartier West - Events</title>
-  <meta name="description" content="Event hub with Tekno and Hip hop line-ups, tickets and official social sources." data-i18n-content="meta.events.description">
+  <title data-i18n-title="meta.events.title">Kwartier West - Evenementen</title>
+  <meta name="description" content="Evenementenhub met Tekno- en Hip hop-line-ups, tickets en officiele sociale bronnen." data-i18n-content="meta.events.description">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Kwartier West">
-  <meta property="og:title" content="Kwartier West - Events">
-  <meta property="og:description" content="Event hub with Tekno and Hip hop line-ups, tickets and official social sources.">
+  <meta property="og:title" content="Kwartier West - Evenementen">
+  <meta property="og:description" content="Evenementenhub met Tekno- en Hip hop-line-ups, tickets en officiele sociale bronnen.">
   <meta property="og:image" content="/assets/og/og-cover.svg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Kwartier West - Tekno and Hip hop event platform">
+  <meta property="og:image:alt" content="Kwartier West - Tekno- en Hip hop-evenementenplatform">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Kwartier West - Events">
-  <meta name="twitter:description" content="Event hub with Tekno and Hip hop line-ups, tickets and official social sources.">
+  <meta name="twitter:title" content="Kwartier West - Evenementen">
+  <meta name="twitter:description" content="Evenementenhub met Tekno- en Hip hop-line-ups, tickets en officiele sociale bronnen.">
   <meta name="twitter:image" content="/assets/og/og-cover.svg">
   <link rel="stylesheet" href="../../css/base.css?v=20260224j">
   <link rel="stylesheet" href="../../css/events.css?v=20260224a">
@@ -24,22 +24,22 @@
   <div data-nav></div>
 
   <main id="main-content" class="page-shell">
-    <header class="hero-surface hero-surface--events">
-      <p class="eyebrow" data-i18n="events.hero.eyebrow">Kwartier West / Event hub</p>
-      <h1 data-i18n="events.hero.title">Live Event Feed</h1>
-      <p class="lead" data-i18n="events.hero.lead">One feed for Tekno and Hip hop: line-up, tickets and booking path.</p>
+    <header class="hero-surface hero-surface--lane hero-surface--lane-global hero-surface--events">
+      <p class="eyebrow" data-i18n="events.hero.eyebrow">Kwartier West / Eventhub</p>
+      <h1 data-i18n="events.hero.title">Live evenementenfeed</h1>
+      <p class="lead" data-i18n="events.hero.lead">Een feed voor Tekno en Hip hop: line-up, tickets en boekingspad.</p>
 
-      <div class="filter-stack" aria-label="Event filters" data-i18n-aria-label="events.filtersAria">
-        <div class="inline-actions filter-row" role="group" aria-label="Filter by collective" data-i18n-aria-label="events.filter.groupSide">
-          <button class="pill-btn is-active" type="button" data-filter-side="all" aria-pressed="true" data-i18n="events.filter.all">All</button>
+      <div class="filter-stack" aria-label="Evenementfilters" data-i18n-aria-label="events.filtersAria">
+        <div class="inline-actions filter-row" role="group" aria-label="Filter op collectief" data-i18n-aria-label="events.filter.groupSide">
+          <button class="pill-btn is-active" type="button" data-filter-side="all" aria-pressed="true" data-i18n="events.filter.all">Alles</button>
           <button class="pill-btn" type="button" data-filter-side="tekno" aria-pressed="false" data-i18n="events.filter.tekno">Tekno</button>
           <button class="pill-btn" type="button" data-filter-side="hiphop" aria-pressed="false" data-i18n="events.filter.hiphop">Hip hop</button>
         </div>
 
-        <div class="inline-actions filter-row" role="group" aria-label="Filter by timeline" data-i18n-aria-label="events.filter.groupScope">
-          <button class="pill-btn is-active" type="button" data-filter-scope="upcoming" aria-pressed="true" data-i18n="events.filter.upcoming">Upcoming</button>
-          <button class="pill-btn" type="button" data-filter-scope="all" aria-pressed="false" data-i18n="events.filter.allEvents">All events</button>
-          <button class="pill-btn" type="button" data-filter-scope="past" aria-pressed="false" data-i18n="events.filter.past">Past</button>
+        <div class="inline-actions filter-row" role="group" aria-label="Filter op periode" data-i18n-aria-label="events.filter.groupScope">
+          <button class="pill-btn is-active" type="button" data-filter-scope="upcoming" aria-pressed="true" data-i18n="events.filter.upcoming">Komend</button>
+          <button class="pill-btn" type="button" data-filter-scope="all" aria-pressed="false" data-i18n="events.filter.allEvents">Alle evenementen</button>
+          <button class="pill-btn" type="button" data-filter-scope="past" aria-pressed="false" data-i18n="events.filter.past">Voorbij</button>
         </div>
 
         <p class="muted" aria-live="polite"><span data-count>-</span> <span class="dot-sep"></span> <span data-visible-count>-</span></p>
@@ -48,16 +48,16 @@
 
     <section class="surface">
       <div class="section-header">
-        <h2 data-i18n="events.section.featured">Featured</h2>
-        <a class="chip-link" href="../booking/index.html?type=collective_full" data-i18n="events.cta.takeover">Book full takeover</a>
+        <h2 data-i18n="events.section.featured">Uitgelicht</h2>
+        <a class="chip-link" href="../booking/index.html?type=collective_full" data-i18n="events.cta.takeover">Boek volledige overname</a>
       </div>
       <div data-featured></div>
     </section>
 
     <section class="surface">
       <div class="section-header">
-        <h2 data-i18n="events.section.overview">Event overview</h2>
-        <a class="chip-link" href="../contact/index.html" data-i18n="events.cta.production">Contact production</a>
+        <h2 data-i18n="events.section.overview">Evenementoverzicht</h2>
+        <a class="chip-link" href="../contact/index.html" data-i18n="events.cta.production">Contact productie</a>
       </div>
       <div data-events-page></div>
     </section>
@@ -78,6 +78,11 @@
   </script>
 </body>
 </html>
+
+
+
+
+
 
 
 
