@@ -1,0 +1,32 @@
+name: Probe one.com SFTP paths
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install lftp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
+      - name: Probe remote directories
+        env:
+          ONECOM_FTP_HOST: ${{ secrets.ONECOM_FTP_HOST }}
+          ONECOM_FTP_USER: ${{ secrets.ONECOM_FTP_USER }}
+          ONECOM_FTP_PASSWORD: ${{ secrets.ONECOM_FTP_PASSWORD }}
+          ONECOM_FTP_PORT: ${{ secrets.ONECOM_FTP_PORT }}
+        run: |
+          lftp -u "$ONECOM_FTP_USER","$ONECOM_FTP_PASSWORD" "sftp://$ONECOM_FTP_HOST:$ONECOM_FTP_PORT" <<EOF
+          set net:timeout 30
+          set net:max-retries 1
+          set sftp:auto-confirm yes
+          set cmd:fail-exit no
+          pwd
+          cls -la
+          cls -la /
+          cls -la /webroots
+          bye
+          EOF
