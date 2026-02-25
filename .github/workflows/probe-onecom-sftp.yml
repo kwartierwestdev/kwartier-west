@@ -27,6 +27,17 @@ jobs:
           pwd
           cls -la
           cls -la /
+          cls -la /customers
+          cls -la /customers/
+          cls -la /run
+          cls -la /run/
+          cls -la /run/www
+          cls -la /run/www/
+          cls -la /run/webroots
+          cls -la /run/webroots/
+          cls -la /www
+          cls -la /www/
           cls -la /webroots
+          cls -la /webroots/
           bye
           EOF
