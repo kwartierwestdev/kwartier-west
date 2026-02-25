@@ -36,6 +36,8 @@ body {
   margin: 0;
   min-height: 100%;
   color-scheme: dark;
+  width: 100%;
+  overflow-x: clip;
 }
 
 body {
@@ -48,7 +50,18 @@ body {
     radial-gradient(1000px 420px at 80% -10%, rgba(227, 13, 13, 0.14), transparent 72%),
     linear-gradient(160deg, var(--bg), #0b0b0b 45%, var(--bg));
   background-size: 36px 36px, 36px 36px, auto, auto;
-  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+img,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+svg {
+  max-width: 100%;
 }
 
 body:not(.landing)::before {
@@ -486,6 +499,22 @@ textarea {
 }
 
 .page-main > * {
+  min-width: 0;
+}
+
+.page-shell,
+.hero-surface,
+.surface,
+.tile-grid,
+.artist-grid,
+.artist-picker__list,
+.form-grid,
+.form-grid--inline,
+.shop-controls,
+.shop-item,
+.event-card,
+.feature-card,
+.source-board {
   min-width: 0;
 }
 
@@ -2416,6 +2445,10 @@ input[disabled] {
     grid-template-columns: 1fr;
   }
 
+  .event-card__title-row {
+    flex-wrap: wrap;
+  }
+
   .event-card__actions {
     justify-items: start;
     border-left: 0;
@@ -2516,6 +2549,12 @@ input[disabled] {
     padding-top: 1.5rem;
   }
 
+  .hero-surface,
+  .surface {
+    padding-left: 0.74rem;
+    padding-right: 0.12rem;
+  }
+
   h1 {
     font-size: clamp(1.9rem, 10.6vw, 3.1rem);
   }
@@ -2576,6 +2615,15 @@ input[disabled] {
 
   .kw-footer__inner {
     grid-template-columns: 1fr;
+  }
+
+  .kw-footer__link,
+  .kw-footer__note,
+  .kw-footer__powered,
+  .social-link__label,
+  .chip-link,
+  .cta-btn {
+    overflow-wrap: anywhere;
   }
 }
 
