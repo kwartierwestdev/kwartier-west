@@ -17,7 +17,26 @@ jobs:
       - name: Install lftp
         run: |
           sudo apt-get update
-          sudo apt-get install -y lftp
+          sudo apt-get install -y lftp rsync
+
+      - name: Build deploy package
+        run: |
+          rm -rf _deploy
+          mkdir -p _deploy
+          rsync -av \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='node_modules/' \
+            --exclude='_screens/' \
+            --exclude='_chrome-profile/' \
+            --exclude='.vscode/' \
+            --exclude='.idea/' \
+            --exclude='docs/' \
+            --exclude='scripts/' \
+            --exclude='README.md' \
+            --exclude='package.json' \
+            --exclude='package-lock.json' \
+            ./ _deploy/
 
       - name: Upload to one.com via SFTP
         env:
@@ -27,7 +46,7 @@ jobs:
           ONECOM_FTP_PORT: ${{ secrets.ONECOM_FTP_PORT }}
           ONECOM_FTP_PATH: ${{ secrets.ONECOM_FTP_PATH }}
         run: |
-          REMOTE_PATH="${ONECOM_FTP_PATH:-/}"
+          REMOTE_PATH="${ONECOM_FTP_PATH:-.}"
           lftp -u "$ONECOM_FTP_USER","$ONECOM_FTP_PASSWORD" "sftp://$ONECOM_FTP_HOST:$ONECOM_FTP_PORT" <<EOF
           set cmd:fail-exit yes
           set net:timeout 30
@@ -35,19 +54,6 @@ jobs:
           set net:reconnect-interval-base 5
           set net:reconnect-interval-max 10
           set sftp:auto-confirm yes
-          mirror -R --verbose --only-newer \
-            --exclude-glob .git* \
-            --exclude-glob .github \
-            --exclude-glob node_modules \
-            --exclude-glob _screens \
-            --exclude-glob _chrome-profile \
-            --exclude-glob .vscode \
-            --exclude-glob .idea \
-            --exclude-glob docs \
-            --exclude-glob scripts \
-            --exclude-glob README.md \
-            --exclude-glob package.json \
-            --exclude-glob package-lock.json \
-            ./ "$REMOTE_PATH"
+          mirror -R --verbose --only-newer ./_deploy/ "$REMOTE_PATH"
           bye
           EOF
