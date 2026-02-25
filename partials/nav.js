@@ -1,5 +1,5 @@
 import { sideLabel } from "../js/core/format.js";
-import { attachLanguageSwitchers, t } from "../js/core/i18n.js";
+import { t } from "../js/core/i18n.js";
 import { mountPageRail } from "../js/core/page-rail.js";
 
 function pathPrefix(baseDepth = 0) {
@@ -78,11 +78,6 @@ export function renderNav({ sideKey = "global", baseDepth = 0 } = {}) {
             .join("")}
         </div>
 
-        <div class="kw-lang-wrap">
-          <label class="kw-lang-label">${t("common.language")}</label>
-          <select class="kw-lang-select" data-lang-switch></select>
-        </div>
-
         <button class="kw-nav__toggle" type="button" aria-expanded="false" aria-controls="kw-drawer">${t("nav.menu")}</button>
       </div>
 
@@ -95,10 +90,6 @@ export function renderNav({ sideKey = "global", baseDepth = 0 } = {}) {
             })
             .join("")}
         </div>
-        <div class="kw-drawer__meta">
-          <label class="kw-drawer__lang-label">${t("common.language")}</label>
-          <select class="kw-drawer__lang-select" data-lang-switch></select>
-        </div>
       </div>
     </nav>
   `;
@@ -108,8 +99,6 @@ export function renderNav({ sideKey = "global", baseDepth = 0 } = {}) {
   } catch (error) {
     console.error("Rail mount failed", error);
   }
-
-  attachLanguageSwitchers(host);
 
   const button = host.querySelector(".kw-nav__toggle");
   const drawer = host.querySelector(".kw-drawer");

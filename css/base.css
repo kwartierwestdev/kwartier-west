@@ -212,7 +212,7 @@ textarea {
   margin: 0 auto;
   min-height: 68px;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.72rem;
 }
