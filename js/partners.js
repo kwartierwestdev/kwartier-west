@@ -59,7 +59,7 @@ export async function renderPartners({ baseDepth = 0 } = {}) {
 
   try {
     const data = await loadPartners({ baseDepth });
-    const partners = asArray(data?.partners);
+    const partners = asArray(data?.partners).filter((partner) => !partner?.internal);
 
     if (!partners.length) {
       mount.innerHTML = `<p class="muted">${t("partners.empty")}</p>`;

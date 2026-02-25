@@ -1,68 +1,54 @@
 {
-  "updatedAt": "2026-02-23T23:55:00Z",
+  "updatedAt": "2026-02-25T10:00:00Z",
   "partners": [
+    {
+      "slug": "kwartier-west",
+      "name": "Kwartier West",
+      "type": "Host / Label",
+      "region": "Belgium",
+      "bio": "Core host behind Kwartier West events, collective programming and booking operations.",
+      "tags": ["Host", "Events", "Label"],
+      "links": []
+    },
+    {
+      "slug": "all-tek-soundsystem",
+      "name": "All-Tek Soundsystem",
+      "type": "Soundsystem partner",
+      "region": "Belgium",
+      "bio": "Soundsystem partner active in the Kwartier West network.",
+      "tags": ["Soundsystem", "Tekno", "Collab"],
+      "links": []
+    },
+    {
+      "slug": "absurd-soundsystem",
+      "name": "Absurd Soundsystem",
+      "type": "Soundsystem partner",
+      "region": "Belgium",
+      "bio": "Soundsystem crew collaborating on selected Kwartier West productions.",
+      "tags": ["Soundsystem", "Tekno", "Rave"],
+      "links": []
+    },
+    {
+      "slug": "imakari-projects",
+      "name": "Imakari projects",
+      "type": "Project partner",
+      "region": "Belgium",
+      "bio": "Project partner within the extended Kwartier West event and production lane.",
+      "tags": ["Projects", "Production", "Collab"],
+      "links": []
+    },
     {
       "slug": "deeqstudio",
       "name": "DEEQSTUDIO",
-      "type": "Creative direction / platform build",
+      "type": "Web dev / Design / Media management",
       "region": "Belgium",
-      "bio": "Design and systems partner behind the Kwartier West digital platform: visual language, structure and app-ready web architecture.",
-      "tags": ["Direction", "Brand systems", "Web/App"],
+      "bio": "Digital partner for Kwartier West: web development, design systems and media management.",
+      "tags": ["Web", "Design", "Media"],
       "links": [
         {
           "platform": "email",
           "label": "Studio desk",
           "url": "mailto:kwartierwest@gmail.com"
-        }
-      ]
-    },
-    {
-      "slug": "apple-music-channel",
-      "name": "Apple Music",
-      "type": "Distribution channel",
-      "region": "Global",
-      "bio": "Global release channel used for selected catalog and artist visibility across the international streaming ecosystem.",
-      "tags": ["Streaming", "Distribution", "Catalog"],
-      "links": [
-        {
-          "platform": "website",
-          "label": "Artist channel entry",
-          "url": "https://music.apple.com/be/artist/pandashaolin/1465535355"
-        }
-      ]
-    },
-    {
-      "slug": "de-kweker-core",
-      "name": "De Kweker",
-      "type": "Flagship artist profile",
-      "region": "Bruges, BE",
-      "bio": "Core profile in the Hip hop lane, with a high-output release flow and a strong live identity across platforms.",
-      "tags": ["MC", "Live profile", "Bruges"],
-      "links": [
-        {
-          "platform": "website",
-          "label": "kwkr.be",
-          "url": "https://kwkr.be"
-        },
-        {
-          "platform": "instagram",
-          "label": "@de.kweker",
-          "url": "https://www.instagram.com/de.kweker/"
-        },
-        {
-          "platform": "facebook",
-          "label": "De Kweker",
-          "url": "https://www.facebook.com/p/De-Kweker-61570442235326/"
-        },
-        {
-          "platform": "youtube",
-          "label": "@De.kweker",
-          "url": "https://www.youtube.com/@De.kweker"
-        },
-        {
-          "platform": "spotify",
-          "label": "Spotify artist",
-          "url": "https://open.spotify.com/artist/2v5Tuugqs8s4vaONc286EG"
         }
       ]
     },
@@ -73,6 +59,7 @@
       "region": "Belgium",
       "bio": "Official publishing and comms channels for event drops, artist announcements and operational updates.",
       "tags": ["Official", "Event drops", "Community"],
+      "internal": true,
       "links": [
         {
           "platform": "instagram",
