@@ -1,0 +1,43 @@
+name: Deploy to one.com
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-onecom-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Upload to one.com via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.ONECOM_FTP_HOST }}
+          username: ${{ secrets.ONECOM_FTP_USER }}
+          password: ${{ secrets.ONECOM_FTP_PASSWORD }}
+          port: ${{ secrets.ONECOM_FTP_PORT }}
+          protocol: ftps
+          server-dir: ${{ secrets.ONECOM_FTP_PATH }}
+          local-dir: ./
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/node_modules/**
+            **/_screens/**
+            **/_chrome-profile/**
+            **/.vscode/**
+            **/.idea/**
+            **/docs/**
+            **/scripts/**
+            **/README.md
+            **/package.json
+            **/package-lock.json
