@@ -411,7 +411,7 @@ textarea {
 .page-main {
   min-width: 0;
   display: grid;
-  gap: 1.35rem;
+  gap: clamp(1rem, 1.8vh, 1.5rem);
   align-content: start;
 }
 
@@ -487,6 +487,42 @@ textarea {
   color: #e5e5e5;
 }
 
+@media (max-height: 860px) and (min-width: 981px) {
+  .page-shell {
+    padding-top: 1.35rem;
+    padding-bottom: 2.8rem;
+  }
+
+  .page-main {
+    gap: 0.96rem;
+  }
+
+  .hero-surface {
+    gap: 0.62rem;
+    padding-top: 0.85rem;
+    padding-bottom: 0.92rem;
+  }
+
+  .hero-surface .lead {
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  .collective-hero-media {
+    min-height: clamp(170px, 23vw, 320px);
+    max-height: min(46svh, 360px);
+  }
+
+  .collective-hero-media__logo {
+    width: clamp(200px, 34vw, 420px);
+  }
+
+  .section-header {
+    margin-bottom: 0.62rem;
+    padding-bottom: 0.4rem;
+  }
+}
+
 @media (min-width: 1800px) {
   :root {
     --max-width: min(1680px, 94vw);
@@ -527,6 +563,7 @@ textarea {
   position: relative;
   padding: 1rem 0 1.1rem 1rem;
   border-left: 1px solid rgba(255, 255, 255, 0.22);
+  overflow: visible;
   background:
     linear-gradient(90deg, rgba(227, 13, 13, 0.1), rgba(227, 13, 13, 0) 38%),
     transparent;
@@ -563,10 +600,9 @@ textarea {
 
 .hero-surface .lead {
   max-width: 52ch;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
 }
 
 .hero-surface > .inline-actions,
@@ -581,9 +617,11 @@ textarea {
 .collective-hero-media {
   grid-column: 1 / -1;
   position: relative;
+  aspect-ratio: 16 / 9;
   margin-top: 0.38rem;
   margin-bottom: 0.2rem;
-  min-height: clamp(220px, 31vw, 430px);
+  min-height: clamp(200px, 27vw, 390px);
+  max-height: min(54svh, 470px);
   border: 1px solid rgba(255, 255, 255, 0.18);
   overflow: hidden;
   background: #080808;
@@ -678,7 +716,11 @@ textarea {
   display: flex;
   flex-direction: column;
   gap: 0.72rem;
-  min-height: calc(100vh - 112px);
+  min-height: 0;
+  max-height: calc(100svh - 112px);
+  overflow: auto;
+  padding-right: 0.12rem;
+  scrollbar-width: thin;
 }
 
 .page-rail__panel {
@@ -1689,10 +1731,9 @@ button.chip-link:hover {
   color: #d6d6d6;
   line-height: 1.44;
   max-width: 62ch;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
 }
 
 .artist-card__tags,
@@ -1792,10 +1833,9 @@ button.chip-link:hover {
 
 .artist-hero__summary {
   max-width: 64ch;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
 }
 
 .artist-hero__connect {
