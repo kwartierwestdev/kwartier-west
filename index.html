@@ -26,13 +26,12 @@
   <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 
   <link rel="stylesheet" href="./css/base.css?v=20260224j">
-  <link rel="stylesheet" href="./css/landing.css?v=20260224j">
+  <link rel="stylesheet" href="./css/landing.css?v=20260226a">
 </head>
 <body class="landing">
   <a class="skip-link skip-link--landing" href="#landing-quick" data-i18n="nav.skip">Ga naar inhoud</a>
 
-  <main id="main-content" class="landing-portal" data-portal data-active="none" aria-label="Kwartier West portal" data-i18n-aria-label="landing.portal.aria">
-    <h1 class="sr-only" data-i18n="meta.home.title">Kwartier West</h1>
+  <main id="main-content" class="landing-portal" data-portal aria-label="Kwartier West portal" data-i18n-aria-label="landing.portal.aria">
 
     <header class="portal-topbar">
       <a class="portal-brand" href="./index.html" aria-current="page">
@@ -47,62 +46,81 @@
       </div>
     </header>
 
-    <section class="portal-canvas" data-portal-canvas aria-describedby="portal-instruction">
-      <p id="portal-instruction" class="portal-instruction" data-i18n="landing.portal.instruction">
-        Kies je kant. Druk Enter.
-      </p>
+    <section class="rift-hero" data-rift-hero tabindex="0" aria-describedby="portal-instruction">
+      <div class="hero-layers" aria-hidden="true">
+        <span class="hero-layer hero-layer--grid"></span>
+        <span class="hero-layer hero-layer--mist"></span>
+        <span class="hero-layer hero-layer--grain"></span>
+        <span class="hero-rift-glow"></span>
+        <span class="hero-rift-line"></span>
+      </div>
 
-      <a class="portal-side portal-side--tekno" data-portal-side="tekno" href="./pages/tekno/index.html" aria-label="Open Tekno portal" data-i18n-aria-label="landing.tekno.aria">
-        <span class="portal-side__image" aria-hidden="true"></span>
-        <span class="portal-side__veil" aria-hidden="true"></span>
-        <span class="portal-side__body">
-          <span class="portal-side__index" aria-hidden="true">01</span>
-          <span class="eyebrow" data-i18n="landing.tekno.eyebrow">Tekno collectief</span>
-          <span class="portal-side__title" data-i18n="landing.tekno.title">Tekno</span>
-          <span class="portal-side__line" data-i18n="landing.tekno.desc">Hardtek, aciddruk en soundsystemdiscipline.</span>
-          <span class="portal-side__actions">
-            <span class="portal-side__cta" data-i18n="landing.tekno.open">Open Tekno</span>
-            <span class="portal-side__subcta" data-i18n="landing.tekno.book">Boek Tekno</span>
-          </span>
-        </span>
-      </a>
+      <div class="hero-copy">
+        <h1 class="hero-copy__title" data-i18n="meta.home.title">Kwartier West</h1>
+        <p class="hero-copy__subline" data-i18n="landing.rift.main.title">Betreed Het Westen</p>
+        <p id="portal-instruction" class="hero-copy__instruction" data-i18n="landing.portal.instruction">Kies je kant. Druk Enter om de rift te kruisen.</p>
+      </div>
 
-      <a class="portal-side portal-side--hiphop" data-portal-side="hiphop" href="./pages/hiphop/index.html" aria-label="Open Hip hop portal" data-i18n-aria-label="landing.hiphop.aria">
-        <span class="portal-side__image" aria-hidden="true"></span>
-        <span class="portal-side__veil" aria-hidden="true"></span>
-        <span class="portal-side__body">
-          <span class="portal-side__index" aria-hidden="true">02</span>
-          <span class="eyebrow" data-i18n="landing.hiphop.eyebrow">Hip hop collectief</span>
-          <span class="portal-side__title" data-i18n="landing.hiphop.title">Hip hop</span>
-          <span class="portal-side__line" data-i18n="landing.hiphop.desc">Bars, producers en live-energie met karakter.</span>
-          <span class="portal-side__actions">
-            <span class="portal-side__cta" data-i18n="landing.hiphop.open">Open Hip hop</span>
-            <span class="portal-side__subcta" data-i18n="landing.hiphop.book">Boek Hip hop</span>
-          </span>
-        </span>
-      </a>
+      <div class="hero-panels" data-rift-panels aria-hidden="true">
+        <article class="hero-panel hero-panel--tekno">
+          <span class="hero-panel__media" aria-hidden="true"></span>
+          <div class="hero-panel__content">
+            <p class="eyebrow" data-i18n="landing.tekno.eyebrow">Tekno collectief</p>
+            <h2 class="hero-panel__title" data-i18n="landing.tekno.title">Tekno</h2>
+            <p class="hero-panel__line" data-i18n="landing.tekno.desc">Hardtek, aciddruk en soundsystemdiscipline.</p>
+            <div class="hero-panel__actions">
+              <a
+                class="hero-panel__cta"
+                data-rift-cta
+                data-rift-open="tekno"
+                data-rift-side="tekno"
+                href="./pages/tekno/index.html"
+                aria-label="Open Tekno"
+                data-i18n-aria-label="landing.tekno.aria"
+                data-i18n="landing.tekno.open"
+                tabindex="-1"
+              >Open Tekno</a>
+              <a
+                class="hero-panel__cta hero-panel__cta--sub"
+                data-rift-cta
+                data-rift-side="tekno"
+                href="./pages/tekno/booking.html"
+                data-i18n="landing.tekno.book"
+                tabindex="-1"
+              >Boek Tekno</a>
+            </div>
+          </div>
+        </article>
 
-      <div class="portal-seam" aria-hidden="true"></div>
-
-      <div class="portal-rift" aria-live="polite">
-        <div class="portal-rift__arches" aria-hidden="true">
-          <span class="portal-rift__arc portal-rift__arc--outer"></span>
-          <span class="portal-rift__arc portal-rift__arc--mid"></span>
-          <span class="portal-rift__arc portal-rift__arc--inner"></span>
-        </div>
-
-        <div class="portal-rift__orbs" aria-hidden="true">
-          <span class="portal-rift__orb portal-rift__orb--one"></span>
-          <span class="portal-rift__orb portal-rift__orb--two"></span>
-          <span class="portal-rift__orb portal-rift__orb--three"></span>
-          <span class="portal-rift__orb portal-rift__orb--four"></span>
-        </div>
-
-        <div class="portal-rift__core">
-          <a class="portal-rift__manifest" href="./pages/events/index.html" aria-label="Ga naar de hoofdsite van Kwartier West" data-i18n-aria-label="landing.rift.main.aria">
-            <span class="portal-rift__manifest-title" data-i18n="landing.rift.main.title">Betreed Het Westen</span>
-          </a>
-        </div>
+        <article class="hero-panel hero-panel--hiphop">
+          <span class="hero-panel__media" aria-hidden="true"></span>
+          <div class="hero-panel__content">
+            <p class="eyebrow" data-i18n="landing.hiphop.eyebrow">Hip hop collectief</p>
+            <h2 class="hero-panel__title" data-i18n="landing.hiphop.title">Hip hop</h2>
+            <p class="hero-panel__line" data-i18n="landing.hiphop.desc">Bars, producers en live-energie met karakter.</p>
+            <div class="hero-panel__actions">
+              <a
+                class="hero-panel__cta"
+                data-rift-cta
+                data-rift-open="hiphop"
+                data-rift-side="hiphop"
+                href="./pages/hiphop/index.html"
+                aria-label="Open Hip hop"
+                data-i18n-aria-label="landing.hiphop.aria"
+                data-i18n="landing.hiphop.open"
+                tabindex="-1"
+              >Open Hip hop</a>
+              <a
+                class="hero-panel__cta hero-panel__cta--sub"
+                data-rift-cta
+                data-rift-side="hiphop"
+                href="./pages/hiphop/booking.html"
+                data-i18n="landing.hiphop.book"
+                tabindex="-1"
+              >Boek Hip hop</a>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
 

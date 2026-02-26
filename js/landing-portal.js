@@ -1,158 +1,211 @@
-import { t } from "./core/i18n.js";
-
-const CENTER_LEFT = 0.44;
-const CENTER_RIGHT = 0.56;
-const EDGE_HYSTERESIS = 0.02;
+const LEFT_THRESHOLD = 0.47;
+const RIGHT_THRESHOLD = 0.53;
 
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-function setActive(root, side) {
-  const safe = side === "tekno" || side === "hiphop" || side === "rift" ? side : "none";
-  if (root.getAttribute("data-active") !== safe) {
-    root.setAttribute("data-active", safe);
-  }
-  return safe;
+function canUseHoverPointer() {
+  return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 }
 
-function sideFromX(canvas, clientX, previous = "none") {
-  const rect = canvas.getBoundingClientRect();
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function setPanelLinksFocusable(links, side) {
+  links.forEach((link) => {
+    const linkSide = (link.dataset.riftSide || "").toLowerCase();
+    link.tabIndex = linkSide === side ? 0 : -1;
+  });
+}
+
+function setPanelsAria(panels, visible) {
+  panels.setAttribute("aria-hidden", visible ? "false" : "true");
+}
+
+function updatePointerMood(hero, event) {
+  const rect = hero.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+
+  const nx = clamp((event.clientX - rect.left) / rect.width, 0, 1) * 2 - 1;
+  const ny = clamp((event.clientY - rect.top) / rect.height, 0, 1) * 2 - 1;
+  const absX = Math.abs(nx);
+
+  hero.style.setProperty("--rift-width", `${(1.6 + absX * 2.8).toFixed(2)}px`);
+  hero.style.setProperty("--rift-shift", `${(nx * 14).toFixed(2)}px`);
+  hero.style.setProperty("--parallax-x", `${(nx * 10).toFixed(2)}px`);
+  hero.style.setProperty("--parallax-y", `${(ny * 7).toFixed(2)}px`);
+}
+
+function sideFromClientX(hero, clientX) {
+  const rect = hero.getBoundingClientRect();
   if (!rect.width) return "none";
-  const ratio = (clientX - rect.left) / rect.width;
-  if (ratio < 0 || ratio > 1) return "none";
-
-  if (previous === "tekno" && ratio < CENTER_RIGHT - EDGE_HYSTERESIS) return "tekno";
-  if (previous === "hiphop" && ratio > CENTER_LEFT + EDGE_HYSTERESIS) return "hiphop";
-
-  if (ratio < CENTER_LEFT) return "tekno";
-  if (ratio > CENTER_RIGHT) return "hiphop";
-  return "rift";
+  const ratio = clamp((clientX - rect.left) / rect.width, 0, 1);
+  if (ratio < LEFT_THRESHOLD) return "tekno";
+  if (ratio > RIGHT_THRESHOLD) return "hiphop";
+  return "none";
 }
 
-const RIFT_VARIANTS = {
-  main: {
-    href: "./pages/events/index.html",
-    aria: "landing.rift.main.aria",
-    title: "landing.rift.main.title"
-  },
-  tekno: {
-    href: "./pages/tekno/index.html",
-    aria: "landing.rift.tekno.aria",
-    title: "landing.rift.tekno.title"
-  },
-  hiphop: {
-    href: "./pages/hiphop/index.html",
-    aria: "landing.rift.hiphop.aria",
-    title: "landing.rift.hiphop.title"
+function resetPointerMood(hero) {
+  hero.style.setProperty("--rift-width", "1px");
+  hero.style.setProperty("--rift-shift", "0px");
+  hero.style.setProperty("--parallax-x", "0px");
+  hero.style.setProperty("--parallax-y", "0px");
+}
+
+function trapTabBetweenCTAs(event, hero, ctas, side) {
+  if (event.key !== "Tab" || !ctas.length || side === "none") return false;
+
+  const enabled = ctas.filter((cta) => (cta.dataset.riftSide || "").toLowerCase() === side);
+  if (!enabled.length) return false;
+
+  const active = document.activeElement;
+  const first = enabled[0];
+  const last = enabled[enabled.length - 1];
+  const inCtaList = enabled.includes(active);
+
+  if (!inCtaList) {
+    event.preventDefault();
+    if (event.shiftKey) {
+      last.focus();
+    } else {
+      first.focus();
+    }
+    return true;
   }
-};
 
-function riftVariantFor(side) {
-  if (side === "tekno") return "tekno";
-  if (side === "hiphop") return "hiphop";
-  return "main";
+  if (!event.shiftKey && active === last) {
+    event.preventDefault();
+    first.focus();
+    return true;
+  }
+
+  if (event.shiftKey && (active === first || active === hero)) {
+    event.preventDefault();
+    last.focus();
+    return true;
+  }
+
+  return false;
 }
 
-function updateRift(root, refs, side) {
-  const variantName = riftVariantFor(side);
-  const variant = RIFT_VARIANTS[variantName];
-  if (!variant) return;
+function applySideState(root, panels, links, side) {
+  root.classList.toggle("has-side", side === "tekno" || side === "hiphop");
+  root.classList.toggle("is-hover-tekno", side === "tekno");
+  root.classList.toggle("is-hover-hiphop", side === "hiphop");
+  setPanelsAria(panels, side === "tekno" || side === "hiphop");
+  setPanelLinksFocusable(links, side);
+}
 
-  root.setAttribute("data-rift-target", variantName);
-  refs.link.setAttribute("href", variant.href);
-  refs.link.setAttribute("aria-label", t(variant.aria));
-  refs.title.textContent = t(variant.title);
+function navigateToSide(side, routes) {
+  const target = routes[side];
+  if (!target) return false;
+  window.location.href = target;
+  return true;
 }
 
 export function initLandingPortal() {
   const root = document.querySelector("[data-portal]");
-  const canvas = document.querySelector("[data-portal-canvas]");
-  const tekno = document.querySelector('[data-portal-side="tekno"]');
-  const hiphop = document.querySelector('[data-portal-side="hiphop"]');
-  const manifest = document.querySelector(".portal-rift__manifest");
-  const riftTitle = document.querySelector(".portal-rift__manifest-title");
+  const hero = document.querySelector("[data-rift-hero]");
+  const panels = document.querySelector("[data-rift-panels]");
+  const allCtas = Array.from(document.querySelectorAll("[data-rift-cta]"));
 
-  if (!root || !canvas || !tekno || !hiphop || !manifest || !riftTitle) return;
+  if (!root || !hero || !panels || !allCtas.length) return;
 
-  const reduced = prefersReducedMotion();
-  const riftRefs = {
-    link: manifest,
-    title: riftTitle
+  const openTekno = allCtas.find((link) => link.dataset.riftOpen === "tekno");
+  const openHiphop = allCtas.find((link) => link.dataset.riftOpen === "hiphop");
+  if (!openTekno || !openHiphop) return;
+
+  const state = {
+    reducedMotion: prefersReducedMotion(),
+    hoverPointer: canUseHoverPointer(),
+    activeSide: "none"
   };
-  let pointerX = null;
-  let rafId = 0;
 
-  updateRift(root, riftRefs, "none");
+  const routes = {
+    tekno: openTekno.href,
+    hiphop: openHiphop.href
+  };
 
-  if (!reduced) {
-    const flushPointer = () => {
-      rafId = 0;
-      if (pointerX === null) return;
-      const current = root.getAttribute("data-active") || "none";
-      const side = sideFromX(canvas, pointerX, current);
-      const active = setActive(root, side);
-      updateRift(root, riftRefs, active);
-    };
+  const setSide = (side) => {
+    const safe = side === "tekno" || side === "hiphop" ? side : "none";
+    state.activeSide = safe;
+    applySideState(root, panels, allCtas, safe);
+  };
 
-    canvas.addEventListener("pointermove", (event) => {
-      pointerX = event.clientX;
-      if (rafId) return;
-      rafId = window.requestAnimationFrame(flushPointer);
+  setSide("none");
+  resetPointerMood(hero);
+
+  if (!state.reducedMotion && state.hoverPointer) {
+    hero.addEventListener("pointermove", (event) => {
+      updatePointerMood(hero, event);
+      setSide(sideFromClientX(hero, event.clientX));
+    });
+
+    hero.addEventListener("pointerleave", () => {
+      resetPointerMood(hero);
+      setSide("none");
     });
   }
 
-  canvas.addEventListener("pointerleave", () => {
-    pointerX = null;
-    if (rafId) {
-      window.cancelAnimationFrame(rafId);
-      rafId = 0;
-    }
-    const active = setActive(root, "none");
-    updateRift(root, riftRefs, active);
+  hero.addEventListener("click", (event) => {
+    const interactive = event.target instanceof Element ? event.target.closest("a,button,input,select,textarea") : null;
+    if (interactive) return;
+    if (!state.hoverPointer) return;
+    const side = state.activeSide !== "none" ? state.activeSide : sideFromClientX(hero, event.clientX);
+    navigateToSide(side, routes);
   });
 
-  [tekno, hiphop].forEach((link) => {
-    link.addEventListener("focus", () => {
-      const active = setActive(root, link.dataset.portalSide || "none");
-      updateRift(root, riftRefs, active);
+  allCtas.forEach((cta) => {
+    cta.addEventListener("focus", () => {
+      const side = (cta.dataset.riftSide || "").toLowerCase();
+      setSide(side);
     });
   });
 
-  manifest.addEventListener("focus", () => {
-    const active = setActive(root, "rift");
-    updateRift(root, riftRefs, active);
-  });
-
-  document.addEventListener("focusin", (event) => {
-    if (!(event.target instanceof HTMLElement)) return;
-    if (!root.contains(event.target)) {
-      const active = setActive(root, "none");
-      updateRift(root, riftRefs, active);
-    }
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (!root.contains(document.activeElement)) return;
-
+  hero.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft") {
       event.preventDefault();
-      const active = setActive(root, "tekno");
-      updateRift(root, riftRefs, active);
-      tekno.focus();
-    } else if (event.key === "ArrowRight") {
+      setSide("tekno");
+      return;
+    }
+
+    if (event.key === "ArrowRight") {
       event.preventDefault();
-      const active = setActive(root, "hiphop");
-      updateRift(root, riftRefs, active);
-      hiphop.focus();
-    } else if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+      setSide("hiphop");
+      return;
+    }
+
+    if (event.key === "Escape") {
       event.preventDefault();
-      const active = setActive(root, "rift");
-      updateRift(root, riftRefs, active);
-      manifest.focus();
-    } else if (event.key === "Escape") {
-      const active = setActive(root, "none");
-      updateRift(root, riftRefs, active);
+      setSide("none");
+      resetPointerMood(hero);
+      return;
+    }
+
+    if (event.key === "1") {
+      event.preventDefault();
+      navigateToSide("tekno", routes);
+      return;
+    }
+
+    if (event.key === "2") {
+      event.preventDefault();
+      navigateToSide("hiphop", routes);
+      return;
+    }
+
+    if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+      if (state.activeSide !== "none") {
+        event.preventDefault();
+        navigateToSide(state.activeSide, routes);
+      }
+      return;
+    }
+
+    if (state.activeSide !== "none") {
+      trapTabBetweenCTAs(event, hero, allCtas, state.activeSide);
     }
   });
 }
