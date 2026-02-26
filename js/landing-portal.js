@@ -47,6 +47,13 @@ function sideFromClientX(hero, clientX) {
   return "none";
 }
 
+function sideFromClientXLoose(hero, clientX) {
+  const rect = hero.getBoundingClientRect();
+  if (!rect.width) return "none";
+  const ratio = clamp((clientX - rect.left) / rect.width, 0, 1);
+  return ratio < 0.5 ? "tekno" : "hiphop";
+}
+
 function resetPointerMood(hero) {
   hero.style.setProperty("--rift-width", "1px");
   hero.style.setProperty("--rift-shift", "0px");
@@ -172,7 +179,9 @@ export function initLandingPortal() {
     const x = typeof event.clientX === "number"
       ? event.clientX
       : hero.getBoundingClientRect().left + (hero.getBoundingClientRect().width / 2);
-    const side = sideFromClientX(hero, x);
+    const side = state.hoverPointer
+      ? sideFromClientX(hero, x)
+      : sideFromClientXLoose(hero, x);
 
     if (!state.hoverPointer) {
       if (side === "none") {
