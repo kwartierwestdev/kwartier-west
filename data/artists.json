@@ -64,11 +64,6 @@
                                          "url":  "https://open.spotify.com/artist/2v5Tuugqs8s4vaONc286EG"
                                      },
                                      {
-                                         "platform":  "website",
-                                         "label":  "Apple Music",
-                                         "url":  "https://music.apple.com/be/artist/de-kweker/1760181514"
-                                     },
-                                     {
                                          "platform":  "soundcloud",
                                          "label":  "De Kweker",
                                          "url":  "https://soundcloud.com/dekweker"
@@ -165,23 +160,7 @@
                                                      "multiple"
                                                  ]
                                    },
-                       "links":  [
-                                     {
-                                         "platform":  "website",
-                                         "label":  "Apple Music",
-                                         "url":  "https://music.apple.com/be/artist/pandashaolin/1465535355"
-                                     },
-                                     {
-                                         "platform":  "instagram",
-                                         "label":  "Collective IG",
-                                         "url":  "https://www.instagram.com/kwtr_west/"
-                                     },
-                                     {
-                                         "platform":  "soundcloud",
-                                         "label":  "Collective SoundCloud",
-                                         "url":  "https://soundcloud.com/kwartier-west"
-                                     }
-                                 ]
+                       "links":  []
                    },
                    {
                        "slug":  "duvve",
@@ -212,21 +191,11 @@
                                                      "multiple"
                                                  ]
                                    },
-                       "links":  [
-                                     {
-                                         "platform":  "youtube",
-                                         "label":  "TXMUSIC session",
-                                         "url":  "https://www.youtube.com/watch?v=xFmQNG0r0xE"
-                                     },
-                                     {
-                                         "platform":  "instagram",
-                                         "label":  "Collective IG",
-                                         "url":  "https://www.instagram.com/kwtr_west/"
-                                     },
-                                     {
-                                         "platform":  "soundcloud",
-                                         "label":  "Collective SoundCloud",
-                                         "url":  "https://soundcloud.com/kwartier-west"
+                      "links":  [
+                                    {
+                                        "platform":  "youtube",
+                                        "label":  "TXMUSIC session",
+                                        "url":  "https://www.youtube.com/watch?v=xFmQNG0r0xE"
                                      }
                                  ]
                    },
@@ -259,18 +228,7 @@
                                                      "multiple"
                                                  ]
                                    },
-                       "links":  [
-                                     {
-                                         "platform":  "instagram",
-                                         "label":  "Collective IG",
-                                         "url":  "https://www.instagram.com/kwtr_west/"
-                                     },
-                                     {
-                                         "platform":  "soundcloud",
-                                         "label":  "Collective SoundCloud",
-                                         "url":  "https://soundcloud.com/kwartier-west"
-                                     }
-                                 ]
+                       "links":  []
                    },
                    {
                        "slug":  "creamz",
@@ -301,18 +259,7 @@
                                                      "multiple"
                                                  ]
                                    },
-                       "links":  [
-                                     {
-                                         "platform":  "instagram",
-                                         "label":  "Collective IG",
-                                         "url":  "https://www.instagram.com/kwtr_west/"
-                                     },
-                                     {
-                                         "platform":  "soundcloud",
-                                         "label":  "Collective SoundCloud",
-                                         "url":  "https://soundcloud.com/kwartier-west"
-                                     }
-                                 ]
+                       "links":  []
                    }
                ],
     "tekno":  [
@@ -353,16 +300,6 @@
                                         "platform":  "soundcloud",
                                         "label":  "Onschuldig",
                                         "url":  "https://soundcloud.com/onschuldig"
-                                    },
-                                    {
-                                        "platform":  "instagram",
-                                        "label":  "Collective IG",
-                                        "url":  "https://www.instagram.com/kwtr_west/"
-                                    },
-                                    {
-                                        "platform":  "soundcloud",
-                                        "label":  "Kwartier West",
-                                        "url":  "https://soundcloud.com/kwartier-west"
                                     }
                                 ]
                   },
@@ -400,11 +337,6 @@
                                         "platform":  "soundcloud",
                                         "label":  "Hyperion",
                                         "url":  "https://soundcloud.com/user-347588809"
-                                    },
-                                    {
-                                        "platform":  "instagram",
-                                        "label":  "Collective IG",
-                                        "url":  "https://www.instagram.com/kwtr_west/"
                                     }
                                 ]
                   },
@@ -559,18 +491,7 @@
                                                     "multiple"
                                                 ]
                                   },
-                      "links":  [
-                                    {
-                                        "platform":  "instagram",
-                                        "label":  "Collective IG",
-                                        "url":  "https://www.instagram.com/kwtr_west/"
-                                    },
-                                    {
-                                        "platform":  "soundcloud",
-                                        "label":  "Kwartier West",
-                                        "url":  "https://soundcloud.com/kwartier-west"
-                                    }
-                                ]
+                      "links":  []
                   },
                   {
                       "slug":  "kulture",
@@ -648,11 +569,6 @@
                                         "platform":  "soundcloud",
                                         "label":  "KumaTEKZ",
                                         "url":  "https://soundcloud.com/kumatekz23"
-                                    },
-                                    {
-                                        "platform":  "instagram",
-                                        "label":  "Collective IG",
-                                        "url":  "https://www.instagram.com/kwtr_west/"
                                     }
                                 ]
                   },
@@ -690,11 +606,6 @@
                                         "platform":  "soundcloud",
                                         "label":  "Masschie",
                                         "url":  "https://soundcloud.com/masschie_sc"
-                                    },
-                                    {
-                                        "platform":  "instagram",
-                                        "label":  "Collective IG",
-                                        "url":  "https://www.instagram.com/kwtr_west/"
                                     }
                                 ]
                   },
@@ -732,11 +643,6 @@
                                         "platform":  "soundcloud",
                                         "label":  "Mombietekk",
                                         "url":  "https://soundcloud.com/gillian-mombert"
-                                    },
-                                    {
-                                        "platform":  "instagram",
-                                        "label":  "Collective IG",
-                                        "url":  "https://www.instagram.com/kwtr_west/"
                                     }
                                 ]
                   },
@@ -769,18 +675,7 @@
                                                     "multiple"
                                                 ]
                                   },
-                      "links":  [
-                                    {
-                                        "platform":  "instagram",
-                                        "label":  "Collective IG",
-                                        "url":  "https://www.instagram.com/kwtr_west/"
-                                    },
-                                    {
-                                        "platform":  "soundcloud",
-                                        "label":  "Kwartier West",
-                                        "url":  "https://soundcloud.com/kwartier-west"
-                                    }
-                                ]
+                      "links":  []
                   }
               ]
 }
