@@ -110,6 +110,7 @@ export function initLandingPortal() {
   const hero = document.querySelector("[data-rift-hero]");
   const panels = document.querySelector("[data-rift-panels]");
   const allCtas = Array.from(document.querySelectorAll("[data-rift-cta]"));
+  const panelCards = Array.from(document.querySelectorAll("[data-rift-panel]"));
 
   if (!root || !hero || !panels || !allCtas.length) return;
 
@@ -161,6 +162,17 @@ export function initLandingPortal() {
     cta.addEventListener("focus", () => {
       const side = (cta.dataset.riftSide || "").toLowerCase();
       setSide(side);
+    });
+  });
+
+  panelCards.forEach((panel) => {
+    panel.addEventListener("click", (event) => {
+      const interactive = event.target instanceof Element ? event.target.closest("a,button,input,select,textarea") : null;
+      if (interactive) return;
+      const side = (panel.getAttribute("data-rift-side") || "").toLowerCase();
+      if (side === "tekno" || side === "hiphop") {
+        navigateToSide(side, routes);
+      }
     });
   });
 

@@ -2278,6 +2278,13 @@ button.chip-link:hover {
   overflow: hidden;
 }
 
+.surface--artist-detail .artist-hero__summary,
+.surface--artist-detail .artist-hero__bio {
+  display: block;
+  -webkit-line-clamp: initial;
+  overflow: visible;
+}
+
 .artist-hero__signature {
   margin: 0.06rem 0 0;
   border-left: 1px solid color-mix(in srgb, var(--accent) 56%, rgba(255, 255, 255, 0.36));
@@ -3513,12 +3520,67 @@ input[disabled] {
   }
 
   .artist-hero__socials .social-link {
-    min-width: 100%;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .artist-hero__socials {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 0.32rem;
+  }
+
+  .artist-hero__socials .social-link__icon {
+    width: 1.82rem;
+    height: 1.82rem;
   }
 
   .shop-item__media {
-    min-height: 220px;
-    clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+    clip-path: none;
+  }
+
+  .shop-item {
+    gap: 0.54rem;
+    padding: 0.34rem 0 0.58rem;
+  }
+
+  .shop-item__body {
+    gap: 0.3rem;
+  }
+
+  .shop-item__head {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .shop-item__title {
+    font-size: clamp(0.96rem, 5.6vw, 1.26rem);
+  }
+
+  .shop-item__meta,
+  .shop-item__description {
+    font-size: 0.82rem;
+    line-height: 1.48;
+  }
+
+  .shop-item__foot {
+    gap: 0.32rem 0.52rem;
+  }
+
+  .shop-item__socials {
+    flex-wrap: wrap;
+  }
+
+  .shop-filter-rail {
+    gap: 0.28rem 0.34rem;
+  }
+
+  .shop-filter-btn {
+    min-height: 1.78rem;
+    font-size: 0.64rem;
   }
 
   .shop-item__foot {
@@ -3563,6 +3625,10 @@ input[disabled] {
 
   .artist-card__summary {
     -webkit-line-clamp: 3;
+  }
+
+  .artist-hero__socials {
+    grid-template-columns: 1fr;
   }
 }
 
