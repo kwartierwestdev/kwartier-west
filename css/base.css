@@ -3593,7 +3593,7 @@ input[disabled] {
 
   .artist-hero__socials {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 100%;
     gap: 0.32rem;
   }
@@ -3601,6 +3601,10 @@ input[disabled] {
   .artist-hero__socials .social-link__icon {
     width: 1.82rem;
     height: 1.82rem;
+  }
+
+  .artist-hero__socials .social-link__label {
+    font-size: 0.72rem;
   }
 
   .shop-item__media {

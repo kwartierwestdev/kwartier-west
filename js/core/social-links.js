@@ -94,6 +94,11 @@ function inferHandle(url = "", platform = "website") {
     const first = String(parts[0] || "").replace(/^@/, "");
     if (!first) return host;
 
+    if (platform === "facebook") {
+      if (first.toLowerCase() === "p" && parts[1]) return String(parts[1]).replace(/^@/, "");
+      if (first.toLowerCase() === "profile.php") return host;
+    }
+
     if (["instagram", "tiktok"].includes(platform)) return `@${first}`;
     if (platform === "youtube") return first.startsWith("@") ? first : `@${first}`;
     if (platform === "linktree") return `@${first}`;
