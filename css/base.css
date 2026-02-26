@@ -1857,7 +1857,8 @@ button.chip-link:hover {
 
 .social-link.is-facebook .social-link__icon svg path,
 .social-link.is-tiktok .social-link__icon svg path,
-.social-link.is-youtube .social-link__icon svg path {
+.social-link.is-youtube .social-link__icon svg path,
+.social-link.is-applemusic .social-link__icon svg path {
   fill: currentColor;
   stroke: none;
 }
@@ -1876,6 +1877,10 @@ button.chip-link:hover {
 
 .social-link.is-youtube {
   --social-accent: #c68585;
+}
+
+.social-link.is-applemusic {
+  --social-accent: #d194aa;
 }
 
 .social-link.is-soundcloud {
@@ -2320,19 +2325,33 @@ button.chip-link:hover {
 }
 
 .artist-hero__socials {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.28rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.32rem 0.5rem;
+  width: 100%;
 }
 
 .artist-hero__socials .social-link {
   min-width: 0;
-  width: auto;
+  width: 100%;
+  padding: 0.08rem 0;
 }
 
 .artist-hero__socials .social-link__icon {
   width: 1.92rem;
   height: 1.92rem;
+}
+
+.artist-hero__socials .social-link__meta {
+  min-width: 0;
+}
+
+.artist-hero__socials .social-link__label {
+  display: block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .artist-hero__actions {
@@ -3574,7 +3593,7 @@ input[disabled] {
 
   .artist-hero__socials {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     width: 100%;
     gap: 0.32rem;
   }

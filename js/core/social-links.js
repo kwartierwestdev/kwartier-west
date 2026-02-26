@@ -5,6 +5,7 @@ const PLATFORM_META = {
   facebook: { label: "Facebook" },
   tiktok: { label: "TikTok" },
   youtube: { label: "YouTube" },
+  applemusic: { label: "Apple Music" },
   soundcloud: { label: "SoundCloud" },
   spotify: { label: "Spotify" },
   linktree: { label: "Linktree" },
@@ -22,6 +23,8 @@ function iconMarkup(platform) {
       return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 4.2c.54 1.54 1.66 2.72 3.1 3.26v2.6a7.52 7.52 0 0 1-3.14-1V14.7c0 3.24-2.62 5.86-5.86 5.86A5.86 5.86 0 0 1 6.2 9.54a5.89 5.89 0 0 1 2.98-.81v2.64a3.28 3.28 0 0 0-1.16 6.36 3.28 3.28 0 0 0 4.06-3.18V4.2z"></path></svg>';
     case "youtube":
       return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.4" y="6.2" width="17.2" height="11.6" rx="3"></rect><path d="M10 9.6l5.1 2.4L10 14.4z"></path></svg>';
+    case "applemusic":
+      return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.6 7.1c-.7.1-1.4-.3-1.8-.8-.4-.5-.6-1.2-.5-1.9.7 0 1.4.3 1.8.8.4.5.6 1.1.5 1.9z"></path><path d="M17.3 15c-.3.8-.7 1.5-1.2 2.2-.7.9-1.4 1.8-2.4 1.8s-1.3-.6-2.4-.6-1.5.6-2.4.6-1.7-.8-2.4-1.8c-1.4-1.9-2.5-5.4-1-7.8.7-1.2 2-2 3.3-2 1 0 1.9.6 2.5.6s1.6-.7 2.8-.7c.4 0 1.7.2 2.5 1.4-.1.1-1.6.9-1.6 2.7 0 2.2 1.9 2.9 1.9 2.9z"></path><path d="M19.2 7.6v7.1a2.2 2.2 0 1 1-1.3-2V8.4l-4.2 1V16a2.2 2.2 0 1 1-1.3-2V8.3c0-.4.2-.7.6-.8l5.6-1.4c.4-.1.6.2.6.5z"></path></svg>';
     case "soundcloud":
       return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 17.2h9.7a3.1 3.1 0 0 0 .16-6.2 5 5 0 0 0-9.8-1.08"></path><path d="M5.2 16.6V9.5M6.3 16.9V8.9M7.4 17.1V8.5"></path></svg>';
     case "spotify":
@@ -42,6 +45,7 @@ function inferFromDomain(url = "") {
   if (lower.includes("facebook.com")) return "facebook";
   if (lower.includes("tiktok.com")) return "tiktok";
   if (lower.includes("youtube.com") || lower.includes("youtu.be")) return "youtube";
+  if (lower.includes("music.apple.com")) return "applemusic";
   if (lower.includes("soundcloud.com")) return "soundcloud";
   if (lower.includes("spotify.com")) return "spotify";
   if (lower.includes("linktr.ee")) return "linktree";
@@ -55,6 +59,7 @@ function inferFromLabel(label = "") {
   if (compact.includes("facebook") || compact === "fb") return "facebook";
   if (compact.includes("tiktok")) return "tiktok";
   if (compact.includes("youtube")) return "youtube";
+  if (compact.includes("applemusic") || compact.includes("apple-music")) return "applemusic";
   if (compact.includes("soundcloud")) return "soundcloud";
   if (compact.includes("spotify")) return "spotify";
   if (compact.includes("linktree")) return "linktree";
@@ -65,7 +70,10 @@ function inferFromLabel(label = "") {
 
 function pickPlatform(link) {
   const explicit = normalizeSlug(link?.platform || "");
-  if (PLATFORM_META[explicit]) return explicit;
+  if (PLATFORM_META[explicit] && explicit !== "website") return explicit;
+  if (explicit === "website") {
+    return inferFromDomain(link?.url) || inferFromLabel(link?.label) || "website";
+  }
   return inferFromDomain(link?.url) || inferFromLabel(link?.label) || "website";
 }
 

@@ -1,7 +1,7 @@
 import { findArtistBySlug, loadArtists } from "./core/content-api.js";
 import { asArray, escapeHTML, normalizeSlug, sideLabel } from "./core/format.js";
 import { t } from "./core/i18n.js";
-import { normalizeSocialLinks, renderSocialRail } from "./core/social-links.js";
+import { normalizeSocialLinks, renderSocialRail } from "./core/social-links.js?v=20260226b";
 
 function getSlug() {
   const params = new URLSearchParams(window.location.search);
@@ -82,7 +82,7 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
 
     const links = normalizeSocialLinks(artist.links);
     const socialRail = renderSocialRail(links, {
-      variant: "icon",
+      variant: "full",
       limit: 9,
       className: "artist-hero__socials"
     });
