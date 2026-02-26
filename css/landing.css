@@ -609,41 +609,39 @@ body.landing::before {
   }
 
   .hero-panels {
-    position: absolute;
-    inset: auto 0 0 0;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.44rem;
-    padding: 0 0.72rem 0.72rem;
-    pointer-events: auto;
+    inset: 0;
+    pointer-events: none;
   }
 
   .hero-panel {
-    position: relative;
-    left: auto;
-    right: auto;
-    bottom: auto;
+    position: absolute;
+    left: 0.72rem;
+    right: 0.72rem;
+    bottom: 0.72rem;
     width: auto;
-    min-height: 0;
-    opacity: 1;
-    pointer-events: auto;
-    transform: none;
+    min-height: clamp(158px, 20svh, 216px);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px);
     cursor: pointer;
     border-left-color: color-mix(in srgb, var(--accent) 62%, rgba(255, 255, 255, 0.36));
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
   }
 
-  .hero-panel__media {
-    display: none;
+  .hero-panel--tekno,
+  .hero-panel--hiphop {
+    left: 0.72rem;
+    right: 0.72rem;
+    width: auto;
+    bottom: 0.72rem;
   }
 
   .hero-panel__content {
     max-width: none;
-    opacity: 1;
-    transform: none;
+    opacity: 0;
+    transform: translateY(8px);
     padding: 0.62rem 0.66rem;
     gap: 0.34rem;
-    border-top: 0;
   }
 
   .hero-panel__content .eyebrow {
@@ -658,7 +656,9 @@ body.landing::before {
   }
 
   .hero-panel__line {
-    display: none;
+    max-width: 100%;
+    font-size: 0.78rem;
+    line-height: 1.36;
   }
 
   .hero-panel__cta {
@@ -679,16 +679,46 @@ body.landing::before {
     justify-content: flex-start;
   }
 
-  .landing-portal.has-side .hero-panel--tekno,
-  .landing-portal.has-side .hero-panel--hiphop {
+  .landing-portal.is-hover-tekno .hero-panel--tekno,
+  .landing-portal.is-hover-hiphop .hero-panel--hiphop {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .landing-portal.is-hover-tekno .hero-panel--tekno .hero-panel__content,
+  .landing-portal.is-hover-hiphop .hero-panel--hiphop .hero-panel__content {
     opacity: 1;
     transform: none;
   }
 
-  .hero-rift-glow::before,
-  .hero-rift-glow::after,
   .rift-hero::before,
   .rift-hero::after {
+    display: block;
+    opacity: 0.62;
+    top: auto;
+    bottom: clamp(8.2rem, 22svh, 11.8rem);
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    transform: none;
+  }
+
+  .rift-hero::before {
+    left: 0.88rem;
+  }
+
+  .rift-hero::after {
+    right: 0.88rem;
+  }
+
+  .landing-portal.is-hover-tekno .rift-hero::before,
+  .landing-portal.is-hover-hiphop .rift-hero::after {
+    opacity: 0.98;
+    color: #fff;
+  }
+
+  .hero-rift-glow::before,
+  .hero-rift-glow::after {
     display: none;
   }
 }
@@ -784,9 +814,14 @@ body.landing::before {
   }
 
   .hero-panels {
-    grid-template-columns: 1fr;
-    gap: 0.34rem;
-    padding: 0 0.56rem 0.56rem;
+    inset: 0;
+  }
+
+  .hero-panel--tekno,
+  .hero-panel--hiphop {
+    left: 0.56rem;
+    right: 0.56rem;
+    bottom: 0.56rem;
   }
 
   .hero-panel__content {
@@ -804,6 +839,12 @@ body.landing::before {
   .hero-panel__cta {
     font-size: 0.54rem;
     padding: 0.28rem 0.38rem;
+  }
+
+  .rift-hero::before,
+  .rift-hero::after {
+    bottom: clamp(7.8rem, 22svh, 10rem);
+    font-size: 0.56rem;
   }
 }
 
@@ -849,12 +890,6 @@ body.landing::before {
     font-size: 0.5rem;
   }
 
-  .hero-panels {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    padding: 0 0.62rem 0.62rem;
-    gap: 0.42rem;
-  }
-
   .hero-panel__content {
     gap: 0.34rem;
     padding: 0.5rem;
@@ -886,18 +921,16 @@ body.landing::before {
     padding-right: max(0.6rem, env(safe-area-inset-right));
   }
 
-  .hero-panels {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .hero-panel--tekno,
+  .hero-panel--hiphop {
+    left: max(0.6rem, env(safe-area-inset-left));
+    right: max(0.6rem, env(safe-area-inset-right));
   }
 }
 
 @media (vertical-viewport-segments: 2) {
   .rift-hero {
-    padding-bottom: clamp(15rem, 40svh, 22rem);
-  }
-
-  .hero-panels {
-    grid-template-columns: 1fr;
+    padding-bottom: clamp(10rem, 30svh, 14rem);
   }
 }
 

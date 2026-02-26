@@ -105,6 +105,14 @@ function navigateToSide(side, routes) {
   return true;
 }
 
+function touchInstructionLabel() {
+  const lang = (document.documentElement.lang || "nl").toLowerCase();
+  if (lang.startsWith("en")) {
+    return "Tap left or right in the rift. Tap again to open.";
+  }
+  return "Tik links of rechts in de rift. Tik opnieuw om te openen.";
+}
+
 export function initLandingPortal() {
   const root = document.querySelector("[data-portal]");
   const hero = document.querySelector("[data-rift-hero]");
@@ -138,6 +146,13 @@ export function initLandingPortal() {
   setSide("none");
   resetPointerMood(hero);
 
+  if (!state.hoverPointer) {
+    const instruction = document.getElementById("portal-instruction");
+    if (instruction) {
+      instruction.textContent = touchInstructionLabel();
+    }
+  }
+
   if (!state.reducedMotion && state.hoverPointer) {
     hero.addEventListener("pointermove", (event) => {
       updatePointerMood(hero, event);
@@ -153,8 +168,27 @@ export function initLandingPortal() {
   hero.addEventListener("click", (event) => {
     const interactive = event.target instanceof Element ? event.target.closest("a,button,input,select,textarea") : null;
     if (interactive) return;
-    if (!state.hoverPointer) return;
-    const side = state.activeSide !== "none" ? state.activeSide : sideFromClientX(hero, event.clientX);
+
+    const x = typeof event.clientX === "number"
+      ? event.clientX
+      : hero.getBoundingClientRect().left + (hero.getBoundingClientRect().width / 2);
+    const side = sideFromClientX(hero, x);
+
+    if (!state.hoverPointer) {
+      if (side === "none") {
+        setSide("none");
+        return;
+      }
+
+      if (state.activeSide === side) {
+        navigateToSide(side, routes);
+        return;
+      }
+
+      setSide(side);
+      return;
+    }
+
     navigateToSide(side, routes);
   });
 

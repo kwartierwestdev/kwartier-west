@@ -3485,8 +3485,18 @@ input[disabled] {
   }
 
   .side-switch {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: flex-start;
+    gap: 0.36rem 0.52rem;
+    padding-top: 0.46rem;
+    padding-bottom: 0.48rem;
+  }
+
+  .side-switch__label,
+  .side-switch__link {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
   }
 
   .artist-card,
@@ -3627,9 +3637,6 @@ input[disabled] {
     -webkit-line-clamp: 3;
   }
 
-  .artist-hero__socials {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (prefers-contrast: more) {
