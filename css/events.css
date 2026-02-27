@@ -23,5 +23,29 @@ body.events-page {
 
 .filter-stack {
   border-left: 1px solid rgba(255, 255, 255, 0.22);
-  padding: 0.58rem 0 0.4rem 0.56rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0.64rem 0.22rem 0.48rem 0.62rem;
+  background:
+    linear-gradient(92deg, rgba(227, 13, 13, 0.1), rgba(227, 13, 13, 0) 58%),
+    transparent;
+}
+
+.hero-surface--events .filter-row {
+  flex-wrap: wrap;
+  row-gap: 0.38rem;
+}
+
+.hero-surface--events [data-visible-count],
+.hero-surface--events [data-count] {
+  font-family: "Space Mono", monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .filter-stack {
+    border-top: 0;
+    background: transparent;
+    padding: 0.48rem 0 0.34rem 0.58rem;
+  }
 }

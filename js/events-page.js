@@ -112,23 +112,70 @@ function listItem(eventItem, artistsData) {
   `;
 }
 
-function applyFilter({ side = "all", scope = "upcoming" } = {}) {
-  const items = document.querySelectorAll("[data-events-page] [data-side]");
-  let visible = 0;
+function filterEvents(events, { side = "all", scope = "upcoming" } = {}) {
+  return events.filter((eventItem) => {
+    const sideMatch = side === "all" || eventItem.sideKey === side;
+    const scopeKey = eventItem.__isPast ? "past" : "upcoming";
+    const scopeMatch = scope === "all" || scope === scopeKey;
+    return sideMatch && scopeMatch;
+  });
+}
 
-  for (const item of items) {
-    const sideMatch = side === "all" || item.getAttribute("data-side") === side;
-    const scopeMatch = scope === "all" || item.getAttribute("data-scope") === scope;
-    const show = sideMatch && scopeMatch;
-    item.hidden = !show;
-    item.setAttribute("aria-hidden", show ? "false" : "true");
-    if (show) visible += 1;
+function renderEventBlock(scopeKey, events, artistsData) {
+  if (!events.length) return "";
+
+  const title = scopeKey === "past" ? t("events.filter.past") : t("events.filter.upcoming");
+
+  return `
+    <section class="event-block event-block--${scopeKey}" data-block-scope="${scopeKey}">
+      <header class="event-block__head">
+        <h3>${escapeHTML(title)}</h3>
+        <span class="event-block__count">${escapeHTML(t("events.total", { count: events.length }))}</span>
+      </header>
+      <div class="event-list">
+        ${events.map((eventItem) => listItem(eventItem, artistsData)).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderEventsOverview(events, artistsData, { scope = "upcoming" } = {}) {
+  if (!events.length) {
+    return `<p class="muted">${t("events.none")}</p>`;
   }
 
-  const visibleNode = document.querySelector("[data-visible-count]");
-  if (visibleNode) {
-    visibleNode.textContent = t("events.visible", { count: visible });
+  const upcoming = events.filter((eventItem) => !eventItem.__isPast);
+  const past = events.filter((eventItem) => eventItem.__isPast);
+  const blocks = [];
+
+  if (scope !== "past") {
+    blocks.push(renderEventBlock("upcoming", upcoming, artistsData));
   }
+  if (scope !== "upcoming") {
+    blocks.push(renderEventBlock("past", past, artistsData));
+  }
+
+  const content = blocks.filter(Boolean).join("");
+  if (!content) {
+    return `<p class="muted">${t("events.none")}</p>`;
+  }
+
+  return `<div class="event-stream">${content}</div>`;
+}
+
+function syncFilterQuery({ side = "all", scope = "upcoming" } = {}) {
+  if (!window.history?.replaceState) return;
+
+  const params = new URLSearchParams(window.location.search || "");
+  if (side === "all") params.delete("side");
+  else params.set("side", side);
+
+  if (scope === "upcoming") params.delete("scope");
+  else params.set("scope", scope);
+
+  const query = params.toString();
+  const nextUrl = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash || ""}`;
+  window.history.replaceState(null, "", nextUrl);
 }
 
 function readInitialFilters() {
@@ -142,7 +189,11 @@ function readInitialFilters() {
   return { side, scope };
 }
 
-function setupFilterButtons({ initialSide = "all", initialScope = "upcoming" } = {}) {
+function setupFilterButtons({
+  initialSide = "all",
+  initialScope = "upcoming",
+  onChange = () => {}
+} = {}) {
   let side = initialSide;
   let scope = initialScope;
 
@@ -162,7 +213,7 @@ function setupFilterButtons({ initialSide = "all", initialScope = "upcoming" } =
       button.setAttribute("aria-pressed", active ? "true" : "false");
     });
 
-    applyFilter({ side, scope });
+    onChange({ side, scope });
   }
 
   sideButtons.forEach((button) => {
@@ -186,6 +237,7 @@ export async function mountEventsPage({ baseDepth = 0 } = {}) {
   const listRoot = document.querySelector("[data-events-page]");
   const featuredRoot = document.querySelector("[data-featured]");
   const totalNode = document.querySelector("[data-count]");
+  const visibleNode = document.querySelector("[data-visible-count]");
 
   if (!listRoot || !featuredRoot) return;
 
@@ -216,14 +268,26 @@ export async function mountEventsPage({ baseDepth = 0 } = {}) {
       return;
     }
 
-    const featured = upcoming[0] || ordered[0];
-    featuredRoot.innerHTML = featuredCard(featured, artistsData);
+    const renderByFilter = ({ side, scope }) => {
+      const visible = filterEvents(ordered, { side, scope });
+      if (visible.length) {
+        featuredRoot.innerHTML = featuredCard(visible[0], artistsData);
+      } else {
+        featuredRoot.innerHTML = `<p class="muted">${t("events.none")}</p>`;
+      }
+      listRoot.innerHTML = renderEventsOverview(visible, artistsData, { scope });
 
-    listRoot.innerHTML = `<div class="event-list">${ordered.map((eventItem) => listItem(eventItem, artistsData)).join("")}</div>`;
+      if (visibleNode) {
+        visibleNode.textContent = t("events.visible", { count: visible.length });
+      }
+
+      syncFilterQuery({ side, scope });
+    };
 
     setupFilterButtons({
       initialSide: initial.side,
-      initialScope: initial.scope
+      initialScope: initial.scope,
+      onChange: renderByFilter
     });
   } catch (error) {
     console.error(error);

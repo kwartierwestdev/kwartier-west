@@ -1638,6 +1638,48 @@ button.chip-link:hover {
   gap: 0.56rem;
 }
 
+.events-page .event-stream {
+  display: grid;
+  gap: 1rem;
+}
+
+.events-page .event-block {
+  display: grid;
+  gap: 0.62rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+  padding-left: 0.72rem;
+}
+
+.events-page .event-block + .event-block {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding-top: 0.66rem;
+}
+
+.events-page .event-block__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.64rem;
+}
+
+.events-page .event-block__head h3 {
+  font-size: clamp(1.08rem, 1.5vw, 1.32rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.events-page .event-block__count {
+  font-family: "Space Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d0d0d0;
+}
+
+.events-page .event-block--past {
+  opacity: 0.95;
+}
+
 .event-card,
 .feature-card {
   position: relative;
@@ -3040,8 +3082,8 @@ input[disabled] {
 
   .events-page .surface--events-overview [data-events-page] .event-list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.72rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.74rem;
   }
 
   .events-page .surface--events-overview [data-events-page] .event-card {

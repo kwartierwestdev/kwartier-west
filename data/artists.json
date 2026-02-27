@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-02-25T11:45:00Z",
+    "updatedAt":  "2026-02-27T13:22:00Z",
     "hiphop":  [
                    {
                        "slug":  "de-kweker",
@@ -71,6 +71,55 @@
                                  ],
                        "profileStyle":  "spotlight",
                        "signatureLine":  "Stem van Brugge, gebouwd voor impact in de hele zaal."
+                   },
+                   {
+                       "slug":  "thorre",
+                       "name":  "Thorre",
+                       "role":  "Rapper / Veteraan",
+                       "city":  "Zwevegem, BE",
+                       "lang":  "NL",
+                       "photo":  "/assets/img/artists/hiphop/thorre.png",
+                        "bio":  "Thorre (Roeland Horr\u00e9) is d\u00e9 West-Vlaamse rap-veteraan uit Zwevegem.",
+                        "headline":  "Rauwe West-Vlaamse hiphop recht van 't straat, zonder franjes.",
+                        "story":  "Met de allereerste Vlaamse Rap Award op zak en als drijvende kracht achter de hiphopformatie NTrek brengt hij pure lyrics in 't dialect op vette beats: direct, rauw en lokaal verankerd.",
+                        "live":  "Geen franjes op het podium: pure delivery, scherpe bars en een directe connectie met de zaal.",
+                       "focus":  [
+                                     "West-Vlaamse dialectbars",
+                                     "Rauw straatverhaal",
+                                     "NTrek-legacy en podiumervaring"
+                                 ],
+                       "tags":  [
+                                    "West-Vlaams",
+                                    "NTrek",
+                                    "Veteraan"
+                                ],
+                       "priority":  74,
+                       "collective":  "hiphop",
+                       "booking":  {
+                                       "available":  true,
+                                       "types":  [
+                                                     "solo",
+                                                     "multiple",
+                                                     "collective"
+                                                 ]
+                                   },
+                       "links":  [
+                                     {
+                                         "platform":  "facebook",
+                                         "label":  "Thorre",
+                                         "url":  "https://www.facebook.com/Thorre8560/"
+                                     },
+                                     {
+                                         "platform":  "soundcloud",
+                                         "label":  "thorre8560",
+                                         "url":  "https://soundcloud.com/thorre8560"
+                                     },
+                                     {
+                                         "platform":  "spotify",
+                                         "label":  "Thorre",
+                                         "url":  "https://open.spotify.com/artist/0umqiVi7wQcryg14XVu7AE"
+                                     }
+                                 ]
                    },
                    {
                        "slug":  "mc-tubbie",
