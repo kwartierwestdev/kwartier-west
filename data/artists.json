@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-02-27T16:55:00Z",
+    "updatedAt":  "2026-02-27T17:28:00Z",
     "hiphop":  [
                    {
                        "slug":  "de-kweker",
@@ -320,24 +320,24 @@
                   {
                       "slug":  "onschuldig",
                       "name":  "Onschuldig",
-                      "role":  "Labelhoofd / Producent",
+                      "role":  "Head Master of the Collective / Producer",
                       "city":  "Roeselare, BE",
                       "lang":  "EN",
                       "photo":  "/assets/img/artists/tekno/onschuldig.png",
-                      "bio":  "Labelhoofd en Tekno-architect met hardtekdruk en acidgedreven langvormsets.",
-                      "headline":  "Systeemdiscipline, acidgrit, gecontroleerde escalatie.",
-                      "story":  "Onschuldig bepaalt de technische ruggengraat van de Tekno-kant: machinale sequencing, strakke systeemkennis en compromisloze tempocontrole.",
-                      "live":  "Livesets starten met laagfrequente spanning en duwen naar snelle, chirurgische pieken. Transities blijven strak en systeemgericht.",
+                      "bio":  "Owner of the collective Kwartier West, onbegrensd soundsystem resident en WTK soundsystem resident. Digital & analog producer, making pure Acid, Tekno & Tribe.",
+                      "headline":  "Provides unique Tekno & Acid sound.",
+                      "story":  "Onschuldig bouwt de ruggengraat van de collectieve sound: rauw, puur en zonder grenzen. Vanuit resident posities in onbegrensd soundsystem en WTK soundsystem blijft de focus op druk, groove en authenticiteit.",
+                      "live":  "Discography: CD 303Day 2024 (303 Breakstreet). Livesets bewegen tussen pure acidlijnen, tekno-energie en tribe-momentum.",
                       "focus":  [
                                     "Hardtek-structuur",
                                     "Acid-opbouw",
                                     "Langdurige rave-opbouw"
                                 ],
                       "tags":  [
-                                   "Labelhoofd",
-                                   "Hardtek",
-                                   "Acid"
-                               ],
+                                    "Head Master",
+                                    "Tekno",
+                                    "Acid"
+                                ],
                       "lead":  true,
                       "priority":  100,
                       "collective":  "tekno",
