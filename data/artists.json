@@ -1,27 +1,27 @@
 {
-    "updatedAt":  "2026-02-27T13:22:00Z",
+    "updatedAt":  "2026-02-27T16:55:00Z",
     "hiphop":  [
                    {
                        "slug":  "de-kweker",
                        "name":  "De Kweker",
-                       "role":  "MC / Artiest",
-                       "city":  "Bruges, BE",
+                        "role":  "Rapper",
+                        "city":  "Brugge, BE",
                        "lang":  "NL",
                        "photo":  "/assets/img/artists/hiphop/de-kweker-kwartier.webp",
-                       "bio":  "Verhaalgedreven MC uit Brugge met directe podiumpresence en filmische pen.",
-                       "headline":  "Concrete verhalen, scherpe bars, zware stagecontrole.",
-                       "story":  "De Kweker beweegt tussen rauwe straatdetails en filmische kadering. Zijn schrijfwerk is gebouwd om live eerst te raken: heldere themas, harde cadans en hooks die blijven hangen in de zaal.",
-                       "live":  "Livesets bouwen op als een verhaallijn: spanning vooraan, druk in het midden en explosieve publieksinteractie in de eindsprint.",
+                        "bio":  "De Kweker is een rapper uit Brugge (8000). Hij maakt muziek vanuit wat hij zelf meemaakt en ziet.",
+                        "headline":  "Geen rol, geen show. Gewoon eerlijke bars uit z'n hoofd.",
+                        "story":  "Brugge zit in alles wat hij doet. Niet als toeristische postkaart, maar als plek waar hij rondloopt, nadenkt en schrijft. Hij brengt verhalen over twijfel, trots, frustratie, vriendschap en alles daartussen, in z'n eigen taal.",
+                        "live":  "Als onderdeel van Rugged & Raw en Kwartier West bouwt hij aan z'n eigen lijn: sterke hooks, eerlijke bars en geen overbodige zever. De Kweker rapt niet om interessant te klinken, maar omdat hij anders te veel in z'n hoofd blijft zitten.",
                        "focus":  [
-                                     "Verhalende bars met heldere themas",
-                                     "Festival- en clubsets klaar om te hosten",
-                                     "Impactvolle samenwerkingen en gastbijdragen"
+                                      "Verhalen uit Brugge in eigen taal",
+                                      "Sterke hooks en eerlijke bars",
+                                      "Maatschappelijke spiegel met scherpe knipoog"
+                                  ],
+                        "tags":  [
+                                     "Brugge 8000",
+                                     "Rauwe bars",
+                                     "NL"
                                  ],
-                       "tags":  [
-                                    "Live MC",
-                                    "Verhaalgedreven",
-                                    "NL"
-                                ],
                        "priority":  100,
                        "collective":  "hiphop",
                        "booking":  {
@@ -70,7 +70,7 @@
                                      }
                                  ],
                        "profileStyle":  "spotlight",
-                       "signatureLine":  "Stem van Brugge, gebouwd voor impact in de hele zaal."
+                        "signatureLine":  "Recht uit Brugge, zonder rol of show."
                    },
                    {
                        "slug":  "thorre",
@@ -79,15 +79,15 @@
                        "city":  "Zwevegem, BE",
                        "lang":  "NL",
                        "photo":  "/assets/img/artists/hiphop/thorre.png",
-                        "bio":  "Thorre (Roeland Horr\u00e9) is d\u00e9 West-Vlaamse rap-veteraan uit Zwevegem.",
-                        "headline":  "Rauwe West-Vlaamse hiphop recht van 't straat, zonder franjes.",
-                        "story":  "Met de allereerste Vlaamse Rap Award op zak en als drijvende kracht achter de hiphopformatie NTrek brengt hij pure lyrics in 't dialect op vette beats: direct, rauw en lokaal verankerd.",
-                        "live":  "Geen franjes op het podium: pure delivery, scherpe bars en een directe connectie met de zaal.",
-                       "focus":  [
-                                     "West-Vlaamse dialectbars",
-                                     "Rauw straatverhaal",
-                                     "NTrek-legacy en podiumervaring"
-                                 ],
+                         "bio":  "Sinds zijn zestiende schrijft Thorre teksten. Wat ooit simpele en vluchtige teksten waren, groeide na meer dan vijftien jaar uit tot diepzinnige, emotioneel gedreven verhalen.",
+                         "headline":  "Maatschappijkritische bars met relativering en humor, van euforie tot diepbedroefdheid.",
+                         "story":  "Hij houdt zichzelf en de wereld een spiegel voor via maatschappijkritische teksten met een relativerende, humoristische toets. Doorheen de jaren ontwikkelde hij een technische stijl gekenmerkt door multi-rijm, trouw aan de fundamenten van hiphop: bars.",
+                         "live":  "Thorre creÃ«ert het liefst concepttracks maar deinst niet terug voor een cypher of freestyle, met onder meer een finaleplek bij 'De Bestn Vant Westn' in 2024. Thorre rapt niet om gehoord te worden, maar omdat hij na jaren schrijven niet meer zonder kan.",
+                        "focus":  [
+                                      "Diepzinnige concepttracks",
+                                      "Technische multi-rijm bars",
+                                      "Cypher- en freestyle-energie"
+                                  ],
                        "tags":  [
                                     "West-Vlaams",
                                     "NTrek",
@@ -118,9 +118,14 @@
                                          "platform":  "spotify",
                                          "label":  "Thorre",
                                          "url":  "https://open.spotify.com/artist/0umqiVi7wQcryg14XVu7AE"
+                                     },
+                                     {
+                                         "platform":  "youtube",
+                                         "label":  "Thorre",
+                                         "url":  "https://www.youtube.com/channel/UCfWQnA8aHN498DUd8Q1i4qQ"
                                      }
                                  ]
-                   },
+                    },
                    {
                        "slug":  "mc-tubbie",
                        "name":  "MC Tubbie",
@@ -128,15 +133,15 @@
                        "city":  "West Flanders, BE",
                        "lang":  "NL",
                        "photo":  "/assets/img/artists/hiphop/mc-tubbie.jpg",
-                       "bio":  "Freestylegerichte rapper met wekelijkse output en hoge cypherenergie.",
-                       "headline":  "Snelle cadans, freestyle-reflex, afwerking voor het publiek.",
-                       "story":  "MC Tubbie bouwde zijn kant op rond consistentie: korte freestyles, snelle reacties en constante output die het publiek dicht bij het proces houdt.",
-                       "live":  "De opbouw is compact en direct: geen dode ruimte, snelle transities en zaalinteractie van eerste verse tot laatste drop.",
-                       "focus":  [
-                                     "Freestyle sessies",
-                                     "Cypher-momenten",
-                                     "Featureklare verses"
-                                 ],
+                        "bio":  "MC Tubbie doet wat hij voelt. Niet wat werkt. Niet wat verwacht wordt.",
+                        "headline":  "Geen hype, geen masker. Gewoon gevoel en rechtuit bars.",
+                        "story":  "Hij denkt veel: over mensen, over hoe alles draait en over waarom iedereen altijd iets probeert te zijn. Tubbie niet. Hij zegt wat hij ziet, soms zacht, soms hard, maar altijd rechtuit.",
+                        "live":  "Op een beat leeft hij anders: woorden komen zonder zoeken, zonder geschreven blad. Wat in de ruimte hangt pakt hij vast, en voor je het weet zit iedereen mee in zijn tempo.",
+                        "focus":  [
+                                      "Freestyle reflex op het moment",
+                                      "Tempo lezen en slim breken",
+                                      "Pure crowdconnectie zonder masker"
+                                  ],
                        "tags":  [
                                     "Freestyle",
                                     "Cypher",
@@ -438,10 +443,10 @@
                       "city":  "Belgium",
                       "lang":  "EN",
                       "photo":  "/assets/img/artists/tekno/IMG_20260225_111426_725.jpg",
-                      "bio":  "NORATN is een opkomende DJ en muziekproducer, gespecialiseerd in tek, acid en mental, met hoog-energetische beats en diepe hypnotische ritmes.",
-                      "headline":  "Opkomende tek-kracht met aciddruk en hypnotische groovecontrole.",
-                      "story":  "Bekend om krachtige sets en een uitgesproken undergroundsound, brengt NORATN een frisse blik in de tek-kant en houdt ze de vloer vast van eerste drop tot laatste cut.",
-                      "live":  "Waar ze ook speelt, haar sets blijven op momentum gefocust: hoge energie, diepe ritmische controle en grensverleggende selectie.",
+                      "bio":  "NORATN is een opkomende DJ en producer die zich beweegt tussen tek, acid en mental. Haar sound is energiek, diep en hypnotisch, met beats die blijven doorduwen.",
+                      "headline":  "Energieke tek- en aciddruk met een diepe, hypnotische onderstroom.",
+                      "story":  "Ze staat bekend om krachtige sets en een eigen sound binnen de underground. Waar ze ook speelt, houdt ze de groove strak en de crowd mee van begin tot einde.",
+                      "live":  "Als nieuwe naam in de scene bouwt NORATN verder aan haar stijl, met een duidelijke drive om grenzen te verleggen in haar muziek.",
                       "focus":  [
                                     "Tek- en aciddruk",
                                     "Mentale groove-sequencing",
@@ -467,10 +472,63 @@
                                         "label":  "noratn__",
                                         "url":  "https://linktr.ee/noratn__"
                                     }
-                                ]
-                  },
-                  {
-                      "slug":  "spoorloos",
+                                  ]
+                   },
+                   {
+                       "slug":  "alexer",
+                       "name":  "Alexer",
+                       "role":  "DJ / Producer",
+                       "city":  "Belgie, BE",
+                       "lang":  "EN",
+                       "photo":  "/assets/img/artists/tekno/alexer.png",
+                       "bio":  "Alexer bouwt melancholische tekno- en tribe-sets die tussen gevoel en beweging hangen.",
+                       "headline":  "Hypnotische grooves, warme melodieen en rauwe ritmes voor open airs en free parties.",
+                       "story":  "Geen overproductie en geen franjes: gewoon sound die blijft rollen. Met releases zoals Galleon Groove, Tribal Motion en Rodeo Rubel ontwikkelde Alexer een eigen stijl waarin dromerige lijnen samenvallen met stevige kicks en organische percussie.",
+                       "live":  "Muziek die persoonlijk aanvoelt, maar tegelijk gemaakt is om uren op te blijven dansen.",
+                       "focus":  [
+                                     "Melancholische tekno",
+                                     "Tribe-driven grooves",
+                                     "Open-air en free-party flow"
+                                 ],
+                       "tags":  [
+                                    "Melancholic",
+                                    "Tribe",
+                                    "Open air"
+                                ],
+                       "priority":  66,
+                       "collective":  "tekno",
+                       "booking":  {
+                                       "available":  true,
+                                       "types":  [
+                                                     "solo",
+                                                     "multiple"
+                                                 ]
+                                   },
+                       "links":  [
+                                     {
+                                         "platform":  "soundcloud",
+                                         "label":  "alexer_23",
+                                         "url":  "https://soundcloud.com/alexer_23"
+                                     },
+                                     {
+                                         "platform":  "instagram",
+                                         "label":  "@alexer__23",
+                                         "url":  "https://www.instagram.com/alexer__23/"
+                                     },
+                                     {
+                                         "platform":  "website",
+                                         "label":  "Bandcamp",
+                                         "url":  "https://alexer23.bandcamp.com"
+                                     },
+                                     {
+                                         "platform":  "facebook",
+                                         "label":  "Alexer",
+                                         "url":  "https://www.facebook.com/profile.php?id=61559690368958"
+                                     }
+                                 ]
+                   },
+                   {
+                       "slug":  "spoorloos",
                       "name":  "Spoorloos",
                       "role":  "DJ / Live-set",
                       "city":  "West Flanders, BE",
@@ -728,3 +786,4 @@
                   }
               ]
 }
+
