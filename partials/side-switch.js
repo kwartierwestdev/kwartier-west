@@ -9,12 +9,14 @@ export function renderSideSwitch(sideKey) {
   const other = sideKey === "tekno" ? "hiphop" : "tekno";
   const otherLabel = other === "tekno" ? t("nav.tekno") : t("nav.hiphop");
   const thisLabel = sideKey === "tekno" ? t("nav.tekno") : t("nav.hiphop");
+  const otherHref = `/pages/${other}/index.html`;
+  const bookingHref = `/pages/booking/index.html?side=${encodeURIComponent(sideKey)}`;
 
   mount.innerHTML = `
     <div class="side-switch" role="navigation" aria-label="${t("nav.sideSwitchAria")}">
       <span class="side-switch__label">${thisLabel}</span>
-      <a class="side-switch__link" href="../${other}/index.html">${otherLabel}</a>
-      <a class="side-switch__link" href="../booking/index.html?side=${sideKey}">${t("nav.bookingDesk")}</a>
+      <a class="side-switch__link" href="${otherHref}">${otherLabel}</a>
+      <a class="side-switch__link" href="${bookingHref}">${t("nav.bookingDesk")}</a>
     </div>
   `;
 }

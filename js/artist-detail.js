@@ -77,6 +77,15 @@ function clearArtistJsonLd() {
   document.querySelectorAll('script[data-artist-jsonld="true"]').forEach((node) => node.remove());
 }
 
+function bookingPath(sideKey, type, slug) {
+  const safeSide = ["tekno", "hiphop"].includes(sideKey) ? sideKey : "hiphop";
+  const safeType = normalizeSlug(type || "single") || "single";
+  const params = new URLSearchParams();
+  params.set("type", safeType);
+  if (slug) params.set("artists", normalizeSlug(slug));
+  return `/pages/${safeSide}/booking.html?${params.toString()}`;
+}
+
 function applyArtistSeo(artist, sideKey, slug, links = []) {
   const artistName = String(artist?.name || "").trim();
   const sideName = sideLabel(sideKey) || sideKey;
@@ -272,8 +281,8 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
           ${signatureLine ? `<p class="artist-hero__signature">${signatureLine}</p>` : ""}
 
           <div class="inline-actions artist-hero__actions">
-            <a class="chip-link" href="./booking.html?type=single&artists=${encodeURIComponent(resolvedSlug)}">${t("artist.bookSolo")}</a>
-            <a class="chip-link" href="./booking.html?type=multiple&artists=${encodeURIComponent(resolvedSlug)}">${t("artist.bookMultiple")}</a>
+            <a class="chip-link" href="${escapeHTML(bookingPath(currentSide, "single", resolvedSlug))}">${t("artist.bookSolo")}</a>
+            <a class="chip-link" href="${escapeHTML(bookingPath(currentSide, "multiple", resolvedSlug))}">${t("artist.bookMultiple")}</a>
           </div>
         </div>
       </section>
