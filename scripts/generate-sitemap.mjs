@@ -39,7 +39,11 @@ function normalizeDate(input) {
 
 function routeToFilePath(route) {
   if (route === "/") return path.join(rootDir, "index.html");
-  const plainRoute = route.split("?")[0];
+  const plainRoute = route.split("?")[0].replace(/\/+$/, "");
+  const artistMatch = plainRoute.match(/^\/pages\/(tekno|hiphop)\/artist\/[^/]+$/);
+  if (artistMatch) {
+    return path.join(rootDir, "pages", artistMatch[1], "artist.html");
+  }
   return path.join(rootDir, plainRoute.replace(/^\//, ""));
 }
 
@@ -55,15 +59,15 @@ async function getLastmod(route, fallbackDate) {
 function buildPriority(route) {
   if (route === "/") return "1.0";
   if (route.includes("/events/")) return "0.9";
+  if (route.includes("/artist/")) return "0.8";
   if (route.includes("/tekno/") || route.includes("/hiphop/")) return "0.8";
-  if (route.includes("/artist.html")) return "0.7";
   return "0.6";
 }
 
 function buildChangefreq(route) {
   if (route === "/") return "weekly";
   if (route.includes("/events/")) return "daily";
-  if (route.includes("/artist.html")) return "weekly";
+  if (route.includes("/artist/")) return "weekly";
   return "monthly";
 }
 
@@ -79,7 +83,7 @@ async function buildRoutes() {
     for (const artist of artists) {
       const slug = String(artist?.slug || "").trim().toLowerCase();
       if (!slug) continue;
-      routes.add(`/pages/${sideKey}/artist.html?slug=${encodeURIComponent(slug)}`);
+      routes.add(`/pages/${sideKey}/artist/${encodeURIComponent(slug)}`);
     }
   }
 

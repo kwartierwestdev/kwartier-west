@@ -62,6 +62,15 @@ export function sidePath(sideKey) {
   return "events";
 }
 
+export function artistPath(sideKey, slug = "") {
+  const side = sidePath(sideKey);
+  if (side === "events") return "/pages/events/index.html";
+
+  const normalized = normalizeSlug(slug);
+  if (!normalized) return `/pages/${side}/artist.html`;
+  return `/pages/${side}/artist/${encodeURIComponent(normalized)}`;
+}
+
 export function pluralize(count, singular, plural) {
   return count === 1 ? singular : plural;
 }

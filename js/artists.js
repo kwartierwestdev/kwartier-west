@@ -1,5 +1,5 @@
-﻿import { loadArtists, pickSideCollection } from "./core/content-api.js";
-import { asArray, escapeHTML, normalizeSlug } from "./core/format.js";
+import { loadArtists, pickSideCollection } from "./core/content-api.js";
+import { artistPath, asArray, escapeHTML, normalizeSlug } from "./core/format.js";
 import { t } from "./core/i18n.js";
 import { renderSocialRail } from "./core/social-links.js";
 
@@ -22,9 +22,10 @@ function renderTags(tags) {
   return `<div class="artist-card__tags">${safeTags.map((tag) => `<span class="tag-pill">${tag}</span>`).join("")}</div>`;
 }
 
-function artistCard(artist) {
-  const slug = encodeURIComponent(normalizeSlug(artist?.slug));
+function artistCard(artist, sideKey) {
   const slugValue = normalizeSlug(artist?.slug);
+  const slug = encodeURIComponent(slugValue);
+  const profileHref = escapeHTML(artistPath(sideKey, slugValue));
   const isLabelHead = slugValue === "onschuldig";
   const name = escapeHTML(artist?.name || t("artists.defaultName"));
   const role = escapeHTML(artist?.role || t("artists.defaultRole"));
@@ -40,7 +41,7 @@ function artistCard(artist) {
 
   return `
     <article class="artist-card${artist?.lead ? " is-lead" : ""}${isLabelHead ? " is-label-head" : ""}" data-artist="${escapeHTML(slugValue)}">
-      <a class="artist-card__hit" href="./artist.html?slug=${slug}" aria-label="${t("common.profile")} ${name}"></a>
+      <a class="artist-card__hit" href="${profileHref}" aria-label="${t("common.profile")} ${name}"></a>
 
       <div class="artist-card__media${photo ? "" : " is-empty"}">
         ${photo ? `<img src="${photo}" alt="${name}" loading="lazy">` : `<span>${t("common.noPhoto")}</span>`}
@@ -58,7 +59,7 @@ function artistCard(artist) {
         ${socials}
 
         <div class="inline-actions artist-card__actions">
-          <a class="chip-link" href="./artist.html?slug=${slug}">${t("artists.profile")}</a>
+          <a class="chip-link" href="${profileHref}">${t("artists.profile")}</a>
           <a class="chip-link" href="./booking.html?type=single&artists=${slug}">${t("artists.bookSolo")}</a>
         </div>
       </div>
@@ -81,9 +82,10 @@ export async function renderArtists(sideKey, { baseDepth = 0 } = {}) {
       return;
     }
 
-    mount.innerHTML = `<div class="artist-grid">${list.map((artist) => artistCard(artist)).join("")}</div>`;
+    mount.innerHTML = `<div class="artist-grid">${list.map((artist) => artistCard(artist, sideKey)).join("")}</div>`;
   } catch (error) {
     console.error(error);
     mount.innerHTML = `<p class="muted">${t("artists.error")}</p>`;
   }
 }
+

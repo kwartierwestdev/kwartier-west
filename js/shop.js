@@ -1,5 +1,5 @@
-﻿import { findArtistBySlug, loadArtists, loadShop } from "./core/content-api.js";
-import { asArray, escapeHTML, normalizeSlug, sideLabel } from "./core/format.js";
+import { findArtistBySlug, loadArtists, loadShop } from "./core/content-api.js";
+import { artistPath, asArray, escapeHTML, normalizeSlug, sideLabel } from "./core/format.js";
 import { t } from "./core/i18n.js";
 import { renderSocialRail } from "./core/social-links.js";
 
@@ -59,7 +59,7 @@ function resolveOwner(item, artistsData) {
 
   return {
     label: found.artist.name,
-    href: `../${found.sideKey}/artist.html?slug=${encodeURIComponent(found.artist.slug)}`,
+    href: artistPath(found.sideKey, found.artist.slug),
     links: found.artist.links || []
   };
 }
@@ -227,3 +227,4 @@ export async function mountShopPage({ baseDepth = 0 } = {}) {
     listRoot.innerHTML = `<p class="muted">${t("shop.error")}</p>`;
   }
 }
+

@@ -5,7 +5,7 @@ import {
   normalizeLineup,
   splitEventsByDate
 } from "./core/content-api.js";
-import { escapeHTML, formatDateTime, sideLabel, sideShortLabel } from "./core/format.js";
+import { artistPath, escapeHTML, formatDateTime, sideLabel, sideShortLabel } from "./core/format.js";
 import { t } from "./core/i18n.js";
 
 function localizedEventStatus(eventItem) {
@@ -26,10 +26,10 @@ function listLineup(eventItem, artistsData) {
 
   return lineup
     .map((entry) => {
-      const path = `../${entry.sideKey}/artist.html?slug=${encodeURIComponent(entry.slug || "")}`;
+      const path = artistPath(entry.sideKey, entry.slug || "");
       const label = escapeHTML(entry.name || t("artists.defaultName"));
       if (!entry.slug) return `<span>${label}</span>`;
-      return `<a class="inline-link" href="${path}">${label}</a>`;
+      return `<a class="inline-link" href="${escapeHTML(path)}">${label}</a>`;
     })
     .join('<span class="dot-sep"></span>');
 }

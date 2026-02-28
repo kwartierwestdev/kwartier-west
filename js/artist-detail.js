@@ -1,5 +1,5 @@
 import { findArtistBySlug, loadArtists } from "./core/content-api.js";
-import { asArray, escapeHTML, normalizeSlug, sideLabel } from "./core/format.js";
+import { artistPath, asArray, escapeHTML, normalizeSlug, sideLabel } from "./core/format.js";
 import { t } from "./core/i18n.js";
 import { normalizeSocialLinks, renderSocialRail } from "./core/social-links.js?v=20260226c";
 
@@ -9,7 +9,16 @@ function getSlug() {
   if (querySlug) return querySlug;
 
   const hashSlug = normalizeSlug(String(window.location.hash || "").replace(/^#slug=/i, ""));
-  return hashSlug;
+  if (hashSlug) return hashSlug;
+
+  const match = window.location.pathname.match(/\/pages\/(tekno|hiphop)\/artist\/([^/?#]+)/i);
+  if (!match?.[2]) return "";
+
+  try {
+    return normalizeSlug(decodeURIComponent(match[2]));
+  } catch {
+    return normalizeSlug(match[2]);
+  }
 }
 
 function absoluteUrl(pathOrUrl) {
@@ -55,7 +64,7 @@ function applyArtistSeo(artist, sideKey, slug, links = []) {
   const summary = String(artist?.headline || artist?.bio || artist?.story || "").trim();
   const safeDescription = summary || `${artistName} binnen ${sideName} van Kwartier West.`;
   const baseUrl = window.location.origin;
-  const canonicalUrl = absoluteUrl(`/pages/${sideKey}/artist.html?slug=${encodeURIComponent(slug)}`);
+  const canonicalUrl = absoluteUrl(artistPath(sideKey, slug));
   const photoUrl = absoluteUrl(artist?.photo);
   const title = artistName ? `${artistName} | Kwartier West` : "Kwartier West - Artiest";
 
@@ -140,9 +149,11 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
       const fallbackSlug = normalizeSlug(fallback?.slug || "");
       if (fallbackSlug) {
         resolvedSlug = fallbackSlug;
-        const nextUrl = new URL(window.location.href);
-        nextUrl.searchParams.set("slug", fallbackSlug);
-        window.history.replaceState({}, "", nextUrl.toString());
+        const fallbackSide = ["tekno", "hiphop"].includes(sideKey)
+          ? sideKey
+          : normalizeSlug(fallback?.collective || "hiphop");
+        const nextUrl = artistPath(fallbackSide, fallbackSlug);
+        window.history.replaceState({}, "", nextUrl);
       }
     }
 
@@ -178,7 +189,7 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
           <h2>${t("artist.wrongSideTitle")}</h2>
           <p class="muted">${wrongSideBodySafe}</p>
           <div class="inline-actions">
-            <a class="chip-link" href="../${escapeHTML(currentSide)}/artist.html?slug=${encodeURIComponent(resolvedSlug)}">${t("artist.openCorrect")}</a>
+            <a class="chip-link" href="${escapeHTML(artistPath(currentSide, resolvedSlug))}">${t("artist.openCorrect")}</a>
           </div>
         </div>
       `;

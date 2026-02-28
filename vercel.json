@@ -1,0 +1,31 @@
+{
+  "rewrites": [
+    {
+      "source": "/pages/hiphop/artist/:slug",
+      "destination": "/pages/hiphop/artist.html?slug=:slug"
+    },
+    {
+      "source": "/pages/hiphop/artist/:slug/",
+      "destination": "/pages/hiphop/artist.html?slug=:slug"
+    },
+    {
+      "source": "/pages/tekno/artist/:slug",
+      "destination": "/pages/tekno/artist.html?slug=:slug"
+    },
+    {
+      "source": "/pages/tekno/artist/:slug/",
+      "destination": "/pages/tekno/artist.html?slug=:slug"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        }
+      ]
+    }
+  ]
+}

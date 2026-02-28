@@ -1,5 +1,5 @@
 import { loadArtists, loadEvents, normalizeLineup, pickSideCollection, splitEventsByDate } from "./core/content-api.js";
-import { escapeHTML, formatDateTime, sideShortLabel } from "./core/format.js";
+import { artistPath, escapeHTML, formatDateTime, sideShortLabel } from "./core/format.js";
 import { t } from "./core/i18n.js";
 
 function localizedEventStatus(eventItem) {
@@ -74,7 +74,7 @@ function lineupHTML(eventItem, artistsData, sideKey) {
     const name = escapeHTML(entry?.name || t("artists.defaultName"));
     if (!slug) return `<span>${name}</span>`;
 
-    return `<a class="inline-link" href="./artist.html?slug=${encodeURIComponent(slug)}">${name}</a>`;
+    return `<a class="inline-link" href="${escapeHTML(artistPath(entry?.sideKey || sideKey, slug))}">${name}</a>`;
   });
 
   return `<span class="muted">${t("events.lineup")}:</span> ${items.join('<span class="dot-sep"></span>')}`;

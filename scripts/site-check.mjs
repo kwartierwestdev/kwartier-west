@@ -45,8 +45,15 @@ function resolveRef(file, ref) {
   return path.resolve(path.dirname(file), clean);
 }
 
+function isKnownVirtualRoute(ref) {
+  const clean = normalizeCandidate(String(ref || "").trim());
+  if (!clean) return false;
+  return /^\/pages\/(?:tekno|hiphop)\/artist\/[^/?#]+\/?$/i.test(clean);
+}
+
 function assertFileExists(file, ref, label) {
   if (isExternal(ref)) return;
+  if (isKnownVirtualRoute(ref)) return;
   const resolved = resolveRef(file, ref);
   if (!resolved) return;
 
