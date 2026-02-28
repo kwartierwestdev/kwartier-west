@@ -5,7 +5,108 @@ import { normalizeSocialLinks, renderSocialRail } from "./core/social-links.js?v
 
 function getSlug() {
   const params = new URLSearchParams(window.location.search);
-  return normalizeSlug(params.get("slug") || "");
+  const querySlug = normalizeSlug(params.get("slug") || "");
+  if (querySlug) return querySlug;
+
+  const hashSlug = normalizeSlug(String(window.location.hash || "").replace(/^#slug=/i, ""));
+  return hashSlug;
+}
+
+function absoluteUrl(pathOrUrl) {
+  const value = String(pathOrUrl || "").trim();
+  if (!value) return "";
+  try {
+    return new URL(value, window.location.origin).toString();
+  } catch {
+    return "";
+  }
+}
+
+function setMetaByName(name, content) {
+  if (!name || !content) return;
+  const node = document.querySelector(`meta[name="${name}"]`);
+  if (node) node.setAttribute("content", content);
+}
+
+function setMetaByProperty(property, content) {
+  if (!property || !content) return;
+  const node = document.querySelector(`meta[property="${property}"]`);
+  if (node) node.setAttribute("content", content);
+}
+
+function setCanonical(url) {
+  if (!url) return;
+  let node = document.querySelector('link[rel="canonical"]');
+  if (!node) {
+    node = document.createElement("link");
+    node.setAttribute("rel", "canonical");
+    document.head.appendChild(node);
+  }
+  node.setAttribute("href", url);
+}
+
+function clearArtistJsonLd() {
+  document.querySelectorAll('script[data-artist-jsonld="true"]').forEach((node) => node.remove());
+}
+
+function applyArtistSeo(artist, sideKey, slug, links = []) {
+  const artistName = String(artist?.name || "").trim();
+  const sideName = sideLabel(sideKey) || sideKey;
+  const summary = String(artist?.headline || artist?.bio || artist?.story || "").trim();
+  const safeDescription = summary || `${artistName} binnen ${sideName} van Kwartier West.`;
+  const baseUrl = window.location.origin;
+  const canonicalUrl = absoluteUrl(`/pages/${sideKey}/artist.html?slug=${encodeURIComponent(slug)}`);
+  const photoUrl = absoluteUrl(artist?.photo);
+  const title = artistName ? `${artistName} | Kwartier West` : "Kwartier West - Artiest";
+
+  if (title) {
+    document.title = title;
+    setMetaByProperty("og:title", title);
+    setMetaByName("twitter:title", title);
+  }
+
+  if (safeDescription) {
+    setMetaByName("description", safeDescription);
+    setMetaByProperty("og:description", safeDescription);
+    setMetaByName("twitter:description", safeDescription);
+  }
+
+  if (canonicalUrl) {
+    setCanonical(canonicalUrl);
+    setMetaByProperty("og:url", canonicalUrl);
+  }
+
+  if (photoUrl) {
+    setMetaByProperty("og:image", photoUrl);
+    setMetaByProperty("og:image:secure_url", photoUrl);
+    setMetaByName("twitter:image", photoUrl);
+  }
+
+  clearArtistJsonLd();
+  if (!artistName || !canonicalUrl) return;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "MusicGroup",
+    "@id": `${canonicalUrl}#artist`,
+    name: artistName,
+    url: canonicalUrl,
+    description: safeDescription,
+    genre: [String(sideName || "").trim()].filter(Boolean),
+    image: photoUrl || undefined,
+    sameAs: links.map((entry) => String(entry?.url || "").trim()).filter(Boolean),
+    memberOf: {
+      "@type": "Organization",
+      name: "Kwartier West",
+      url: `${baseUrl}/`
+    }
+  };
+
+  const script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.dataset.artistJsonld = "true";
+  script.textContent = JSON.stringify(jsonLd);
+  document.head.appendChild(script);
 }
 
 export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
@@ -19,18 +120,39 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
     if (heroLead && lead) heroLead.textContent = lead;
   }
 
-  const slug = getSlug();
-  if (!slug) {
-    root.innerHTML = `<p class="muted">${t("artist.notSelected")}</p>`;
-    setHero(t("artists.profile"), t("artist.notSelected"));
-    return;
-  }
-
   root.innerHTML = `<p class="muted">${t("artist.loading")}</p>`;
 
   try {
     const artistsData = await loadArtists({ baseDepth });
-    const found = findArtistBySlug(artistsData, slug);
+    const requestedSlug = getSlug();
+    let resolvedSlug = requestedSlug;
+
+    if (!resolvedSlug) {
+      const preferredSide = asArray(artistsData?.[sideKey]);
+      const pool = preferredSide.length
+        ? preferredSide
+        : [...asArray(artistsData?.hiphop), ...asArray(artistsData?.tekno)];
+
+      const fallback = pool
+        .slice()
+        .sort((a, b) => Number(b?.priority || 0) - Number(a?.priority || 0))[0];
+
+      const fallbackSlug = normalizeSlug(fallback?.slug || "");
+      if (fallbackSlug) {
+        resolvedSlug = fallbackSlug;
+        const nextUrl = new URL(window.location.href);
+        nextUrl.searchParams.set("slug", fallbackSlug);
+        window.history.replaceState({}, "", nextUrl.toString());
+      }
+    }
+
+    if (!resolvedSlug) {
+      root.innerHTML = `<p class="muted">${t("artist.notSelected")}</p>`;
+      setHero(t("artists.profile"), t("artist.notSelected"));
+      return;
+    }
+
+    const found = findArtistBySlug(artistsData, resolvedSlug);
 
     if (!found) {
       root.innerHTML = `<p class="muted">${t("artist.notFound")}</p>`;
@@ -48,6 +170,7 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
         name: escapeHTML(found.artist.name),
         side: escapeHTML(sideLabel(currentSide))
       });
+      applyArtistSeo(found.artist, currentSide, resolvedSlug, normalizeSocialLinks(found.artist.links));
       setHero(t("artists.profile"), wrongSideBody);
 
       root.innerHTML = `
@@ -55,7 +178,7 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
           <h2>${t("artist.wrongSideTitle")}</h2>
           <p class="muted">${wrongSideBodySafe}</p>
           <div class="inline-actions">
-            <a class="chip-link" href="../${escapeHTML(currentSide)}/artist.html?slug=${encodeURIComponent(slug)}">${t("artist.openCorrect")}</a>
+            <a class="chip-link" href="../${escapeHTML(currentSide)}/artist.html?slug=${encodeURIComponent(resolvedSlug)}">${t("artist.openCorrect")}</a>
           </div>
         </div>
       `;
@@ -86,6 +209,7 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
       limit: 9,
       className: "artist-hero__socials"
     });
+    applyArtistSeo(artist, currentSide, resolvedSlug, links);
 
     setHero(
       artist.name || t("artists.profile"),
@@ -114,8 +238,8 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
           ${signatureLine ? `<p class="artist-hero__signature">${signatureLine}</p>` : ""}
 
           <div class="inline-actions artist-hero__actions">
-            <a class="chip-link" href="./booking.html?type=single&artists=${encodeURIComponent(slug)}">${t("artist.bookSolo")}</a>
-            <a class="chip-link" href="./booking.html?type=multiple&artists=${encodeURIComponent(slug)}">${t("artist.bookMultiple")}</a>
+            <a class="chip-link" href="./booking.html?type=single&artists=${encodeURIComponent(resolvedSlug)}">${t("artist.bookSolo")}</a>
+            <a class="chip-link" href="./booking.html?type=multiple&artists=${encodeURIComponent(resolvedSlug)}">${t("artist.bookMultiple")}</a>
           </div>
         </div>
       </section>

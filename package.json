@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "npx --yes http-server -c-1 -p 5173 .",
     "validate": "node data/validate.mjs",
+    "sitemap": "node scripts/generate-sitemap.mjs",
     "site-check": "node scripts/site-check.mjs",
     "check": "npm run validate && npm run site-check"
   }
