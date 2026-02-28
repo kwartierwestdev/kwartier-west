@@ -80,7 +80,7 @@ function renderItem(item, artistsData) {
   return `
     <article class="shop-item" data-filter-owner="${escapeHTML(item.ownerType || "artists")}" data-filter-side="${escapeHTML(item.side || "global")}" data-filter-status="${escapeHTML(item.status || "coming_soon")}">
       <div class="shop-item__media${image ? "" : " is-empty"}">
-        ${image ? `<img src="${image}" alt="${escapeHTML(item.title || "Merch item")}" loading="lazy">` : `<span>${escapeHTML(t("common.noPhoto"))}</span>`}
+        ${image ? `<img src="${image}" alt="${escapeHTML(item.title || "Merch artikel")}" loading="lazy">` : `<span>${escapeHTML(t("common.noPhoto"))}</span>`}
       </div>
 
       <div class="shop-item__body">
@@ -89,7 +89,7 @@ function renderItem(item, artistsData) {
           <span class="shop-item__price">${price ? `EUR ${price.toFixed(2)}` : t("shop.price.tba")}</span>
         </div>
 
-        <h3 class="shop-item__title">${escapeHTML(item.title || "Untitled")}</h3>
+        <h3 class="shop-item__title">${escapeHTML(item.title || "Zonder titel")}</h3>
 
         <p class="shop-item__meta">
           ${owner.href ? `<a class="inline-link" href="${escapeHTML(owner.href)}">${escapeHTML(owner.label)}</a>` : escapeHTML(owner.label)}
