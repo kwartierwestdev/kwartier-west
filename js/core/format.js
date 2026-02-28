@@ -62,13 +62,28 @@ export function sidePath(sideKey) {
   return "events";
 }
 
+function isLocalDevEnvironment() {
+  if (typeof window === "undefined") return false;
+  const host = String(window.location.hostname || "").toLowerCase();
+  if (window.location.protocol === "file:") return true;
+  return host === "localhost" || host === "127.0.0.1" || host === "0.0.0.0";
+}
+
 export function artistPath(sideKey, slug = "") {
   const side = sidePath(sideKey);
   if (side === "events") return "/pages/events/index.html";
 
   const normalized = normalizeSlug(slug);
   if (!normalized) return `/pages/${side}/artist.html`;
-  return `/pages/${side}/artist/${encodeURIComponent(normalized)}`;
+  const encoded = encodeURIComponent(normalized);
+
+  // Local static servers (bv. VS Code Live Server) hebben geen rewrite rules.
+  // Gebruik daar query-urls zodat links lokaal altijd werken.
+  if (isLocalDevEnvironment()) {
+    return `/pages/${side}/artist.html?slug=${encoded}`;
+  }
+
+  return `/pages/${side}/artist/${encoded}`;
 }
 
 export function pluralize(count, singular, plural) {
