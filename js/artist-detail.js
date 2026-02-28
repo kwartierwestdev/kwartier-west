@@ -21,6 +21,25 @@ function getSlug() {
   }
 }
 
+function redirectLegacyArtistUrl(sideKey) {
+  const pathname = String(window.location.pathname || "");
+  if (!/\/pages\/(?:tekno|hiphop)\/artist\.html$/i.test(pathname)) return false;
+
+  const params = new URLSearchParams(window.location.search);
+  const querySlug = normalizeSlug(params.get("slug") || "");
+  const hashSlug = normalizeSlug(String(window.location.hash || "").replace(/^#slug=/i, ""));
+  const slug = querySlug || hashSlug;
+  if (!slug) return false;
+
+  const safeSide = ["tekno", "hiphop"].includes(sideKey) ? sideKey : "hiphop";
+  const destination = artistPath(safeSide, slug);
+  const current = `${pathname}${window.location.search || ""}${window.location.hash || ""}`;
+
+  if (!destination || current === destination) return false;
+  window.location.replace(destination);
+  return true;
+}
+
 function absoluteUrl(pathOrUrl) {
   const value = String(pathOrUrl || "").trim();
   if (!value) return "";
@@ -123,6 +142,10 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
   const heroTitle = document.querySelector("[data-artist-page-title]");
   const heroLead = document.querySelector("[data-artist-page-lead]");
   if (!root) return;
+
+  if (redirectLegacyArtistUrl(sideKey)) {
+    return;
+  }
 
   function setHero(title = "", lead = "") {
     if (heroTitle && title) heroTitle.textContent = title;
