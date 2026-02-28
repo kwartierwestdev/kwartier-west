@@ -1,7 +1,18 @@
-import { asArray, normalizeSlug, parseISODate } from "./format.js";
+import { asArray, decodeHTMLEntities, normalizeSlug, parseISODate } from "./format.js";
 import { fetchJSONWithTimeout, resolveEndpoint } from "./integration-client.js";
 
 const DATA_CACHE = new Map();
+
+function decodeEntitiesDeep(value) {
+  if (typeof value === "string") return decodeHTMLEntities(value);
+  if (Array.isArray(value)) return value.map((item) => decodeEntitiesDeep(item));
+  if (value && typeof value === "object") {
+    const out = {};
+    for (const [key, nested] of Object.entries(value)) out[key] = decodeEntitiesDeep(nested);
+    return out;
+  }
+  return value;
+}
 
 function buildCandidates(fileName, baseDepth = 0) {
   const cleaned = String(fileName || "").replace(/^\/+/, "");
@@ -40,7 +51,8 @@ export async function loadDataset(fileName, { baseDepth = 0, revalidate = false 
     return DATA_CACHE.get(key);
   }
 
-  const data = await fetchJSON(buildCandidates(fileName, baseDepth));
+  const rawData = await fetchJSON(buildCandidates(fileName, baseDepth));
+  const data = decodeEntitiesDeep(rawData);
   if (!revalidate) DATA_CACHE.set(key, data);
   return data;
 }
@@ -68,10 +80,11 @@ export async function loadEvents(options = {}) {
 
   if (syncConfig.enabled && syncConfig.endpoint) {
     try {
-      return await fetchRemoteDataset(syncConfig.endpoint, {
+      const remoteData = await fetchRemoteDataset(syncConfig.endpoint, {
         baseDepth,
         timeoutMs: Number(syncConfig.timeoutMs || 9000)
       });
+      return decodeEntitiesDeep(remoteData);
     } catch (error) {
       console.warn("Remote event sync unavailable, using local events.json", error);
     }
@@ -94,10 +107,11 @@ export async function loadShop(options = {}) {
 
   if (shopConfig.enabled && shopConfig.endpoint) {
     try {
-      return await fetchRemoteDataset(shopConfig.endpoint, {
+      const remoteData = await fetchRemoteDataset(shopConfig.endpoint, {
         baseDepth,
         timeoutMs: Number(shopConfig.timeoutMs || 9000)
       });
+      return decodeEntitiesDeep(remoteData);
     } catch (error) {
       console.warn("Remote shop API unavailable, using local shop.json", error);
     }

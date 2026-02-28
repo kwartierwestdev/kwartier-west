@@ -1,6 +1,17 @@
 import { getCurrentLocale, t } from "./i18n.js";
 
 const DATE_CACHE = new Map();
+const HTML_ENTITY_MAP = Object.freeze({
+  amp: "&",
+  lt: "<",
+  gt: ">",
+  quot: '"',
+  apos: "'",
+  nbsp: " ",
+  copy: "\u00A9",
+  reg: "\u00AE",
+  trade: "\u2122"
+});
 
 function getDateFormatter(locale = "nl-BE", options = {}) {
   const key = `${locale}|${JSON.stringify(options)}`;
@@ -10,8 +21,47 @@ function getDateFormatter(locale = "nl-BE", options = {}) {
   return DATE_CACHE.get(key);
 }
 
+export function decodeHTMLEntities(value = "") {
+  let output = String(value ?? "");
+  const MAX_PASSES = 2;
+
+  for (let pass = 0; pass < MAX_PASSES; pass += 1) {
+    const decoded = output.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (match, token) => {
+      const normalized = String(token || "").toLowerCase();
+      if (!normalized) return match;
+
+      if (normalized.startsWith("#x")) {
+        const codePoint = Number.parseInt(normalized.slice(2), 16);
+        if (!Number.isFinite(codePoint) || codePoint < 0 || codePoint > 0x10ffff) return match;
+        try {
+          return String.fromCodePoint(codePoint);
+        } catch {
+          return match;
+        }
+      }
+
+      if (normalized.startsWith("#")) {
+        const codePoint = Number.parseInt(normalized.slice(1), 10);
+        if (!Number.isFinite(codePoint) || codePoint < 0 || codePoint > 0x10ffff) return match;
+        try {
+          return String.fromCodePoint(codePoint);
+        } catch {
+          return match;
+        }
+      }
+
+      return HTML_ENTITY_MAP[normalized] ?? match;
+    });
+
+    if (decoded === output) break;
+    output = decoded;
+  }
+
+  return output;
+}
+
 export function escapeHTML(value = "") {
-  return String(value)
+  return decodeHTMLEntities(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
