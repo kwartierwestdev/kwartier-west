@@ -31,8 +31,16 @@ Production-grade frontend for Kwartier West.
 ## Commands
 - `npm run dev`
 - `npm run validate`
+- `npm run lint`
 - `npm run site-check`
 - `npm run check`
+- `npm run prepush`
+
+## CI quality gate
+- GitHub Actions runs `npm ci` and `npm run check` on every push and pull request targeting `main`.
+
+## Artist profile content contract
+- See [`docs/artist-content-contract.md`](docs/artist-content-contract.md) for stable rules on `headline`, `story`, and `bio`.
 
 ## Internationalization
 - Base language: English.

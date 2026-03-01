@@ -201,9 +201,11 @@ const EN = {
   "artist.section.live": "Live direction",
   "artist.section.focus": "Focus lanes",
   "artist.section.summary": "Snapshot",
-  "artist.section.bio": "Bio",
+  "artist.section.bio": "Biografie",
   "artist.section.channels": "Channels",
   "artist.collectiveSuffix": "collective",
+  "artist.bio.expand": "Read full bio",
+  "artist.bio.collapse": "Show less",
   "artist.focusEmpty": "No focus lanes published yet.",
   "artist.linksEmpty": "No public channels published yet.",
 
@@ -570,6 +572,8 @@ const NL = {
   "artist.section.bio": "Bio",
   "artist.section.channels": "Kanalen",
   "artist.collectiveSuffix": "collectief",
+  "artist.bio.expand": "Lees volledige bio",
+  "artist.bio.collapse": "Toon minder",
   "artist.focusEmpty": "Nog geen focuspunten gepubliceerd.",
   "artist.linksEmpty": "Nog geen kanalen gepubliceerd.",
 

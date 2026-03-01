@@ -6,8 +6,10 @@
     "dev": "npx --yes http-server -c-1 -p 5173 .",
     "validate": "node data/validate.mjs",
     "i18n-check": "node scripts/i18n-check.mjs",
+    "lint": "npm run i18n-check",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "site-check": "node scripts/site-check.mjs",
-    "check": "npm run validate && npm run i18n-check && npm run site-check"
+    "check": "npm run validate && npm run lint && npm run site-check",
+    "prepush": "npm run check"
   }
 }

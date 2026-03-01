@@ -271,6 +271,7 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
     const storyRaw = String(artist?.story || "").trim();
     const summary = escapeHTML(summaryRaw);
     const hasBioStory = Boolean(storyRaw) && normalizeCopy(storyRaw) !== normalizeCopy(summaryRaw);
+    const bioIsLong = hasBioStory && normalizeCopy(storyRaw).length > 320;
     const bioParagraphs = hasBioStory
       ? splitStoryParagraphs(storyRaw).map((paragraph) => `<p>${escapeHTML(paragraph)}</p>`).join("")
       : "";
@@ -297,9 +298,17 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
 
     root.innerHTML = `
       <section class="artist-hero${isSpotlightProfile ? " artist-hero--spotlight" : ""}" data-artist="${escapeHTML(artistSlug)}">
-        <div class="artist-hero__media${photo ? "" : " is-empty"}">
-          ${photo ? `<img src="${photo}" alt="${name}" loading="eager">` : `<span>${t("common.noPhoto")}</span>`}
-        </div>
+        <aside class="artist-hero__rail">
+          <div class="artist-hero__media${photo ? "" : " is-empty"}">
+            ${photo ? `<img src="${photo}" alt="${name}" loading="eager">` : `<span>${t("common.noPhoto")}</span>`}
+          </div>
+          ${tags ? `<div class="artist-hero__tags">${tags}</div>` : ""}
+          <div class="artist-hero__connect">
+            <p class="eyebrow">${t("artist.section.channels")}</p>
+            ${socialRail || `<p class="muted">${t("artist.linksEmpty")}</p>`}
+          </div>
+          ${signatureLine ? `<p class="artist-hero__signature">${signatureLine}</p>` : ""}
+        </aside>
 
         <div class="artist-hero__body">
           <p class="eyebrow">${escapeHTML(sideLabel(currentSide))} ${escapeHTML(t("artist.collectiveSuffix"))}</p>
@@ -314,17 +323,10 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
           ${bioParagraphs ? `
             <section class="artist-hero__copy artist-hero__copy--bio">
               <p class="eyebrow artist-hero__copy-label">${t("artist.section.bio")}</p>
-              <div class="artist-hero__bio">${bioParagraphs}</div>
+              <div class="artist-hero__bio${bioIsLong ? " is-collapsed" : ""}" data-artist-bio>${bioParagraphs}</div>
+              ${bioIsLong ? `<button type="button" class="chip-link artist-hero__bio-toggle" data-artist-bio-toggle aria-expanded="false">${t("artist.bio.expand")}</button>` : ""}
             </section>
           ` : ""}
-          ${tags ? `<div class="artist-hero__tags">${tags}</div>` : ""}
-
-          <div class="artist-hero__connect">
-            <p class="eyebrow">${t("artist.section.channels")}</p>
-            ${socialRail || `<p class="muted">${t("artist.linksEmpty")}</p>`}
-          </div>
-
-          ${signatureLine ? `<p class="artist-hero__signature">${signatureLine}</p>` : ""}
 
           <div class="inline-actions artist-hero__actions">
             <a class="chip-link" href="${escapeHTML(bookingPath(currentSide, "single", resolvedSlug))}">${t("artist.bookSolo")}</a>
@@ -333,6 +335,16 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
         </div>
       </section>
     `;
+
+    const bioNode = root.querySelector("[data-artist-bio]");
+    const bioToggle = root.querySelector("[data-artist-bio-toggle]");
+    if (bioNode && bioToggle) {
+      bioToggle.addEventListener("click", () => {
+        const isCollapsed = bioNode.classList.toggle("is-collapsed");
+        bioToggle.setAttribute("aria-expanded", isCollapsed ? "false" : "true");
+        bioToggle.textContent = isCollapsed ? t("artist.bio.expand") : t("artist.bio.collapse");
+      });
+    }
   } catch (error) {
     console.error(error);
     root.innerHTML = `<p class="muted">${t("events.error")}</p>`;

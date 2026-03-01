@@ -2247,6 +2247,12 @@ button.chip-link:hover {
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3), 0 0 18px rgba(227, 13, 13, 0.1);
 }
 
+.artist-hero__rail {
+  display: grid;
+  gap: 0.56rem;
+  align-content: start;
+}
+
 .artist-hero__media {
   position: relative;
   border: 1px solid rgba(255, 255, 255, 0.24);
@@ -2339,20 +2345,44 @@ button.chip-link:hover {
 }
 
 .artist-hero__bio {
-  display: grid;
-  gap: 0.62rem;
+  display: block;
   color: #d5d5d5;
   font-size: 0.91rem;
+  position: relative;
 }
 
 .artist-hero__bio p {
   margin: 0;
 }
 
+.artist-hero__bio p + p {
+  margin-top: 0.62rem;
+}
+
+.artist-hero__bio.is-collapsed {
+  max-height: 9.8rem;
+  overflow: hidden;
+}
+
+.artist-hero__bio.is-collapsed::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2.8rem;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0), rgba(10, 10, 10, 0.94));
+}
+
+.artist-hero__bio-toggle {
+  margin-top: 0.52rem;
+}
+
 .artist-hero__signature {
-  margin: 0.06rem 0 0;
-  border-left: 1px solid color-mix(in srgb, var(--accent) 56%, rgba(255, 255, 255, 0.36));
-  padding: 0.35rem 0 0.35rem 0.5rem;
+  margin: 0;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 56%, rgba(255, 255, 255, 0.36));
+  padding: 0.46rem 0 0;
   font-family: "Space Mono", monospace;
   font-size: 0.64rem;
   letter-spacing: 0.11em;
@@ -2367,10 +2397,10 @@ button.chip-link:hover {
   display: grid;
   gap: 0.38rem;
   width: 100%;
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 0.42rem 0 0.46rem 0.56rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.42rem 0 0.46rem;
   background:
-    linear-gradient(90deg, rgba(227, 13, 13, 0.07), rgba(227, 13, 13, 0) 60%),
+    linear-gradient(180deg, rgba(227, 13, 13, 0.09), rgba(227, 13, 13, 0) 58%),
     transparent;
 }
 
@@ -2380,8 +2410,8 @@ button.chip-link:hover {
 
 .artist-hero__socials {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.32rem 0.5rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.26rem;
   width: 100%;
 }
 
@@ -2406,6 +2436,10 @@ button.chip-link:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.artist-hero__rail .artist-hero__tags {
+  margin-top: -0.08rem;
 }
 
 .artist-hero__actions {
@@ -3221,7 +3255,7 @@ input[disabled] {
     grid-template-columns: minmax(232px, 296px) minmax(0, 1fr);
     gap: 0.82rem;
     padding-left: 0.6rem;
-    align-items: start;
+    align-items: stretch;
   }
 
   .surface--artist-detail .artist-hero__body {
@@ -3584,6 +3618,21 @@ input[disabled] {
     padding: 0.52rem;
   }
 
+  .artist-hero {
+    grid-template-columns: 1fr;
+    gap: 0.62rem;
+  }
+
+  .artist-hero__rail {
+    gap: 0.52rem;
+  }
+
+  .artist-hero__media {
+    width: 100%;
+    max-width: none;
+    aspect-ratio: 4 / 3;
+  }
+
   .artist-card__media {
     max-width: none;
     width: 100%;
@@ -3647,7 +3696,7 @@ input[disabled] {
 
   .artist-hero__socials {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     width: 100%;
     gap: 0.32rem;
   }
@@ -3753,6 +3802,29 @@ input[disabled] {
 }
 
 @media (max-width: 520px) {
+  .artist-hero {
+    grid-template-columns: 1fr;
+    gap: 0.58rem;
+  }
+
+  .artist-hero__rail {
+    gap: 0.5rem;
+  }
+
+  .artist-hero__media {
+    width: 100%;
+    max-width: none;
+    aspect-ratio: 4 / 3;
+  }
+
+  .artist-hero__body {
+    gap: 0.56rem;
+  }
+
+  .artist-hero__actions {
+    margin-top: 0.24rem;
+  }
+
   .artist-card,
   .artist-card:nth-child(even) {
     grid-template-columns: 1fr;
