@@ -86,6 +86,15 @@ function bookingPath(sideKey, type, slug) {
   return `/pages/${safeSide}/booking.html?${params.toString()}`;
 }
 
+function artistOgPath(sideKey, slug) {
+  const safeSide = ["tekno", "hiphop"].includes(normalizeSlug(sideKey || "")) ? normalizeSlug(sideKey || "") : "hiphop";
+  const safeSlug = normalizeSlug(slug || "");
+  const params = new URLSearchParams();
+  params.set("side", safeSide);
+  if (safeSlug) params.set("slug", safeSlug);
+  return `/api/og-artist?${params.toString()}`;
+}
+
 function normalizeCopy(value = "") {
   return String(value || "").replace(/\s+/g, " ").trim();
 }
@@ -127,6 +136,7 @@ function applyArtistSeo(artist, sideKey, slug, links = []) {
   const baseUrl = window.location.origin;
   const canonicalUrl = absoluteUrl(artistPath(sideKey, slug));
   const photoUrl = absoluteUrl(artist?.photo);
+  const ogImageUrl = absoluteUrl(artistOgPath(sideKey, slug));
   const title = artistName ? `${artistName} | Kwartier West` : "Kwartier West - Artiest";
 
   if (title) {
@@ -146,10 +156,17 @@ function applyArtistSeo(artist, sideKey, slug, links = []) {
     setMetaByProperty("og:url", canonicalUrl);
   }
 
-  if (photoUrl) {
-    setMetaByProperty("og:image", photoUrl);
-    setMetaByProperty("og:image:secure_url", photoUrl);
-    setMetaByName("twitter:image", photoUrl);
+  const preferredImage = ogImageUrl || photoUrl;
+  if (preferredImage) {
+    setMetaByProperty("og:image", preferredImage);
+    setMetaByProperty("og:image:secure_url", preferredImage);
+    setMetaByName("twitter:image", preferredImage);
+    setMetaByProperty("og:image:width", "1200");
+    setMetaByProperty("og:image:height", "630");
+    setMetaByProperty("og:image:type", "image/png");
+    if (artistName) {
+      setMetaByProperty("og:image:alt", `${artistName} | Kwartier West`);
+    }
   }
 
   clearArtistJsonLd();
