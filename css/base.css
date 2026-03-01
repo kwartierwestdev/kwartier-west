@@ -2410,8 +2410,8 @@ button.chip-link:hover {
 
 .artist-hero__socials {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0.26rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.32rem 0.5rem;
   width: 100%;
 }
 
@@ -3696,7 +3696,7 @@ input[disabled] {
 
   .artist-hero__socials {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 100%;
     gap: 0.32rem;
   }
@@ -3819,6 +3819,10 @@ input[disabled] {
 
   .artist-hero__body {
     gap: 0.56rem;
+  }
+
+  .artist-hero__socials {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .artist-hero__actions {
