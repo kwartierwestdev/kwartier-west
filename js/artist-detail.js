@@ -86,6 +86,39 @@ function bookingPath(sideKey, type, slug) {
   return `/pages/${safeSide}/booking.html?${params.toString()}`;
 }
 
+function normalizeCopy(value = "") {
+  return String(value || "").replace(/\s+/g, " ").trim();
+}
+
+function splitStoryParagraphs(text = "") {
+  const clean = String(text || "").trim();
+  if (!clean) return [];
+
+  const manualParagraphs = clean
+    .split(/\n{2,}/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  if (manualParagraphs.length > 1) return manualParagraphs;
+
+  const sentenceMatches = clean.match(/[^.!?]+[.!?]+(?:\s+|$)|[^.!?]+$/g) || [clean];
+  const sentences = sentenceMatches.map((part) => part.trim()).filter(Boolean);
+  if (sentences.length <= 2) return [clean];
+
+  const grouped = [];
+  let bucket = "";
+  sentences.forEach((sentence) => {
+    const next = bucket ? `${bucket} ${sentence}` : sentence;
+    if (next.length > 230 && bucket) {
+      grouped.push(bucket);
+      bucket = sentence;
+      return;
+    }
+    bucket = next;
+  });
+  if (bucket) grouped.push(bucket);
+  return grouped.length ? grouped : [clean];
+}
+
 function applyArtistSeo(artist, sideKey, slug, links = []) {
   const artistName = String(artist?.name || "").trim();
   const sideName = sideLabel(sideKey) || sideKey;
@@ -237,7 +270,10 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
     const summaryRaw = String(artist?.headline || artist?.bio || "").trim();
     const storyRaw = String(artist?.story || "").trim();
     const summary = escapeHTML(summaryRaw);
-    const bio = storyRaw && storyRaw !== summaryRaw ? escapeHTML(storyRaw) : "";
+    const hasBioStory = Boolean(storyRaw) && normalizeCopy(storyRaw) !== normalizeCopy(summaryRaw);
+    const bioParagraphs = hasBioStory
+      ? splitStoryParagraphs(storyRaw).map((paragraph) => `<p>${escapeHTML(paragraph)}</p>`).join("")
+      : "";
     const tags = asArray(artist.tags).map((tag) => `<span class="tag-pill">${escapeHTML(tag)}</span>`).join("");
     const signatureLine = escapeHTML(artist.signatureLine || "");
     const artistSlug = normalizeSlug(artist.slug || "");
@@ -269,8 +305,18 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
           <p class="eyebrow">${escapeHTML(sideLabel(currentSide))} ${escapeHTML(t("artist.collectiveSuffix"))}</p>
           <h1>${name}</h1>
           <p class="artist-hero__meta">${role}${city ? ` <span class="dot-sep"></span> ${city}` : ""}${lang ? ` <span class="dot-sep"></span> ${lang}` : ""}</p>
-          ${summary ? `<p class="artist-hero__summary">${summary}</p>` : ""}
-          ${bio ? `<p class="artist-hero__bio">${bio}</p>` : ""}
+          ${summary ? `
+            <section class="artist-hero__copy artist-hero__copy--summary">
+              <p class="eyebrow artist-hero__copy-label">${t("artist.section.summary")}</p>
+              <p class="artist-hero__summary">${summary}</p>
+            </section>
+          ` : ""}
+          ${bioParagraphs ? `
+            <section class="artist-hero__copy artist-hero__copy--bio">
+              <p class="eyebrow artist-hero__copy-label">${t("artist.section.bio")}</p>
+              <div class="artist-hero__bio">${bioParagraphs}</div>
+            </section>
+          ` : ""}
           ${tags ? `<div class="artist-hero__tags">${tags}</div>` : ""}
 
           <div class="artist-hero__connect">

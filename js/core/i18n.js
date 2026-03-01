@@ -96,7 +96,7 @@ const EN = {
   "landing.portal.instruction": "Click to enter.",
   "landing.tekno.eyebrow": "Tekno collective",
   "landing.tekno.title": "Tekno",
-  "landing.tekno.desc": "Hardtek, acid pressure and soundsystem discipline.",
+  "landing.tekno.desc": "Hardtekk, acid pressure and soundsystem discipline.",
   "landing.tekno.open": "Open Tekno",
   "landing.tekno.book": "Book Tekno",
   "landing.tekno.aria": "Open Tekno portal",
@@ -200,6 +200,8 @@ const EN = {
   "artist.section.signature": "Signature",
   "artist.section.live": "Live direction",
   "artist.section.focus": "Focus lanes",
+  "artist.section.summary": "Snapshot",
+  "artist.section.bio": "Bio",
   "artist.section.channels": "Channels",
   "artist.collectiveSuffix": "collective",
   "artist.focusEmpty": "No focus lanes published yet.",
@@ -460,7 +462,7 @@ const NL = {
   "landing.portal.instruction": "Klik om binnen te gaan.",
   "landing.tekno.eyebrow": "Tekno collectief",
   "landing.tekno.title": "Tekno",
-  "landing.tekno.desc": "Hardtek, aciddruk en soundsystemdiscipline.",
+  "landing.tekno.desc": "Hardtekk, aciddruk en soundsystemdiscipline.",
   "landing.tekno.open": "Ga naar Tekno",
   "landing.tekno.book": "Boek Tekno",
   "landing.tekno.aria": "Ga naar Tekno-portaal",
@@ -564,6 +566,8 @@ const NL = {
   "artist.section.signature": "Signatuur",
   "artist.section.live": "Podiumaanpak",
   "artist.section.focus": "Focus",
+  "artist.section.summary": "Kern",
+  "artist.section.bio": "Bio",
   "artist.section.channels": "Kanalen",
   "artist.collectiveSuffix": "collectief",
   "artist.focusEmpty": "Nog geen focuspunten gepubliceerd.",
@@ -880,4 +884,3 @@ export function initI18nPage() {
   applyI18n(document);
   attachLanguageSwitchers(document);
 }
-
