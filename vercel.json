@@ -25,6 +25,28 @@
   "rewrites": [
     {
       "source": "/pages/hiphop/artist.html",
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "(?<slug>[^&]+)"
+        }
+      ],
+      "destination": "/api/artist-legacy?side=hiphop&slug=:slug"
+    },
+    {
+      "source": "/pages/tekno/artist.html",
+      "has": [
+        {
+          "type": "query",
+          "key": "slug",
+          "value": "(?<slug>[^&]+)"
+        }
+      ],
+      "destination": "/api/artist-legacy?side=tekno&slug=:slug"
+    },
+    {
+      "source": "/pages/hiphop/artist.html",
       "destination": "/api/artist-legacy?side=hiphop"
     },
     {
