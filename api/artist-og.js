@@ -9,6 +9,12 @@ const PHOTO_X = 54;
 const PHOTO_Y = 54;
 const PHOTO_W = 430;
 const PHOTO_H = 522;
+const LOGO_W = 320;
+const LOGO_H = 92;
+const LOGO_X = 530;
+const LOGO_Y = 72;
+const NAME_X = 530;
+const NAME_Y = 214;
 
 function normalize(value = "") {
   return String(value || "").trim().toLowerCase();
@@ -21,6 +27,34 @@ function escapeXml(value = "") {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+function splitNameLines(name = "", maxCharsPerLine = 18) {
+  const clean = String(name || "").replace(/\s+/g, " ").trim();
+  if (!clean) return ["KWARTIER WEST"];
+
+  const words = clean.split(" ");
+  const lines = [];
+  let current = "";
+
+  for (const word of words) {
+    const candidate = current ? `${current} ${word}` : word;
+    if (candidate.length <= maxCharsPerLine) {
+      current = candidate;
+      continue;
+    }
+    if (current) lines.push(current);
+    current = word;
+    if (lines.length === 2) break;
+  }
+  if (current && lines.length < 2) lines.push(current);
+
+  const out = lines.slice(0, 2);
+  if (!out.length) out.push(clean.slice(0, maxCharsPerLine));
+  if (out.length === 2 && words.join(" ").length > out.join(" ").length) {
+    out[1] = `${out[1].slice(0, Math.max(0, maxCharsPerLine - 1)).trimEnd()}...`;
+  }
+  return out;
 }
 
 async function loadArtists() {
@@ -50,7 +84,7 @@ function sideLabel(sideKey = "") {
   return normalize(sideKey) === "tekno" ? "TEKNO" : "HIP HOP";
 }
 
-function panelSvg({ name, role, city, side }) {
+function panelSvg() {
   return `
 <svg width="${WIDTH}" height="${HEIGHT}" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -72,12 +106,18 @@ function panelSvg({ name, role, city, side }) {
   </g>
   <rect x="40" y="40" width="${WIDTH - 80}" height="${HEIGHT - 80}" fill="none" stroke="rgba(255,255,255,0.34)" stroke-width="2"/>
   <rect x="${PHOTO_X - 14}" y="${PHOTO_Y - 14}" width="${PHOTO_W + 28}" height="${PHOTO_H + 28}" fill="none" stroke="rgba(255,255,255,0.24)" stroke-width="2"/>
-  <text x="530" y="130" fill="#f3f3f3" font-size="28" font-family="Arial, sans-serif" letter-spacing="7">${escapeXml(side)} COLLECTIEF</text>
-  <text x="530" y="250" fill="#f8f8f8" font-size="94" font-weight="800" font-family="Arial, sans-serif">${escapeXml(name)}</text>
-  <text x="530" y="328" fill="#e8e8e8" font-size="40" font-family="Arial, sans-serif">${escapeXml(role)}</text>
-  <text x="530" y="378" fill="#d7d7d7" font-size="30" font-family="Arial, sans-serif">${escapeXml(city)}</text>
+  <rect x="516" y="54" width="630" height="522" fill="rgba(8,8,8,0.48)" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
   <line x1="530" y1="514" x2="1120" y2="514" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
-  <text x="530" y="556" fill="#ffffff" font-size="34" font-weight="700" font-family="Arial, sans-serif" letter-spacing="4">KWARTIER WEST</text>
+</svg>`;
+}
+
+function textSvg({ side, name }) {
+  const [line1, line2 = ""] = splitNameLines(name, 18);
+  return `
+<svg width="${WIDTH}" height="${HEIGHT}" xmlns="http://www.w3.org/2000/svg">
+  <text x="${NAME_X}" y="${NAME_Y}" fill="#f0f0f0" font-size="24" font-family="Arial, sans-serif" letter-spacing="5">${escapeXml(side)} COLLECTIEF</text>
+  <text x="${NAME_X}" y="${NAME_Y + 98}" fill="#ffffff" font-size="86" font-weight="800" font-family="Arial, sans-serif">${escapeXml(line1)}</text>
+  ${line2 ? `<text x="${NAME_X}" y="${NAME_Y + 184}" fill="#ffffff" font-size="86" font-weight="800" font-family="Arial, sans-serif">${escapeXml(line2)}</text>` : ""}
 </svg>`;
 }
 
@@ -95,6 +135,13 @@ async function fetchPhotoBuffer(origin, photoPath) {
   }
 }
 
+async function fetchLogoBuffer(origin) {
+  const logoUrl = `${origin}/assets/kw-wordmark-real.png`;
+  const response = await fetch(logoUrl, { cache: "no-store" });
+  if (!response.ok) throw new Error(`logo ${response.status}`);
+  return Buffer.from(await response.arrayBuffer());
+}
+
 export default async function handler(request, response) {
   try {
     const url = new URL(request.url, "https://kwartierwest.be");
@@ -107,8 +154,6 @@ export default async function handler(request, response) {
     const artist = picked.artist || {};
 
     const name = String(artist?.name || "Kwartier West").trim();
-    const role = String(artist?.role || "Artist").trim();
-    const city = String(artist?.city || "Belgium").trim();
     const sideText = sideLabel(picked.sideKey);
 
     const photoBuffer = await fetchPhotoBuffer(origin, artist?.photo);
@@ -117,7 +162,14 @@ export default async function handler(request, response) {
       .png()
       .toBuffer();
 
-    const panel = Buffer.from(panelSvg({ name, role, city, side: sideText }));
+    const logoBuffer = await fetchLogoBuffer(origin);
+    const logoPng = await sharp(logoBuffer)
+      .resize(LOGO_W, LOGO_H, { fit: "contain" })
+      .png()
+      .toBuffer();
+
+    const panel = Buffer.from(panelSvg());
+    const textLayer = Buffer.from(textSvg({ side: sideText, name }));
     const output = await sharp({
       create: {
         width: WIDTH,
@@ -128,7 +180,9 @@ export default async function handler(request, response) {
     })
       .composite([
         { input: panel, left: 0, top: 0 },
-        { input: photoPng, left: PHOTO_X, top: PHOTO_Y }
+        { input: photoPng, left: PHOTO_X, top: PHOTO_Y },
+        { input: logoPng, left: LOGO_X, top: LOGO_Y },
+        { input: textLayer, left: 0, top: 0 }
       ])
       .png()
       .toBuffer();
