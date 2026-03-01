@@ -1,6 +1,26 @@
 {
   "redirects": [
-    
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "kwartierwest.be"
+        }
+      ],
+      "destination": "https://www.kwartierwest.be/$1",
+      "permanent": true
+    },
+    {
+      "source": "/pages/hiphop/artist/:slug/",
+      "destination": "/pages/hiphop/artist/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/pages/tekno/artist/:slug/",
+      "destination": "/pages/tekno/artist/:slug",
+      "permanent": true
+    }
   ],
   "rewrites": [
     {
@@ -16,15 +36,7 @@
       "destination": "/api/artist-page?side=hiphop&slug=:slug"
     },
     {
-      "source": "/pages/hiphop/artist/:slug/",
-      "destination": "/api/artist-page?side=hiphop&slug=:slug"
-    },
-    {
       "source": "/pages/tekno/artist/:slug",
-      "destination": "/api/artist-page?side=tekno&slug=:slug"
-    },
-    {
-      "source": "/pages/tekno/artist/:slug/",
       "destination": "/api/artist-page?side=tekno&slug=:slug"
     }
   ],

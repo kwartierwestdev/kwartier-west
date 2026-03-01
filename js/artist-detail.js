@@ -3,6 +3,8 @@ import { artistPath, asArray, escapeHTML, normalizeSlug, sideLabel } from "./cor
 import { t } from "./core/i18n.js";
 import { normalizeSocialLinks, renderSocialRail } from "./core/social-links.js?v=20260226c";
 
+const SITE_ORIGIN = "https://www.kwartierwest.be";
+
 function getSlug() {
   const params = new URLSearchParams(window.location.search);
   const querySlug = normalizeSlug(params.get("slug") || "");
@@ -63,7 +65,7 @@ function absoluteUrl(pathOrUrl) {
   const value = String(pathOrUrl || "").trim();
   if (!value) return "";
   try {
-    return new URL(value, window.location.origin).toString();
+    return new URL(value, SITE_ORIGIN).toString();
   } catch {
     return "";
   }
@@ -152,7 +154,7 @@ function applyArtistSeo(artist, sideKey, slug, links = []) {
   const sideName = sideLabel(sideKey) || sideKey;
   const summary = String(artist?.headline || artist?.bio || artist?.story || "").trim();
   const safeDescription = summary || `${artistName} binnen ${sideName} van Kwartier West.`;
-  const baseUrl = window.location.origin;
+  const baseUrl = SITE_ORIGIN;
   const canonicalUrl = absoluteUrl(artistPath(sideKey, slug));
   const photoUrl = absoluteUrl(artist?.photo);
   const ogImageUrl = absoluteUrl(artistOgPath(sideKey, slug));

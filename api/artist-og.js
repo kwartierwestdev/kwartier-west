@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
+const SITE_ORIGIN = "https://www.kwartierwest.be";
 const WIDTH = 1200;
 const HEIGHT = 630;
 const PHOTO_X = 54;
@@ -97,7 +98,7 @@ async function fetchPhotoBuffer(origin, photoPath) {
 export default async function handler(request, response) {
   try {
     const url = new URL(request.url, "https://kwartierwest.be");
-    const origin = `${request.headers["x-forwarded-proto"] || "https"}://${request.headers.host || "kwartierwest.be"}`;
+    const origin = SITE_ORIGIN;
     const side = normalize(url.searchParams.get("side"));
     const slug = normalize(url.searchParams.get("slug"));
 

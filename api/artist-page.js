@@ -1,6 +1,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
+const SITE_ORIGIN = "https://www.kwartierwest.be";
+
 function normalize(value = "") {
   return String(value || "").trim().toLowerCase();
 }
@@ -117,7 +119,7 @@ export default async function handler(request, response) {
     const artists = await loadArtists();
     const artist = findArtist(artists, side, slug);
     const safeSlug = artist?.slug ? normalize(artist.slug) : slug || "artist";
-    const origin = `${request.headers["x-forwarded-proto"] || "https"}://${request.headers.host || "kwartierwest.be"}`;
+    const origin = SITE_ORIGIN;
 
     response.setHeader("content-type", "text/html; charset=utf-8");
     response.setHeader("cache-control", "public, max-age=0, s-maxage=900, stale-while-revalidate=86400");
