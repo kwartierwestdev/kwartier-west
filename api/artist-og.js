@@ -123,13 +123,14 @@ function textSvg({ side, name }) {
 
 async function buildTextLayer(side, name) {
   const [line1, line2 = ""] = splitNameLines(name, 18);
+  const sideMarkup = `<span foreground="#f0f0f0" font_family="DejaVu Sans" font_size="24" letter_spacing="5000">${escapeXml(`${side} COLLECTIEF`)}</span>`;
+  const name1Markup = `<span foreground="#ffffff" font_family="DejaVu Sans" font_size="86" font_weight="800">${escapeXml(line1)}</span>`;
   const sideText = await sharp({
     text: {
-      text: `${side} COLLECTIEF`,
+      text: sideMarkup,
       width: 620,
       align: "left",
-      rgba: true,
-      font: "DejaVu Sans 24"
+      rgba: true
     }
   })
     .png()
@@ -137,11 +138,10 @@ async function buildTextLayer(side, name) {
 
   const name1 = await sharp({
     text: {
-      text: line1,
+      text: name1Markup,
       width: 620,
       align: "left",
-      rgba: true,
-      font: "DejaVu Sans Bold 86"
+      rgba: true
     }
   })
     .png()
@@ -153,13 +153,13 @@ async function buildTextLayer(side, name) {
   ];
 
   if (line2) {
+    const name2Markup = `<span foreground="#ffffff" font_family="DejaVu Sans" font_size="86" font_weight="800">${escapeXml(line2)}</span>`;
     const name2 = await sharp({
       text: {
-        text: line2,
+        text: name2Markup,
         width: 620,
         align: "left",
-        rgba: true,
-        font: "DejaVu Sans Bold 86"
+        rgba: true
       }
     })
       .png()
