@@ -37,7 +37,7 @@ function buildHtml({ origin, side, slug, artist }) {
   const canonical = `${origin}/pages/${safeSide}/artist/${encodeURIComponent(slug)}`;
   const title = artist?.name ? `${artist.name} | Kwartier West` : `Kwartier West - ${sideTitle} artiest`;
   const description = metaDescription(artist);
-  const ogImage = `${origin}/api/og-artist?side=${encodeURIComponent(safeSide)}&slug=${encodeURIComponent(slug)}`;
+  const ogImage = `${origin}/api/artist-og?side=${encodeURIComponent(safeSide)}&slug=${encodeURIComponent(slug)}`;
   const ogAlt = artist?.name ? `${artist.name} | Kwartier West` : "Kwartier West artiest";
 
   return `<!doctype html>

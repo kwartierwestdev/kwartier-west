@@ -111,7 +111,7 @@ function artistOgPath(sideKey, slug) {
   const params = new URLSearchParams();
   params.set("side", safeSide);
   if (safeSlug) params.set("slug", safeSlug);
-  return `/api/og-artist?${params.toString()}`;
+  return `/api/artist-og?${params.toString()}`;
 }
 
 function normalizeCopy(value = "") {
