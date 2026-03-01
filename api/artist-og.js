@@ -115,10 +115,59 @@ function textSvg({ side, name }) {
   const [line1, line2 = ""] = splitNameLines(name, 18);
   return `
 <svg width="${WIDTH}" height="${HEIGHT}" xmlns="http://www.w3.org/2000/svg">
-  <text x="${NAME_X}" y="${NAME_Y}" fill="#f0f0f0" font-size="24" font-family="Arial, sans-serif" letter-spacing="5">${escapeXml(side)} COLLECTIEF</text>
-  <text x="${NAME_X}" y="${NAME_Y + 98}" fill="#ffffff" font-size="86" font-weight="800" font-family="Arial, sans-serif">${escapeXml(line1)}</text>
-  ${line2 ? `<text x="${NAME_X}" y="${NAME_Y + 184}" fill="#ffffff" font-size="86" font-weight="800" font-family="Arial, sans-serif">${escapeXml(line2)}</text>` : ""}
+  <text x="${NAME_X}" y="${NAME_Y}" fill="#f0f0f0" font-size="24" font-family="DejaVu Sans, sans-serif" letter-spacing="5">${escapeXml(side)} COLLECTIEF</text>
+  <text x="${NAME_X}" y="${NAME_Y + 98}" fill="#ffffff" font-size="86" font-weight="800" font-family="DejaVu Sans, sans-serif">${escapeXml(line1)}</text>
+  ${line2 ? `<text x="${NAME_X}" y="${NAME_Y + 184}" fill="#ffffff" font-size="86" font-weight="800" font-family="DejaVu Sans, sans-serif">${escapeXml(line2)}</text>` : ""}
 </svg>`;
+}
+
+async function buildTextLayer(side, name) {
+  const [line1, line2 = ""] = splitNameLines(name, 18);
+  const sideText = await sharp({
+    text: {
+      text: `${side} COLLECTIEF`,
+      width: 620,
+      align: "left",
+      rgba: true,
+      font: "DejaVu Sans 24"
+    }
+  })
+    .png()
+    .toBuffer();
+
+  const name1 = await sharp({
+    text: {
+      text: line1,
+      width: 620,
+      align: "left",
+      rgba: true,
+      font: "DejaVu Sans Bold 86"
+    }
+  })
+    .png()
+    .toBuffer();
+
+  const layers = [
+    { input: sideText, left: NAME_X, top: NAME_Y - 26 },
+    { input: name1, left: NAME_X, top: NAME_Y + 14 }
+  ];
+
+  if (line2) {
+    const name2 = await sharp({
+      text: {
+        text: line2,
+        width: 620,
+        align: "left",
+        rgba: true,
+        font: "DejaVu Sans Bold 86"
+      }
+    })
+      .png()
+      .toBuffer();
+    layers.push({ input: name2, left: NAME_X, top: NAME_Y + 100 });
+  }
+
+  return layers;
 }
 
 async function fetchPhotoBuffer(origin, photoPath) {
@@ -169,7 +218,7 @@ export default async function handler(request, response) {
       .toBuffer();
 
     const panel = Buffer.from(panelSvg());
-    const textLayer = Buffer.from(textSvg({ side: sideText, name }));
+    const textLayers = await buildTextLayer(sideText, name);
     const output = await sharp({
       create: {
         width: WIDTH,
@@ -182,7 +231,7 @@ export default async function handler(request, response) {
         { input: panel, left: 0, top: 0 },
         { input: photoPng, left: PHOTO_X, top: PHOTO_Y },
         { input: logoPng, left: LOGO_X, top: LOGO_Y },
-        { input: textLayer, left: 0, top: 0 }
+        ...textLayers
       ])
       .png()
       .toBuffer();
