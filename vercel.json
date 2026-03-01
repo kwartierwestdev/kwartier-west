@@ -1,53 +1,16 @@
 {
   "redirects": [
-    {
-      "source": "/pages/hiphop/artist/:slug",
-      "has": [
-        {
-          "type": "query",
-          "key": "slug"
-        }
-      ],
-      "destination": "/pages/hiphop/artist/:slug",
-      "permanent": true
-    },
-    {
-      "source": "/pages/tekno/artist/:slug",
-      "has": [
-        {
-          "type": "query",
-          "key": "slug"
-        }
-      ],
-      "destination": "/pages/tekno/artist/:slug",
-      "permanent": true
-    },
+    
+  ],
+  "rewrites": [
     {
       "source": "/pages/hiphop/artist.html",
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "(?<slug>[^&]+)"
-        }
-      ],
-      "destination": "/pages/hiphop/artist/:slug",
-      "permanent": true
+      "destination": "/api/artist-legacy?side=hiphop"
     },
     {
       "source": "/pages/tekno/artist.html",
-      "has": [
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "(?<slug>[^&]+)"
-        }
-      ],
-      "destination": "/pages/tekno/artist/:slug",
-      "permanent": true
-    }
-  ],
-  "rewrites": [
+      "destination": "/api/artist-legacy?side=tekno"
+    },
     {
       "source": "/pages/hiphop/artist/:slug",
       "destination": "/api/artist-page?side=hiphop&slug=:slug"
