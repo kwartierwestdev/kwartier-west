@@ -40,6 +40,25 @@ function redirectLegacyArtistUrl(sideKey) {
   return true;
 }
 
+function stripRedundantSlugQueryFromCleanUrl() {
+  const pathname = String(window.location.pathname || "");
+  const match = pathname.match(/\/pages\/(?:tekno|hiphop)\/artist\/([^/?#]+)/i);
+  if (!match?.[1]) return;
+
+  const params = new URLSearchParams(window.location.search || "");
+  const querySlug = normalizeSlug(params.get("slug") || "");
+  const pathSlug = normalizeSlug(match[1] || "");
+  if (!querySlug || querySlug !== pathSlug) return;
+
+  params.delete("slug");
+  const nextSearch = params.toString();
+  const nextUrl = `${pathname}${nextSearch ? `?${nextSearch}` : ""}${window.location.hash || ""}`;
+  const currentUrl = `${pathname}${window.location.search || ""}${window.location.hash || ""}`;
+  if (nextUrl !== currentUrl) {
+    window.history.replaceState({}, "", nextUrl);
+  }
+}
+
 function absoluteUrl(pathOrUrl) {
   const value = String(pathOrUrl || "").trim();
   if (!value) return "";
@@ -205,6 +224,7 @@ export async function renderArtistDetail(sideKey, { baseDepth = 0 } = {}) {
   if (redirectLegacyArtistUrl(sideKey)) {
     return;
   }
+  stripRedundantSlugQueryFromCleanUrl();
 
   function setHero(title = "", lead = "") {
     if (heroTitle && title) heroTitle.textContent = title;
