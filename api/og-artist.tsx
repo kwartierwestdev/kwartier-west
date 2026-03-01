@@ -19,7 +19,7 @@ function escapeText(value = "") {
   return String(value || "").replace(/\s+/g, " ").trim();
 }
 
-async function loadArtists(origin) {
+async function loadArtists(origin: string) {
   const response = await fetch(`${origin}/data/artists.json`, {
     headers: { accept: "application/json" },
     cache: "no-store"
@@ -28,7 +28,7 @@ async function loadArtists(origin) {
   return response.json();
 }
 
-function pickArtist(artistsData, sideKey, slug) {
+function pickArtist(artistsData: any, sideKey: string, slug: string) {
   const safeSide = normalize(sideKey);
   const safeSlug = normalize(slug);
   const pools = safeSide && Array.isArray(artistsData?.[safeSide])
@@ -36,7 +36,7 @@ function pickArtist(artistsData, sideKey, slug) {
     : [artistsData?.hiphop || [], artistsData?.tekno || []];
 
   for (const pool of pools) {
-    const found = (pool || []).find((entry) => normalize(entry?.slug) === safeSlug);
+    const found = (pool || []).find((entry: any) => normalize(entry?.slug) === safeSlug);
     if (found) return { artist: found, sideKey: safeSide || normalize(found?.collective || "hiphop") };
   }
 
@@ -45,13 +45,13 @@ function pickArtist(artistsData, sideKey, slug) {
   return { artist: fallback, sideKey: normalize(fallback?.collective || "hiphop") };
 }
 
-export default async function handler(request) {
+export default async function handler(request: Request) {
   const url = new URL(request.url);
   const origin = url.origin;
   const slug = normalize(url.searchParams.get("slug"));
   const sideKey = normalize(url.searchParams.get("side"));
 
-  let artist = null;
+  let artist: any = null;
   let resolvedSide = sideKey || "hiphop";
 
   try {
