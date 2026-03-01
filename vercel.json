@@ -1,6 +1,28 @@
 {
   "redirects": [
     {
+      "source": "/pages/hiphop/artist/:slug",
+      "has": [
+        {
+          "type": "query",
+          "key": "slug"
+        }
+      ],
+      "destination": "/pages/hiphop/artist/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/pages/tekno/artist/:slug",
+      "has": [
+        {
+          "type": "query",
+          "key": "slug"
+        }
+      ],
+      "destination": "/pages/tekno/artist/:slug",
+      "permanent": true
+    },
+    {
       "source": "/pages/hiphop/artist.html",
       "has": [
         {
@@ -28,19 +50,19 @@
   "rewrites": [
     {
       "source": "/pages/hiphop/artist/:slug",
-      "destination": "/pages/hiphop/artist.html?slug=:slug"
+      "destination": "/api/artist-page?side=hiphop&slug=:slug"
     },
     {
       "source": "/pages/hiphop/artist/:slug/",
-      "destination": "/pages/hiphop/artist.html?slug=:slug"
+      "destination": "/api/artist-page?side=hiphop&slug=:slug"
     },
     {
       "source": "/pages/tekno/artist/:slug",
-      "destination": "/pages/tekno/artist.html?slug=:slug"
+      "destination": "/api/artist-page?side=tekno&slug=:slug"
     },
     {
       "source": "/pages/tekno/artist/:slug/",
-      "destination": "/pages/tekno/artist.html?slug=:slug"
+      "destination": "/api/artist-page?side=tekno&slug=:slug"
     }
   ],
   "headers": [
