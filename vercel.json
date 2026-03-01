@@ -20,9 +20,7 @@
       "source": "/pages/tekno/artist/:slug/",
       "destination": "/pages/tekno/artist/:slug",
       "permanent": true
-    }
-  ],
-  "rewrites": [
+    },
     {
       "source": "/pages/hiphop/artist.html",
       "has": [
@@ -32,7 +30,8 @@
           "value": "(?<slug>[^&]+)"
         }
       ],
-      "destination": "/api/artist-legacy?side=hiphop&slug=:slug"
+      "destination": "/pages/hiphop/artist/:slug",
+      "permanent": true
     },
     {
       "source": "/pages/tekno/artist.html",
@@ -43,8 +42,11 @@
           "value": "(?<slug>[^&]+)"
         }
       ],
-      "destination": "/api/artist-legacy?side=tekno&slug=:slug"
-    },
+      "destination": "/pages/tekno/artist/:slug",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
     {
       "source": "/pages/hiphop/artist.html",
       "destination": "/api/artist-legacy?side=hiphop"
